@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 public class MainController {
     @FXML private Label checkSumInput;
@@ -68,31 +67,14 @@ public class MainController {
     private void onSaveClick() {
         try {
             heroData.setOutputData(BinHexUtils.getDecodeHexString(hexCodeInput.getText()));
-            int cs = BinHexUtils.calculateCheckSum(heroData);
-            checkSumOutput.setText("Checksum: " + cs);
-            byte[] toSave = getResultBytes(cs);
+            heroData.setCheckSum(BinHexUtils.calculateCheckSum(heroData));
+            checkSumOutput.setText("Checksum: " + heroData.getCheckSum());
+            byte[] toSave = BinHexUtils.getResultBytes(heroData);
             Files.write(Paths.get(folder + heroData.getFileName()), toSave);
             hexCodeOutput.setText(BinHexUtils.getFormattedHexString(toSave));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private byte[] getResultBytes(int checkSum) throws IOException {
-        String hex = Integer.toHexString(checkSum);
-        if (hex.length() < 8)
-            hex = hex + "0";
-        System.out.println(hex);
-        byte[] array = DatatypeConverter.parseHexBinary(hex);
-        byte[] reverse = new byte[array.length];
-        for (int i = 0; i < array.length; i++) {
-            reverse[i] = array[array.length - 1 - i];
-        }
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        outputStream.write(heroData.getPreData());
-        outputStream.write(reverse);
-        outputStream.write(heroData.getPostData());
-        return outputStream.toByteArray();
     }
 
     @FXML

@@ -5,6 +5,7 @@ import org.junit.Test;
 import ru.aizen.domain.HeroData;
 import ru.aizen.domain.util.BinHexUtils;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 
 public class SaveFileTest {
@@ -12,6 +13,13 @@ public class SaveFileTest {
     @Test
     public void  testCheckSum() {
         Assert.assertEquals(-564645869, BinHexUtils.calculateCheckSum(getTestHeroData()));
+    }
+
+    @Test
+    public void  testInputOutputArrays() throws IOException {
+        HeroData heroData = getTestHeroData();
+        heroData.setCheckSum(BinHexUtils.calculateCheckSum(heroData));
+        Assert.assertArrayEquals(heroData.getData(), BinHexUtils.getResultBytes(heroData));
     }
 
     @Test
