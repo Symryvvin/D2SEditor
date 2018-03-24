@@ -1,5 +1,6 @@
 package ru.aizen;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.aizen.domain.HeroData;
@@ -9,6 +10,11 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class SaveFileTest {
+
+    @Test
+    public void testFileSize(){
+        Assert.assertArrayEquals(HexBin.decode("C203"), BinHexUtils.calculateFileSize(getTestHeroData()));
+    }
 
     @Test
     public void  testCheckSum() {

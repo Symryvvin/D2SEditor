@@ -6,10 +6,7 @@ import ru.aizen.domain.HeroData;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -46,6 +43,11 @@ public final class BinHexUtils {
                 .collect(Collectors.toList());
         heroData.setCheckSum(getCheckSum(fullData));
         return heroData.getCheckSum();
+    }
+
+    public static byte[] calculateFileSize(HeroData heroData){
+        Short realSize = (short)heroData.getReallyFileSize();
+        return ByteBuffer.allocate(2).putShort(Short.reverseBytes(realSize)).array();
     }
 
     public static byte[] getResultBytes(HeroData heroData) throws IOException {
