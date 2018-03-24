@@ -9,8 +9,6 @@ import ru.aizen.domain.HeroData;
 import ru.aizen.domain.util.BinHexUtils;
 import ru.aizen.domain.util.FileUtils;
 
-import javax.xml.bind.DatatypeConverter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

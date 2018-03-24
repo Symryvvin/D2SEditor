@@ -3,7 +3,6 @@ package ru.aizen.domain.util;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import ru.aizen.domain.HeroData;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -49,27 +48,18 @@ public final class BinHexUtils {
         return heroData.getCheckSum();
     }
 
-   public static byte[] getResultBytes(HeroData heroData) throws IOException {
-/*        Integer reversed = Integer.reverseBytes(heroData.getCheckSum());
-        ByteBuffer.allocate(4).putInt(reversed).array();*/
-        String hex = Integer.toHexString(heroData.getCheckSum());
-        if (hex.length() < 8)
-            hex = hex + "0";
-        byte[] array = DatatypeConverter.parseHexBinary(hex);
-        byte[] reverse = new byte[array.length];
-        for (int i = 0; i < array.length; i++) {
-            reverse[i] = array[array.length - 1 - i];
-        }
+    public static byte[] getResultBytes(HeroData heroData) throws IOException {
+        Integer reversed = Integer.reverseBytes(heroData.getCheckSum());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         outputStream.write(heroData.getPreData());
-        outputStream.write(reverse);
+        outputStream.write(ByteBuffer.allocate(4).putInt(reversed).array());
         outputStream.write(heroData.getPostData());
         return outputStream.toByteArray();
     }
 
-    private static List<Integer> getUnsignedByteList(byte[] bytes){
+    private static List<Integer> getUnsignedByteList(byte[] bytes) {
         List<Integer> result = new ArrayList<>();
-        for(byte b : bytes){
+        for (byte b : bytes) {
             result.add(Byte.toUnsignedInt(b));
         }
         return result;
