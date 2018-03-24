@@ -66,7 +66,7 @@ public final class BinHexUtils {
         return result;
     }
 
-    private static List<Integer> getUnsignedByteList(byte[] bytes) {
+    public static List<Integer> getUnsignedByteList(byte[] bytes) {
         List<Integer> result = new ArrayList<>();
         for (byte b : bytes) {
             result.add(Byte.toUnsignedInt(b));
