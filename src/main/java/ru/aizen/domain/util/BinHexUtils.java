@@ -35,13 +35,13 @@ public final class BinHexUtils {
         byte[] zero = new byte[4];
 
         Arrays.fill(zero, (byte) 0);
-        int preCheckSum = BinHexUtils.getCheckSum(preData, 0);
-        int onCheckSum = BinHexUtils.getCheckSum(zero, preCheckSum);
-        hero.setCheckSum(BinHexUtils.getCheckSum(postData, onCheckSum));
+        int preCheckSum = getCheckSum(preData, 0);
+        int onCheckSum = getCheckSum(zero, preCheckSum);
+        hero.setCheckSum(getCheckSum(postData, onCheckSum));
         return hero.getCheckSum();
     }
 
-    public static int getCheckSum(byte[] data, int start) {
+    private static int getCheckSum(byte[] data, int start) {
         int acc = start;
         for (Byte b : data) {
             int by = b.intValue() < 0 ? b.intValue() + 256 : b.intValue();
