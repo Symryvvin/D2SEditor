@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class SaveFileTest {
 
     @Test
-    public void testFileSize(){
+    public void testCalculateFileSize(){
         Assert.assertArrayEquals(HexBin.decode("C203"), BinHexUtils.calculateFileSize(
                 (short)getTestHeroData().getReallyFileSize()));
     }

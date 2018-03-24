@@ -68,6 +68,8 @@ public class MainController {
             heroData.setCheckSum(BinHexUtils.calculateCheckSum(heroData));
             checkSumOutput.setText("Checksum: " + heroData.getCheckSum());
             byte[] toSave = BinHexUtils.getResultBytes(heroData);
+            BinHexUtils.replaceSize(toSave, toSave.length);
+            System.out.println(toSave.length);
             Files.write(Paths.get(folder + heroData.getFileName()), toSave);
             hexCodeOutput.setText(BinHexUtils.getFormattedHexString(toSave));
         } catch (IOException e) {

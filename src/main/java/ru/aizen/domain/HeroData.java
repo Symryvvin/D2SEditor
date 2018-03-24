@@ -25,7 +25,6 @@ public class HeroData {
             this.backUp = Paths.get(filePath.toString() + ".bak");
             this.data = Files.readAllBytes(filePath);
             this.fileName = filePath.getFileName().toString();
-            this.reallyFileSize = Files.size(filePath);
             splitData(data);
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,6 +40,7 @@ public class HeroData {
         this.preData = Arrays.copyOfRange(data, 0, 12);
         this.postData = Arrays.copyOfRange(data, 16, data.length);
         this.fileSize = Arrays.copyOfRange(data, 9, 10);
+        this.reallyFileSize = preData.length + postData.length + 4;
     }
 
     public Path getInput() {
@@ -49,6 +49,10 @@ public class HeroData {
 
     public Path getBackUp() {
         return backUp;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 
     public byte[] getData() {
@@ -82,4 +86,6 @@ public class HeroData {
     public byte[] getFileSize() {
         return fileSize;
     }
+
+
 }

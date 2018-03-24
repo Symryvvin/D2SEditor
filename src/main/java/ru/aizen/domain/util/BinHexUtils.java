@@ -35,7 +35,8 @@ public final class BinHexUtils {
     public static int calculateCheckSum(HeroData heroData) {
         byte[] zero = new byte[4];
         Arrays.fill(zero, (byte) 0);
-        List<Integer> preData = getUnsignedByteList(heroData.getPreData());
+        List<Integer> preData = getUnsignedByteList(replaceSize(heroData.getPreData(),
+                (short)heroData.getReallyFileSize()));
         List<Integer> zeroCheckSum = getUnsignedByteList(zero);
         List<Integer> postData = getUnsignedByteList(heroData.getPostData());
         List<Integer> fullData = Stream.of(preData, zeroCheckSum, postData)
@@ -58,10 +59,11 @@ public final class BinHexUtils {
         return outputStream.toByteArray();
     }
 
-    public static void replaceSize(byte[] result, int realSize){
+    public static byte[] replaceSize(byte[] result, int realSize){
         byte[] size = calculateFileSize((short)realSize);
         result[8] = size[0];
         result[9] = size[1];
+        return result;
     }
 
     private static List<Integer> getUnsignedByteList(byte[] bytes) {
