@@ -5,7 +5,10 @@ import ru.aizen.domain.Hero;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class BinHexUtils {
     private BinHexUtils() {
@@ -30,23 +33,28 @@ public final class BinHexUtils {
     }
 
     public static int calculateCheckSum(Hero hero) {
-        byte[] preData = hero.getPreData();
-        byte[] postData = hero.getPostData();
         byte[] zero = new byte[4];
-
         Arrays.fill(zero, (byte) 0);
-        int preCheckSum = getCheckSum(preData, 0);
-        int onCheckSum = getCheckSum(zero, preCheckSum);
-        hero.setCheckSum(getCheckSum(postData, onCheckSum));
+        List<Integer> preData = getUnsignedByteList(hero.getPreData());
+        List<Integer> zeroCheckSum = getUnsignedByteList(zero);
+        List<Integer> postData = getUnsignedByteList(hero.getPostData());
+        List<Integer> fullData = Stream.of(preData, zeroCheckSum, postData)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        hero.setCheckSum(getCheckSum(fullData));
         return hero.getCheckSum();
     }
 
-    private static int getCheckSum(byte[] data, int start) {
-        int acc = start;
-        for (Byte b : data) {
-            int by = b.intValue() < 0 ? b.intValue() + 256 : b.intValue();
-            acc = (acc << 1) + by + ((acc < 0) ? 1 : 0);
+    private static List<Integer> getUnsignedByteList(byte[] bytes){
+        List<Integer> result = new ArrayList<>();
+        for(byte b : bytes){
+            result.add(Byte.toUnsignedInt(b));
         }
-        return acc;
+        return result;
+    }
+
+    private static int getCheckSum(List<Integer> byteList) {
+        return byteList.stream()
+                .reduce(0, (first, second) -> (first << 1) + second + ((first < 0) ? 1 : 0));
     }
 }
