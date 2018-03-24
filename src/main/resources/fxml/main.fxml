@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MainController">
-    <VBox fx:id="data" layoutX="14.0" layoutY="14.0">
+    <VBox layoutX="14.0" layoutY="14.0">
         <Button mnemonicParsing="false" onMouseClicked="#onOpenClick" text="Load"/>
         <Region prefHeight="10.0"/>
         <Label text="Input HEX"/>
