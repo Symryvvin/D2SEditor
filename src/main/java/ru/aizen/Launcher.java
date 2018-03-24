@@ -16,7 +16,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
-        stage.setScene(new Scene(root, 800, 800));
+        stage.setScene(new Scene(root));
         stage.setTitle("ShadowMaster");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
         stage.show();

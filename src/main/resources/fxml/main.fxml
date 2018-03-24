@@ -1,21 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MainController">
-    <VBox layoutX="14.0" layoutY="14.0">
-        <Button mnemonicParsing="false" onMouseClicked="#onOpenClick" text="Load"/>
-        <Region prefHeight="10.0"/>
-        <Label text="Input HEX"/>
-        <TextArea fx:id="hexCodeInput"  prefHeight="240.0" prefWidth="469.0"
-                  wrapText="true"/>
-        <Button mnemonicParsing="false" onMouseClicked="#onSaveClick" text="Save"/>
-        <Label text="Output HEX"/>
-        <TextArea fx:id="hexCodeOutput" prefHeight="240.0" prefWidth="469.0"
-                  wrapText="true"/>
-    </VBox>
+    <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+             AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+        <tabs>
+            <Tab text="Hero Editor">
+                <AnchorPane>
+
+                </AnchorPane>
+            </Tab>
+            <Tab text="Hex Editor">
+                <AnchorPane>
+                    <HBox AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"
+                          AnchorPane.topAnchor="10">
+                        <VBox minWidth="460">
+                            <HBox>
+                                <Button onMouseClicked="#onOpenClick" text="Load" prefHeight="30"/>
+                                <Region prefWidth="10.0"/>
+                                <Label fx:id="fileName" text="File name: " prefHeight="30"/>
+                                <Region prefWidth="10.0"/>
+                                <Label fx:id="checkSumInput" text="Checksum:" prefHeight="30"/>
+                            </HBox>
+                            <Region prefHeight="10.0"/>
+                            <Label text="Input HEX"/>
+                            <TextArea fx:id="hexCodeInput" prefHeight="800.0"
+                                      wrapText="true"/>
+                        </VBox>
+                        <Region prefWidth="10.0"/>
+                        <VBox minWidth="460">
+                            <HBox>
+                                <Button onMouseClicked="#onSaveClick" text="Save" prefHeight="30"/>
+                                <Region prefWidth="10.0"/>
+                                <Label fx:id="checkSumOutput" text="Checksum:" prefHeight="30"/>
+                                <Region prefWidth="10.0"/>
+                                <Button onMouseClicked="#onRestoreClick" text="Restore" prefHeight="30"/>
+                            </HBox>
+                            <Region prefHeight="10.0"/>
+                            <Label text="Output HEX"/>
+                            <TextArea fx:id="hexCodeOutput" prefHeight="800.0"
+                                      wrapText="true"/>
+                        </VBox>
+                    </HBox>
+                </AnchorPane>
+            </Tab>
+        </tabs>
+    </TabPane>
 
 </AnchorPane>
