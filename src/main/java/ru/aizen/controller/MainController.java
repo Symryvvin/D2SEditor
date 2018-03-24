@@ -1,7 +1,9 @@
 package ru.aizen.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ru.aizen.domain.Hero;
@@ -11,10 +13,15 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class MainController {
+    @FXML private Label checkSumInput;
+    @FXML private Label fileName;
+    @FXML private Label checkSumOutput;
     @FXML private TextArea hexCodeOutput;
     @FXML private TextArea hexCodeInput;
 
@@ -34,6 +41,7 @@ public class MainController {
             File file = chooser.showOpenDialog(new Stage());
             if (file != null) {
                 openFile(file);
+                createBackup(file);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,6 +52,10 @@ public class MainController {
         byte[] data = Files.readAllBytes(file.toPath());
         hero = new Hero(data, file.getName());
         hexCodeInput.setText(BinHexUtils.getFormattedHexString(data));
+    }
+
+    private void createBackup(File file) throws IOException {
+        Files.copy(file.toPath(), Paths.get(folder + file.getName() + ".bak"),  StandardCopyOption.REPLACE_EXISTING);
     }
 
     @FXML
@@ -74,5 +86,11 @@ public class MainController {
         outputStream.write(reverse);
         outputStream.write(hero.getPostData());
         return outputStream.toByteArray();
+    }
+
+    @FXML
+    private void onRestoreClick() throws IOException {
+        Files.copy(Paths.get(folder + hero.getFileName() + ".bak"), Paths.get(hero.getFileName()),  StandardCopyOption.REPLACE_EXISTING);
+        openFile(Paths.get(hero.getFileName()).toFile());
     }
 }
