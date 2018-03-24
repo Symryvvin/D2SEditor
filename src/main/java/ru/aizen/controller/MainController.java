@@ -7,6 +7,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ru.aizen.domain.HeroData;
 import ru.aizen.domain.util.BinHexUtils;
+import ru.aizen.domain.util.FileUtils;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
@@ -40,7 +41,7 @@ public class MainController {
             File file = chooser.showOpenDialog(new Stage());
             if (file != null) {
                 openFile(file.toPath());
-                createBackup();
+                FileUtils.backUp(heroData);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,10 +62,6 @@ public class MainController {
         hexCodeOutput.clear();
         checkSumInput.setText("");
         checkSumOutput.setText("");
-    }
-
-    private void createBackup() throws IOException {
-        Files.copy(heroData.getInput(), heroData.getBackUp(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     @FXML
@@ -100,7 +97,7 @@ public class MainController {
 
     @FXML
     private void onRestoreClick() throws IOException {
-        Files.copy(heroData.getBackUp(), heroData.getInput(), StandardCopyOption.REPLACE_EXISTING);
+        FileUtils.fromBackUp(heroData);
         openFile(heroData.getInput());
         checkSumOutput.setText("Checksum: " + heroData.getCheckSum());
         hexCodeOutput.clear();

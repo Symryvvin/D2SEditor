@@ -11,10 +11,20 @@ public class SaveFileTest {
 
     @Test
     public void  testCheckSum() {
+        Assert.assertEquals(-564645869, BinHexUtils.calculateCheckSum(getTestHeroData()));
+    }
+
+    @Test
+    public void testHeroDataPaths(){
+        HeroData heroData = getTestHeroData();
+        Assert.assertEquals("test.d2s", heroData.getInput().getFileName().toString());
+        Assert.assertEquals("test.d2s.bak", heroData.getBackUp().getFileName().toString());
+    }
+
+    private HeroData getTestHeroData(){
         String fileName = "/test.d2s";
         String pathToFile = getClass().getResource(fileName).getFile().replaceFirst("/", "");
-        HeroData heroData = new HeroData(Paths.get(pathToFile));
-        Assert.assertEquals(-564645869, BinHexUtils.calculateCheckSum(heroData));
+        return new HeroData(Paths.get(pathToFile));
     }
 
 }
