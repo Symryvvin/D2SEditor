@@ -22,12 +22,12 @@ public class HeroDataReader {
     }
 
     /**
-     * Attribute block placed between [67 66 00] (+3 because 67 66 00 is not interested value)
+     * Attribute block placed between [67 66] (+2 because 67 66 is not interested value)
      * and [69 66] (start of skills block) bytes
      * @return bytes of attributes
      */
     public byte[] getAttributesBlock() {
-        int start = getPositionInDataByHexCode(attributesSection) + 3;
+        int start = getPositionInDataByHexCode(attributesSection) + 2;
         int end = getPositionInDataByHexCode(skillsSection);
         return Arrays.copyOfRange(data, start, end);
     }
