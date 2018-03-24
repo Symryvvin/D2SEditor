@@ -45,9 +45,8 @@ public final class BinHexUtils {
         return heroData.getCheckSum();
     }
 
-    public static byte[] calculateFileSize(HeroData heroData){
-        Short realSize = (short)heroData.getReallyFileSize();
-        return ByteBuffer.allocate(2).putShort(Short.reverseBytes(realSize)).array();
+    public static byte[] calculateFileSize(short size){
+        return ByteBuffer.allocate(2).putShort(Short.reverseBytes(size)).array();
     }
 
     public static byte[] getResultBytes(HeroData heroData) throws IOException {
@@ -57,6 +56,12 @@ public final class BinHexUtils {
         outputStream.write(ByteBuffer.allocate(4).putInt(reversed).array());
         outputStream.write(heroData.getPostData());
         return outputStream.toByteArray();
+    }
+
+    public static void replaceSize(byte[] result, int realSize){
+        byte[] size = calculateFileSize((short)realSize);
+        result[8] = size[0];
+        result[9] = size[1];
     }
 
     private static List<Integer> getUnsignedByteList(byte[] bytes) {

@@ -13,7 +13,8 @@ public class SaveFileTest {
 
     @Test
     public void testFileSize(){
-        Assert.assertArrayEquals(HexBin.decode("C203"), BinHexUtils.calculateFileSize(getTestHeroData()));
+        Assert.assertArrayEquals(HexBin.decode("C203"), BinHexUtils.calculateFileSize(
+                (short)getTestHeroData().getReallyFileSize()));
     }
 
     @Test
