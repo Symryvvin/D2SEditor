@@ -1,8 +1,14 @@
 package ru.aizen.domain;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
-public class Hero {
+public class HeroData {
+    private Path input;
+    private Path backUp;
     private String fileName;
 
     private byte[] data;
@@ -11,16 +17,36 @@ public class Hero {
 
     private int checkSum;
 
-    public Hero(byte[] data, String fileName) {
-        this.data = data;
-        this.fileName = fileName;
+    public HeroData(Path filePath) {
+        try {
+            this.input = filePath;
+            this.backUp = Paths.get(filePath.toString() + ".bak");
+            this.data = Files.readAllBytes(filePath);
+            this.fileName = filePath.getFileName().toString();
+            splitData(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setOutputData(byte[] data){
+        splitData(data);
+    }
+
+    private void splitData(byte[] data){
         int offset = 12;
         int checkSumSize = 4;
         this.preData = Arrays.copyOfRange(data, 0, offset);
         this.postData = Arrays.copyOfRange(data, offset + checkSumSize, data.length);
+    }
+
+    public Path getInput() {
+        return input;
+    }
+
+    public Path getBackUp() {
+        return backUp;
     }
 
     public byte[] getData() {

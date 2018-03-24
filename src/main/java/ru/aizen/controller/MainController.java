@@ -3,18 +3,17 @@ package ru.aizen.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import ru.aizen.domain.Hero;
+import ru.aizen.domain.HeroData;
 import ru.aizen.domain.util.BinHexUtils;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
@@ -26,7 +25,7 @@ public class MainController {
     @FXML private TextArea hexCodeInput;
 
     private String folder;
-    private Hero hero;
+    private HeroData heroData;
 
     public void initialize() {
         folder = "C:/Users/" + System.getProperty("user.name") + "/Saved Games/Diablo II/";
@@ -40,31 +39,42 @@ public class MainController {
             chooser.setInitialDirectory(new File(folder));
             File file = chooser.showOpenDialog(new Stage());
             if (file != null) {
-                openFile(file);
-                createBackup(file);
+                openFile(file.toPath());
+                createBackup();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void openFile(File file) throws IOException {
-        byte[] data = Files.readAllBytes(file.toPath());
-        hero = new Hero(data, file.getName());
-        hexCodeInput.setText(BinHexUtils.getFormattedHexString(data));
+    private void openFile(Path path) {
+        clearAll();
+        heroData = new HeroData(path);
+        heroData.setCheckSum(BinHexUtils.calculateCheckSum(heroData));
+        checkSumInput.setText("Checksum: " + heroData.getCheckSum());
+        fileName.setText("File name: " + heroData.getFileName());
+        hexCodeInput.setText(BinHexUtils.getFormattedHexString(heroData.getData()));
     }
 
-    private void createBackup(File file) throws IOException {
-        Files.copy(file.toPath(), Paths.get(folder + file.getName() + ".bak"),  StandardCopyOption.REPLACE_EXISTING);
+    private void clearAll() {
+        hexCodeInput.clear();
+        hexCodeOutput.clear();
+        checkSumInput.setText("");
+        checkSumOutput.setText("");
+    }
+
+    private void createBackup() throws IOException {
+        Files.copy(heroData.getInput(), heroData.getBackUp(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     @FXML
     private void onSaveClick() {
         try {
-            hero.setOutputData(BinHexUtils.getDecodeHexString(hexCodeInput.getText()));
-            int cs = BinHexUtils.calculateCheckSum(hero);
+            heroData.setOutputData(BinHexUtils.getDecodeHexString(hexCodeInput.getText()));
+            int cs = BinHexUtils.calculateCheckSum(heroData);
+            checkSumOutput.setText("Checksum: " + cs);
             byte[] toSave = getResultBytes(cs);
-            Files.write(Paths.get(folder + hero.getFileName()), toSave);
+            Files.write(Paths.get(folder + heroData.getFileName()), toSave);
             hexCodeOutput.setText(BinHexUtils.getFormattedHexString(toSave));
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,15 +92,17 @@ public class MainController {
             reverse[i] = array[array.length - 1 - i];
         }
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        outputStream.write(hero.getPreData());
+        outputStream.write(heroData.getPreData());
         outputStream.write(reverse);
-        outputStream.write(hero.getPostData());
+        outputStream.write(heroData.getPostData());
         return outputStream.toByteArray();
     }
 
     @FXML
     private void onRestoreClick() throws IOException {
-        Files.copy(Paths.get(folder + hero.getFileName() + ".bak"), Paths.get(hero.getFileName()),  StandardCopyOption.REPLACE_EXISTING);
-        openFile(Paths.get(hero.getFileName()).toFile());
+        Files.copy(heroData.getBackUp(), heroData.getInput(), StandardCopyOption.REPLACE_EXISTING);
+        openFile(heroData.getInput());
+        checkSumOutput.setText("Checksum: " + heroData.getCheckSum());
+        hexCodeOutput.clear();
     }
 }

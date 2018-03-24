@@ -1,7 +1,7 @@
 package ru.aizen.domain.util;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
-import ru.aizen.domain.Hero;
+import ru.aizen.domain.HeroData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,17 +32,17 @@ public final class BinHexUtils {
         return HexBin.decode(hex);
     }
 
-    public static int calculateCheckSum(Hero hero) {
+    public static int calculateCheckSum(HeroData heroData) {
         byte[] zero = new byte[4];
         Arrays.fill(zero, (byte) 0);
-        List<Integer> preData = getUnsignedByteList(hero.getPreData());
+        List<Integer> preData = getUnsignedByteList(heroData.getPreData());
         List<Integer> zeroCheckSum = getUnsignedByteList(zero);
-        List<Integer> postData = getUnsignedByteList(hero.getPostData());
+        List<Integer> postData = getUnsignedByteList(heroData.getPostData());
         List<Integer> fullData = Stream.of(preData, zeroCheckSum, postData)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-        hero.setCheckSum(getCheckSum(fullData));
-        return hero.getCheckSum();
+        heroData.setCheckSum(getCheckSum(fullData));
+        return heroData.getCheckSum();
     }
 
     private static List<Integer> getUnsignedByteList(byte[] bytes){
