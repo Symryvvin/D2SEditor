@@ -1,4 +1,4 @@
-package ru.aizen.domain;
+package ru.aizen.domain.attribute;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

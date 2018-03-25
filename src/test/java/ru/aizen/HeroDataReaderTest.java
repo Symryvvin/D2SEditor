@@ -5,9 +5,9 @@ import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.aizen.domain.Attributes;
+import ru.aizen.domain.attribute.Attributes;
 import ru.aizen.domain.HeroDataReader;
-import ru.aizen.domain.util.AttributePacker;
+import ru.aizen.domain.attribute.AttributePacker;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

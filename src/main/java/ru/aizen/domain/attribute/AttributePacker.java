@@ -1,7 +1,6 @@
-package ru.aizen.domain.util;
+package ru.aizen.domain.attribute;
 
-import ru.aizen.domain.Attribute;
-import ru.aizen.domain.Attributes;
+import ru.aizen.domain.util.BinaryUtils;
 
 public class AttributePacker {
     private static final String STOP_CODE = "01FF";
