@@ -13,8 +13,8 @@ import java.util.List;
  *
  */
 public class HeroDataReader {
-    private final String attributesSection = "676600";
-    private final String skillsSection = "6966";
+    private static final String ATTRIBUTES_BLOCK_START = "6766";
+    private static final String SKILLS_BLOCK_START = "6966";
 
     private byte[] data;
 
@@ -28,8 +28,8 @@ public class HeroDataReader {
      * @return bytes of attributes
      */
     public byte[] getAttributesBlock() throws DecoderException {
-        int start = getPositionInDataByHexCode(attributesSection) + 2;
-        int end = getPositionInDataByHexCode(skillsSection);
+        int start = getPositionInDataByHexCode(ATTRIBUTES_BLOCK_START) + 2;
+        int end = getPositionInDataByHexCode(SKILLS_BLOCK_START);
         return Arrays.copyOfRange(data, start, end);
     }
 
