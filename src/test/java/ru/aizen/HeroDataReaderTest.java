@@ -4,9 +4,12 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ru.aizen.domain.Attributes;
 import ru.aizen.domain.HeroDataReader;
+import ru.aizen.domain.util.HeroDataExtractorUtils;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -24,6 +27,30 @@ public class HeroDataReaderTest {
     public void testFindAttributeSection() {
         String hex = "001E084081000A066440A0800201060071C001401C8000C0022400B0000A00AAC002802AC040D000430000C0C100008007040000FE03";
         Assert.assertArrayEquals(HexBin.decode(hex), reader.getAttributesBlock());
+    }
+
+    @Test
+    public void testExtractAttributes() throws IOException, URISyntaxException {
+        byte[] packedAttributes = reader.getAttributesBlock();
+        Attributes expected = new Attributes();
+        expected.put(Attributes.STRENGTH, 15);
+        expected.put(Attributes.ENERGY, 20);
+        expected.put(Attributes.DEXTERITY, 20);
+        expected.put(Attributes.VITALITY, 25);
+        expected.put(Attributes.STAT_POINTS, 5);
+        expected.put(Attributes.SKILL_POINTS, 1);
+        expected.put(Attributes.HP, 56);
+        expected.put(Attributes.MAX_HP, 56);
+        expected.put(Attributes.MP, 22);
+        expected.put(Attributes.MAX_MP, 22);
+        expected.put(Attributes.SP, 85);
+        expected.put(Attributes.MAX_SP, 85);
+        expected.put(Attributes.LEVEL, 2);
+        expected.put(Attributes.EXPERIENCE, 536);
+        expected.put(Attributes.GOLD, 3);
+        expected.put(Attributes.GOLD_IN_STASH, 4);
+        Attributes attributes = HeroDataExtractorUtils.unpackAttributes(packedAttributes);
+        Assert.assertEquals(expected, attributes);
     }
 
 }
