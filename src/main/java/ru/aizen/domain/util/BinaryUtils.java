@@ -1,8 +1,5 @@
 package ru.aizen.domain.util;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,14 +48,5 @@ public final class BinaryUtils {
     public static int reversedBitsToInt(List<Integer> bits) {
         Collections.reverse(bits);
         return bitsToInt(bits);
-    }
-
-    public static int bitsToInt(String hex) {
-        try {
-            return bitsToInt(getBits(Hex.decodeHex(hex), false));
-        } catch (DecoderException e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 }
