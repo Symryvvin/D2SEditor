@@ -9,7 +9,6 @@ import org.apache.commons.codec.DecoderException;
 import ru.aizen.domain.Character;
 import ru.aizen.domain.HeroData;
 import ru.aizen.domain.util.BinHexUtils;
-import ru.aizen.domain.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,23 +45,23 @@ public class MainController {
             if (file != null) {
                 path = file.toPath();
                 openFile();
-                FileUtils.backUp(character.getData());
                 statsController.loadCharacterStats(character.getAttributes());
             }
-        } catch (IOException | DecoderException e) {
+        } catch (DecoderException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void openFile() throws DecoderException {
+    private void openFile() throws DecoderException, IOException {
         clearAll();
         loadCharacter();
         setInputData();
     }
 
-    private void loadCharacter() throws DecoderException {
+    private void loadCharacter() throws DecoderException, IOException {
         character = new Character(new HeroData(path));
         character.load();
+        character.backup();
     }
 
     private void setInputData() {
@@ -101,8 +100,8 @@ public class MainController {
     }
 
     @FXML
-    private void onRestoreClick() throws IOException, DecoderException {
-        FileUtils.fromBackUp(character.getData());
+    private void onRestoreClick() throws DecoderException, IOException {
+        character.restore();
         clearAll();
         openFile();
     }

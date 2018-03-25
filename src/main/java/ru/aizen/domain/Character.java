@@ -3,6 +3,9 @@ package ru.aizen.domain;
 import org.apache.commons.codec.DecoderException;
 import ru.aizen.domain.attribute.AttributePacker;
 import ru.aizen.domain.attribute.Attributes;
+import ru.aizen.domain.util.FileUtils;
+
+import java.io.IOException;
 
 public class Character {
     private HeroData data;
@@ -18,6 +21,14 @@ public class Character {
         attributes = aReader.unpackAttributes(data.getAttributesBlock());
     }
 
+    public void backup() throws IOException {
+        FileUtils.backup(data);
+    }
+
+    public void restore() throws IOException {
+        FileUtils.restore(data);
+    }
+
     public HeroData getData() {
         return data;
     }
@@ -29,4 +40,6 @@ public class Character {
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
+
+
 }

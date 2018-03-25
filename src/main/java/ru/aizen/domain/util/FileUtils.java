@@ -12,11 +12,11 @@ public final class FileUtils {
         throw new AssertionError();
     }
 
-    public static void backUp(HeroData heroData) throws IOException {
+    public static void backup(HeroData heroData) throws IOException {
         Files.copy(heroData.getInput(), heroData.getBackUp(), StandardCopyOption.REPLACE_EXISTING);
     }
 
-    public static void fromBackUp(HeroData heroData) throws IOException {
+    public static void restore(HeroData heroData) throws IOException {
         Files.copy(heroData.getBackUp(), heroData.getInput(), StandardCopyOption.REPLACE_EXISTING);
     }
 }
