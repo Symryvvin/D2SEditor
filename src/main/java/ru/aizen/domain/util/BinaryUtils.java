@@ -1,8 +1,6 @@
 package ru.aizen.domain.util;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 public final class BinaryUtils {
 
@@ -27,26 +25,19 @@ public final class BinaryUtils {
                 Integer.toBinaryString(Byte.toUnsignedInt(b))).replace(' ', '0');
     }
 
-    public static List<Integer> getBits(byte[] bytes, boolean reverted) {
+    public static String getBitString(byte[] bytes, boolean reverted) {
         StringBuilder result = new StringBuilder();
         for (byte b : bytes) {
             result.append(BinaryUtils.toBinaryString(b, reverted));
         }
-        return result.toString()
-                .chars()
-                .map(i -> i == '1' ? 1 : 0)
-                .boxed()
-                .collect(Collectors.toList());
+        return result.toString();
     }
 
-    public static int bitsToInt(List<Integer> bits) {
-        return Integer.parseInt(bits.stream()
-                .map(Object::toString)
-                .reduce("", (a, b) -> a + b), 2);
+    public static int bitsToInt(String bits) {
+        return Integer.parseInt(bits, 2);
     }
 
-    public static int reversedBitsToInt(List<Integer> bits) {
-        Collections.reverse(bits);
-        return bitsToInt(bits);
+    public static int reversedBitsToInt(String bits) {
+        return bitsToInt(StringUtils.reverse(bits));
     }
 }

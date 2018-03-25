@@ -3,18 +3,15 @@ package ru.aizen.domain.util;
 import ru.aizen.domain.Attribute;
 import ru.aizen.domain.Attributes;
 
-import java.util.List;
-
 public class AttributePacker {
     private static final String STOP_CODE = "01FF";
 
     public AttributePacker() {
     }
 
-
     public Attributes unpackAttributes(byte[] data) {
         Attributes attributes = new Attributes();
-        List<Integer> bits = BinaryUtils.getBits(data, true);
+        String bits = BinaryUtils.getBitString(data, true);
         int stopId = Integer.parseInt(STOP_CODE, 16);
         int cursor = 0;
         int end;
@@ -32,9 +29,8 @@ public class AttributePacker {
         return attributes;
     }
 
-    private static int readValue(List<Integer> bits, int initial, int length) {
-        List<Integer> list = bits.subList(initial, length);
-        return BinaryUtils.reversedBitsToInt(list);
+    private static int readValue(String bits, int initial, int length) {
+        return BinaryUtils.reversedBitsToInt(bits.substring(initial, length));
     }
 
 

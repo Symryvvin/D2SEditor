@@ -30,7 +30,7 @@ public class HeroDataReaderTest {
     }
 
     @Test
-    public void testExtractAttributes() throws IOException, URISyntaxException, DecoderException {
+    public void testExtractAttributes() throws DecoderException {
         byte[] packedAttributes = reader.getAttributesBlock();
         Attributes expected = new Attributes();
         expected.put(Attributes.STRENGTH, 15);
