@@ -1,0 +1,7 @@
+.menu-item {
+    -fx-pref-width: 200px;
+}
+
+.menu-item > .label{
+    -fx-pref-width: 150px;
+}

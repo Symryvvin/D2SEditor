@@ -18,3 +18,7 @@ ComboBox{
 GridPane {
     -fx-hgap: 5;
 }
+
+ButtonBar {
+    -fx-hgap: 5;
+}
