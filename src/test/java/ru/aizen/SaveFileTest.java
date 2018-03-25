@@ -15,20 +15,21 @@ public class SaveFileTest {
 
     @Test
     public void testCalculateFileSize() throws DecoderException, URISyntaxException {
-        Assert.assertArrayEquals(Hex.decodeHex("E603"), BinHexUtils.calculateFileSize(
-                (short)getTestHeroData().getReallyFileSize()));
+        Assert.assertArrayEquals(Hex.decodeHex("E603"), getTestHeroData().calculateFileSize());
     }
 
     @Test
     public void  testCheckSum() throws URISyntaxException {
-        Assert.assertEquals(-667916153, BinHexUtils.calculateCheckSum(getTestHeroData()));
+        HeroData heroData = getTestHeroData();
+        heroData.calculateCheckSum();
+        Assert.assertEquals(-667916153, heroData.getCheckSum());
     }
 
     @Test
     public void  testInputOutputArrays() throws IOException, URISyntaxException {
         HeroData heroData = getTestHeroData();
-        heroData.setCheckSum(BinHexUtils.calculateCheckSum(heroData));
-        Assert.assertArrayEquals(heroData.getData(), BinHexUtils.getResultBytes(heroData));
+        heroData.calculateCheckSum();
+        Assert.assertArrayEquals(heroData.getData(), heroData.getResultBytes());
     }
 
     @Test

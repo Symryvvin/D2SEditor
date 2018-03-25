@@ -49,7 +49,7 @@ public class MainController {
     private void openFile(Path path) {
         clearAll();
         heroData = new HeroData(path);
-        heroData.setCheckSum(BinHexUtils.calculateCheckSum(heroData));
+        heroData.calculateCheckSum();
         checkSumInput.setText("Checksum: " + heroData.getCheckSum());
         fileName.setText("File name: " + heroData.getFileName());
         hexCodeInput.setText(BinHexUtils.getFormattedHexString(heroData.getData()));
@@ -66,10 +66,9 @@ public class MainController {
     private void onSaveClick() {
         try {
             heroData.setOutputData(BinHexUtils.getDecodeHexString(hexCodeInput.getText()));
-            heroData.setCheckSum(BinHexUtils.calculateCheckSum(heroData));
+            heroData.calculateCheckSum();
             checkSumOutput.setText("Checksum: " + heroData.getCheckSum());
-            byte[] toSave = BinHexUtils.getResultBytes(heroData);
-            BinHexUtils.replaceSize(toSave, toSave.length);
+            byte[] toSave = heroData.getResultBytes();
             System.out.println(toSave.length);
             Files.write(Paths.get(folder + heroData.getFileName()), toSave);
             hexCodeOutput.setText(BinHexUtils.getFormattedHexString(toSave));
