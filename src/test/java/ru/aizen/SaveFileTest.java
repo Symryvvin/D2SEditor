@@ -8,39 +8,39 @@ import ru.aizen.domain.HeroData;
 import ru.aizen.domain.util.BinHexUtils;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
 public class SaveFileTest {
 
     @Test
-    public void testCalculateFileSize() throws DecoderException {
+    public void testCalculateFileSize() throws DecoderException, URISyntaxException {
         Assert.assertArrayEquals(Hex.decodeHex("E603"), BinHexUtils.calculateFileSize(
                 (short)getTestHeroData().getReallyFileSize()));
     }
 
     @Test
-    public void  testCheckSum() {
+    public void  testCheckSum() throws URISyntaxException {
         Assert.assertEquals(-667916153, BinHexUtils.calculateCheckSum(getTestHeroData()));
     }
 
     @Test
-    public void  testInputOutputArrays() throws IOException {
+    public void  testInputOutputArrays() throws IOException, URISyntaxException {
         HeroData heroData = getTestHeroData();
         heroData.setCheckSum(BinHexUtils.calculateCheckSum(heroData));
         Assert.assertArrayEquals(heroData.getData(), BinHexUtils.getResultBytes(heroData));
     }
 
     @Test
-    public void testHeroDataPaths(){
+    public void testHeroDataPaths() throws URISyntaxException {
         HeroData heroData = getTestHeroData();
         Assert.assertEquals("test.d2s", heroData.getInput().getFileName().toString());
         Assert.assertEquals("test.d2s.bak", heroData.getBackUp().getFileName().toString());
     }
 
-    private HeroData getTestHeroData(){
+    private HeroData getTestHeroData() throws URISyntaxException {
         String fileName = "/test.d2s";
-        String pathToFile = getClass().getResource(fileName).getFile().replaceFirst("/", "");
-        return new HeroData(Paths.get(pathToFile));
+        return new HeroData(Paths.get(getClass().getResource(fileName).toURI()));
     }
 
 }
