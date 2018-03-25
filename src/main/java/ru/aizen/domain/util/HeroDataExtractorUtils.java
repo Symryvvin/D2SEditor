@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ public final class HeroDataExtractorUtils {
                 .map(i -> new Attribute(i[0], i[1], i[2], i[3]))
                 .collect(Collectors.toMap(Attribute::getId, a -> a));
         Attributes attributes = new Attributes();
-        List<Integer> bits = getBitListFromByteArray(data);
+        List<Integer> bits = getBitsArrayFromByteArray(data);
         int cursor = 0;
         int end;
         while (true) {
@@ -44,18 +43,16 @@ public final class HeroDataExtractorUtils {
         return attributes;
     }
 
-    private static List<Integer> getBitListFromByteArray(byte[] bytes) {
-        List<Integer> bits = new ArrayList<>();
-        for (byte aByte : bytes) {
-            String bitString = String.format("%8s",
-                    Integer.toBinaryString(Byte.toUnsignedInt(aByte))).replace(' ', '0');
-            String reversed = new StringBuilder(bitString).reverse().toString();
-            char[] chars = reversed.toCharArray();
-            for (char ch : chars) {
-                bits.add(ch == '1' ? 1 : 0);
-            }
+    private static List<Integer> getBitsArrayFromByteArray(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        for (byte b : bytes) {
+            result.append(BinaryUtils.toRevertedBinaryString(b));
         }
-        return bits;
+        return result.toString()
+                .chars()
+                .map(i -> i == '1' ? 1 : 0)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     private static int readBits(List<Integer> bits, int cursor, int length) {
@@ -65,4 +62,5 @@ public final class HeroDataExtractorUtils {
                 .map(Object::toString)
                 .reduce("", (a, b) -> a + b), 2);
     }
+
 }

@@ -1,6 +1,7 @@
 package ru.aizen;
 
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,10 +19,9 @@ public class HeroDataReaderTest {
     private HeroDataReader reader;
 
     @Before
-    public void getTestData() throws IOException {
+    public void getTestData() throws IOException, URISyntaxException {
         String fileName = "/test.d2s";
-        String pathToFile = getClass().getResource(fileName).getFile().replaceFirst("/", "");
-        reader = new HeroDataReader(Files.readAllBytes(Paths.get(pathToFile)));
+        reader = new HeroDataReader(Files.readAllBytes(Paths.get(getClass().getResource(fileName).toURI())));
     }
 
     @Test
