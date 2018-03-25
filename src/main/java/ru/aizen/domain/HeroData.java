@@ -1,5 +1,6 @@
 package ru.aizen.domain;
 
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.math.NumberUtils;
 import ru.aizen.domain.util.BinHexUtils;
 
@@ -24,12 +25,15 @@ public class HeroData {
 
     private int checkSum;
 
+    private HeroDataReader reader;
+
     public HeroData(Path filePath) {
         try {
             this.input = filePath;
             this.backUp = Paths.get(filePath.toString() + ".bak");
             this.data = Files.readAllBytes(filePath);
             this.fileName = filePath.getFileName().toString();
+            this.reader = new HeroDataReader(data);
             splitData(data);
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,6 +50,10 @@ public class HeroData {
         this.sizeInBytes = (short)(preData.length + postData.length + 4);
     }
 
+    public byte[] getAttributesBlock() throws DecoderException {
+        return reader.getAttributesBlock();
+    }
+
     public void calculateCheckSum() {
         try {
             byte[] zero = new byte[4];
@@ -57,7 +65,7 @@ public class HeroData {
         }
     }
 
-    public byte[] getResultBytes() throws IOException {
+    public byte[] getDataToSave() throws IOException {
         Integer reversed = Integer.reverseBytes(checkSum);
         return concatAllBytes(ByteBuffer.allocate(4).putInt(reversed).array());
     }

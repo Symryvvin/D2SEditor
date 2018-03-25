@@ -6,6 +6,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.codec.DecoderException;
+import ru.aizen.domain.Character;
 import ru.aizen.domain.HeroData;
 import ru.aizen.domain.util.BinHexUtils;
 import ru.aizen.domain.util.FileUtils;
@@ -24,10 +25,15 @@ public class MainController {
     @FXML private TextArea hexCodeInput;
 
     private String folder;
-    private HeroData heroData;
+    private Path path;
+    private Character character;
+
+    @FXML private EditorController editorController;
+    private StatsController statsController;
 
     public void initialize() {
         folder = "C:/Users/" + System.getProperty("user.name") + "/Saved Games/Diablo II/";
+        statsController = editorController.getStatsController();
     }
 
     @FXML
@@ -38,21 +44,31 @@ public class MainController {
             chooser.setInitialDirectory(new File(folder));
             File file = chooser.showOpenDialog(new Stage());
             if (file != null) {
-                openFile(file.toPath());
-                FileUtils.backUp(heroData);
+                path = file.toPath();
+                openFile();
+                FileUtils.backUp(character.getData());
+                statsController.loadCharacterStats(character.getAttributes());
             }
-        } catch (IOException e) {
+        } catch (IOException | DecoderException e) {
             e.printStackTrace();
         }
     }
 
-    private void openFile(Path path) {
+    private void openFile() throws DecoderException {
         clearAll();
-        heroData = new HeroData(path);
-        heroData.calculateCheckSum();
-        checkSumInput.setText("Checksum: " + heroData.getCheckSum());
-        fileName.setText("File name: " + heroData.getFileName());
-        hexCodeInput.setText(BinHexUtils.getFormattedHexString(heroData.getData()));
+        loadCharacter();
+        setInputData();
+    }
+
+    private void loadCharacter() throws DecoderException {
+        character = new Character(new HeroData(path));
+        character.load();
+    }
+
+    private void setInputData() {
+        checkSumInput.setText("Checksum: " + character.getData().getCheckSum());
+        fileName.setText("File name: " + character.getData().getFileName());
+        hexCodeInput.setText(BinHexUtils.getFormattedHexString(character.getData().getData()));
     }
 
     private void clearAll() {
@@ -65,25 +81,29 @@ public class MainController {
     @FXML
     private void onSaveClick() {
         try {
-            heroData.setOutputData(BinHexUtils.getDecodeHexString(hexCodeInput.getText()));
-            heroData.calculateCheckSum();
-            checkSumOutput.setText("Checksum: " + heroData.getCheckSum());
-            byte[] toSave = heroData.getResultBytes();
-            System.out.println(toSave.length);
-            Files.write(Paths.get(folder + heroData.getFileName()), toSave);
-            hexCodeOutput.setText(BinHexUtils.getFormattedHexString(toSave));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DecoderException e) {
+            character.getData().setOutputData(BinHexUtils.getDecodeHexString(hexCodeInput.getText()));
+            character.getData().calculateCheckSum();
+            byte[] toSave = character.getData().getDataToSave();
+            saveFile(toSave);
+        } catch (IOException | DecoderException e) {
             e.printStackTrace();
         }
     }
 
+    private void saveFile(byte[] data) throws IOException {
+        Files.write(Paths.get(folder + character.getData().getFileName()), data);
+        setOutputData(data);
+    }
+
+    private void setOutputData(byte[] output) {
+        checkSumOutput.setText("Checksum: " + character.getData().getCheckSum());
+        hexCodeOutput.setText(BinHexUtils.getFormattedHexString(output));
+    }
+
     @FXML
-    private void onRestoreClick() throws IOException {
-        FileUtils.fromBackUp(heroData);
-        openFile(heroData.getInput());
-        checkSumOutput.setText("Checksum: " + heroData.getCheckSum());
-        hexCodeOutput.clear();
+    private void onRestoreClick() throws IOException, DecoderException {
+        FileUtils.fromBackUp(character.getData());
+        clearAll();
+        openFile();
     }
 }

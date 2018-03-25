@@ -5,7 +5,6 @@ import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.aizen.domain.HeroData;
-import ru.aizen.domain.util.BinHexUtils;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -29,7 +28,7 @@ public class SaveFileTest {
     public void  testInputOutputArrays() throws IOException, URISyntaxException {
         HeroData heroData = getTestHeroData();
         heroData.calculateCheckSum();
-        Assert.assertArrayEquals(heroData.getData(), heroData.getResultBytes());
+        Assert.assertArrayEquals(heroData.getData(), heroData.getDataToSave());
     }
 
     @Test
