@@ -19,4 +19,8 @@ public final class FileUtils {
     public static void restore(HeroData heroData) throws IOException {
         Files.copy(heroData.getBackUp(), heroData.getInput(), StandardCopyOption.REPLACE_EXISTING);
     }
+
+    public static void save(HeroData heroData) throws IOException {
+        Files.write(heroData.getInput(), heroData.getDataToSave());
+    }
 }

@@ -12,9 +12,7 @@ import ru.aizen.domain.util.BinHexUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class MainController {
     @FXML private Label checkSumInput;
@@ -80,18 +78,12 @@ public class MainController {
     @FXML
     private void onSaveClick() {
         try {
-            character.getData().setOutputData(BinHexUtils.getDecodeHexString(hexCodeInput.getText()));
-            character.getData().calculateCheckSum();
-            byte[] toSave = character.getData().getDataToSave();
-            saveFile(toSave);
+            byte[] toSave = BinHexUtils.getDecodeHexString(hexCodeInput.getText());
+            character.save(toSave);
+            setOutputData(toSave);
         } catch (IOException | DecoderException e) {
             e.printStackTrace();
         }
-    }
-
-    private void saveFile(byte[] data) throws IOException {
-        Files.write(Paths.get(folder + character.getData().getFileName()), data);
-        setOutputData(data);
     }
 
     private void setOutputData(byte[] output) {

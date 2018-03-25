@@ -21,6 +21,12 @@ public class Character {
         attributes = aReader.unpackAttributes(data.getAttributesBlock());
     }
 
+    public void save(byte[] toSave) throws IOException {
+        data.setOutputData(toSave);
+        data.calculateCheckSum();
+        FileUtils.save(data);
+    }
+
     public void backup() throws IOException {
         FileUtils.backup(data);
     }
@@ -40,6 +46,7 @@ public class Character {
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
+
 
 
 }
