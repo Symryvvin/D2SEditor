@@ -13,13 +13,13 @@ public class SaveFileTest {
 
     @Test
     public void testCalculateFileSize(){
-        Assert.assertArrayEquals(HexBin.decode("C203"), BinHexUtils.calculateFileSize(
+        Assert.assertArrayEquals(HexBin.decode("E603"), BinHexUtils.calculateFileSize(
                 (short)getTestHeroData().getReallyFileSize()));
     }
 
     @Test
     public void  testCheckSum() {
-        Assert.assertEquals(-564645869, BinHexUtils.calculateCheckSum(getTestHeroData()));
+        Assert.assertEquals(-667916153, BinHexUtils.calculateCheckSum(getTestHeroData()));
     }
 
     @Test

@@ -22,7 +22,7 @@ public class HeroDataReaderTest {
 
     @Test
     public void testFindAttributeSection() {
-        String hex = "0014082092800C06FC41E09F02020600E6C20180B98000A0022400A8000A0080C1020060C080D0E0830200E03F";
+        String hex = "001E084081000A066440A0800201060071C001401C8000C0022400B0000A00AAC002802AC040D000430000C0C100008007040000FE03";
         Assert.assertArrayEquals(HexBin.decode(hex), reader.getAttributesBlock());
     }
 
