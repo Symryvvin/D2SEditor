@@ -1,14 +1,13 @@
 package ru.aizen;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.aizen.domain.Attributes;
 import ru.aizen.domain.HeroDataReader;
-import ru.aizen.domain.util.HeroDataExtractorUtils;
+import ru.aizen.domain.util.AttributePacker;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -50,7 +49,8 @@ public class HeroDataReaderTest {
         expected.put(Attributes.EXPERIENCE, 536);
         expected.put(Attributes.GOLD, 3);
         expected.put(Attributes.GOLD_IN_STASH, 4);
-        Attributes attributes = HeroDataExtractorUtils.unpackAttributes(packedAttributes);
+        AttributePacker packer = new AttributePacker();
+        Attributes attributes = packer.unpackAttributes(packedAttributes);
         Assert.assertEquals(expected, attributes);
     }
 

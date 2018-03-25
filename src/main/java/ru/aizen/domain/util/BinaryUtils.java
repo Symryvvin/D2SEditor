@@ -16,8 +16,10 @@ public final class BinaryUtils {
         return b;
     }
 
-    public static String toRevertedBinaryString(byte b) {
+    public static String toBinaryString(byte b, boolean reverted) {
+        if (reverted)
+            b = revertBits(b);
         return String.format("%8s",
-                Integer.toBinaryString(Byte.toUnsignedInt(revertBits(b)))).replace(' ', '0');
+                Integer.toBinaryString(Byte.toUnsignedInt(b))).replace(' ', '0');
     }
 }
