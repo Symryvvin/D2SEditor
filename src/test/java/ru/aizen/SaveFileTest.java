@@ -1,6 +1,7 @@
 package ru.aizen;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.aizen.domain.HeroData;
@@ -12,8 +13,8 @@ import java.nio.file.Paths;
 public class SaveFileTest {
 
     @Test
-    public void testCalculateFileSize(){
-        Assert.assertArrayEquals(HexBin.decode("E603"), BinHexUtils.calculateFileSize(
+    public void testCalculateFileSize() throws DecoderException {
+        Assert.assertArrayEquals(Hex.decodeHex("E603"), BinHexUtils.calculateFileSize(
                 (short)getTestHeroData().getReallyFileSize()));
     }
 

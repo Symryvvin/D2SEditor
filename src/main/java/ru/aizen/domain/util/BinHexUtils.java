@@ -1,6 +1,7 @@
 package ru.aizen.domain.util;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import ru.aizen.domain.HeroData;
 
 import java.io.ByteArrayOutputStream;
@@ -16,7 +17,7 @@ public final class BinHexUtils {
     }
 
     public static String getFormattedHexString(byte[] data) {
-        String hex = HexBin.encode(data);
+        String hex = Hex.encodeHexString(data);
         List<String> hexByte = new ArrayList<>();
         char[] hexChars = hex.toCharArray();
         for (int i = 1; i < hexChars.length; i = i + 2) {
@@ -27,9 +28,9 @@ public final class BinHexUtils {
                         first + second + "\t");
     }
 
-    public static byte[] getDecodeHexString(String hex) {
+    public static byte[] getDecodeHexString(String hex) throws DecoderException {
         hex = hex.replace("\t", "");
-        return HexBin.decode(hex);
+        return Hex.decodeHex(hex);
     }
 
     public static int calculateCheckSum(HeroData heroData) {

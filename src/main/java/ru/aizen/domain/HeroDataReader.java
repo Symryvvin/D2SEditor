@@ -1,6 +1,7 @@
 package ru.aizen.domain;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import ru.aizen.domain.util.BinHexUtils;
 
 import java.util.Arrays;
@@ -26,7 +27,7 @@ public class HeroDataReader {
      * and [69 66] (start of skills block) bytes
      * @return bytes of attributes
      */
-    public byte[] getAttributesBlock() {
+    public byte[] getAttributesBlock() throws DecoderException {
         int start = getPositionInDataByHexCode(attributesSection) + 2;
         int end = getPositionInDataByHexCode(skillsSection);
         return Arrays.copyOfRange(data, start, end);
@@ -37,8 +38,8 @@ public class HeroDataReader {
      * @param hex hex code
      * @return position value
      */
-    private int getPositionInDataByHexCode(String hex) {
-        byte[] subArray = HexBin.decode(hex);
+    private int getPositionInDataByHexCode(String hex) throws DecoderException {
+        byte[] subArray = Hex.decodeHex(hex);
         List<Integer> arrayList = BinHexUtils.getUnsignedByteList(data);
         List<Integer> subArrayList = BinHexUtils.getUnsignedByteList(subArray);
         return Collections.indexOfSubList(arrayList, subArrayList);

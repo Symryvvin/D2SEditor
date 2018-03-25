@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.codec.DecoderException;
 import ru.aizen.domain.HeroData;
 import ru.aizen.domain.util.BinHexUtils;
 import ru.aizen.domain.util.FileUtils;
@@ -73,6 +74,8 @@ public class MainController {
             Files.write(Paths.get(folder + heroData.getFileName()), toSave);
             hexCodeOutput.setText(BinHexUtils.getFormattedHexString(toSave));
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DecoderException e) {
             e.printStackTrace();
         }
     }

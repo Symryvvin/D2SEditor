@@ -1,6 +1,7 @@
 package ru.aizen;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,13 +25,13 @@ public class HeroDataReaderTest {
     }
 
     @Test
-    public void testFindAttributeSection() {
+    public void testFindAttributeSection() throws DecoderException {
         String hex = "001E084081000A066440A0800201060071C001401C8000C0022400B0000A00AAC002802AC040D000430000C0C100008007040000FE03";
-        Assert.assertArrayEquals(HexBin.decode(hex), reader.getAttributesBlock());
+        Assert.assertArrayEquals(Hex.decodeHex(hex), reader.getAttributesBlock());
     }
 
     @Test
-    public void testExtractAttributes() throws IOException, URISyntaxException {
+    public void testExtractAttributes() throws IOException, URISyntaxException, DecoderException {
         byte[] packedAttributes = reader.getAttributesBlock();
         Attributes expected = new Attributes();
         expected.put(Attributes.STRENGTH, 15);
