@@ -1,0 +1,20 @@
+Label{
+    -fx-font-size: 12px;
+    -fx-pref-height: 24px;
+    -fx-font-weight: bold;
+}
+
+TextField{
+    -fx-font-size: 12px;
+    -fx-pref-height: 24px;
+
+}
+
+ComboBox{
+    -fx-font-size: 12px;
+    -fx-pref-height: 24px;
+}
+
+GridPane {
+    -fx-hgap: 5;
+}

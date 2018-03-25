@@ -17,7 +17,7 @@
         <tabs>
             <Tab text="Hero Editor">
                 <AnchorPane>
-
+                    <fx:include source="editor.fxml"/>
                 </AnchorPane>
             </Tab>
             <Tab text="Hex Editor">
