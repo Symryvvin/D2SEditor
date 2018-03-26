@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class Character {
-    private HeroData data;
+    private CharacterData characterData;
     private Attributes attributes;
 
     private AttributePacker aReader;
@@ -18,29 +18,29 @@ public class Character {
         aReader = new AttributePacker();
     }
 
-    public void load(Path path) throws DecoderException {
-        data = new HeroData(path);
-        data.calculateCheckSum();
+    public void load(Path path) throws DecoderException, IOException {
+        characterData = new CharacterData(path);
+        characterData.read();
         aReader = new AttributePacker();
-        attributes = aReader.unpackAttributes(data.getAttributesBlock());
+        attributes = aReader.unpackAttributes(characterData.getAttributesBlock());
     }
 
     public void save(byte[] toSave) throws IOException {
-        data.setOutputData(toSave);
-        data.calculateCheckSum();
-        FileUtils.save(data);
+        characterData.setOutputData(toSave);
+        characterData.calculateCheckSum();
+        FileUtils.save(characterData);
     }
 
     public void backup() throws IOException {
-        FileUtils.backup(data);
+        FileUtils.backup(characterData);
     }
 
     public void restore() throws IOException {
-        FileUtils.restore(data);
+        FileUtils.restore(characterData);
     }
 
-    public HeroData getData() {
-        return data;
+    public CharacterData getCharacterData() {
+        return characterData;
     }
 
     public Attributes getAttributes() {

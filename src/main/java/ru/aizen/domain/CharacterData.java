@@ -13,31 +13,30 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class HeroData {
+public class CharacterData {
     private Path input;
     private Path backUp;
-    private String fileName;
-    private short sizeInBytes;
 
-    private byte[] data;
+    private byte[] bytes;
     private byte[] preData;
     private byte[] postData;
 
     private int checkSum;
+    private short sizeInBytes;
 
     private HeroDataReader reader;
 
-    public HeroData(Path filePath) {
-        try {
-            this.input = filePath;
-            this.backUp = Paths.get(filePath.toString() + ".bak");
-            this.data = Files.readAllBytes(filePath);
-            this.fileName = filePath.getFileName().toString();
-            this.reader = new HeroDataReader(data);
-            splitData(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public CharacterData(Path filePath) {
+        this.input = filePath;
+        this.backUp = Paths.get(filePath.toString() + ".bak");
+    }
+
+    public void read() throws IOException {
+        System.out.println(input);
+        this.bytes = Files.readAllBytes(input);
+        this.reader = new HeroDataReader(bytes);
+        splitData(bytes);
+        calculateCheckSum();
     }
 
     public void setOutputData(byte[] data) {
@@ -47,28 +46,25 @@ public class HeroData {
     private void splitData(byte[] data) {
         this.preData = Arrays.copyOfRange(data, 0, 12);
         this.postData = Arrays.copyOfRange(data, 16, data.length);
-        this.sizeInBytes = (short)(preData.length + postData.length + 4);
+        this.sizeInBytes = (short) (preData.length + postData.length + 4);
     }
 
     public byte[] getAttributesBlock() throws DecoderException {
         return reader.getAttributesBlock();
     }
 
-    public void calculateCheckSum() {
-        try {
-            byte[] zero = new byte[4];
-            Arrays.fill(zero, NumberUtils.BYTE_ZERO);
-            replaceFileSize();
-            checkSum = checksum(BinHexUtils.getUnsignedByteList(concatAllBytes(zero)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void calculateCheckSum() throws IOException {
+        byte[] zero = new byte[4];
+        Arrays.fill(zero, NumberUtils.BYTE_ZERO);
+        replaceFileSize();
+        checkSum = checksum(BinHexUtils.getUnsignedByteList(concatAllBytes(zero)));
     }
 
     public byte[] getDataToSave() throws IOException {
         Integer reversed = Integer.reverseBytes(checkSum);
         return concatAllBytes(ByteBuffer.allocate(4).putInt(reversed).array());
     }
+
     private byte[] concatAllBytes(byte[] checksum) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         outputStream.write(preData);
@@ -77,13 +73,13 @@ public class HeroData {
         return outputStream.toByteArray();
     }
 
-    public byte[] calculateFileSize(){
+    public byte[] calculateFileSize() {
         return ByteBuffer.allocate(2)
                 .putShort(Short.reverseBytes(sizeInBytes))
                 .array();
     }
 
-    private void replaceFileSize(){
+    private void replaceFileSize() {
         byte[] size = ByteBuffer.allocate(2).putShort(Short.reverseBytes(sizeInBytes)).array();
         preData[8] = size[0];
         preData[9] = size[1];
@@ -102,15 +98,11 @@ public class HeroData {
         return backUp;
     }
 
-    public byte[] getData() {
-        return data;
+    public byte[] getBytes() {
+        return bytes;
     }
 
     public int getCheckSum() {
         return checkSum;
-    }
-
-    public String getFileName() {
-        return fileName;
     }
 }

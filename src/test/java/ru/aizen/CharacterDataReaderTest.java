@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class HeroDataReaderTest {
+public class CharacterDataReaderTest {
     private HeroDataReader reader;
 
     @Before

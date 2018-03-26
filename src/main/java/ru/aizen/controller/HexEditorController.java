@@ -12,12 +12,12 @@ public class HexEditorController extends AbstractController{
     @FXML private TextArea hexCodeOutput;
     
     private void loadHexData(){
-        checkSumInput.setText("Checksum: " + character.getData().getCheckSum());
-        hexCodeInput.setText(BinHexUtils.getFormattedHexString(character.getData().getData()));
+        checkSumInput.setText("Checksum: " + character.getCharacterData().getCheckSum());
+        hexCodeInput.setText(BinHexUtils.getFormattedHexString(character.getCharacterData().getBytes()));
     }
 
     public void setOutputData(byte[] output) {
-        checkSumOutput.setText("Checksum: " + character.getData().getCheckSum());
+        checkSumOutput.setText("Checksum: " + character.getCharacterData().getCheckSum());
         hexCodeOutput.setText(BinHexUtils.getFormattedHexString(output));
     }
 

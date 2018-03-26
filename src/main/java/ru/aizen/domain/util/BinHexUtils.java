@@ -2,14 +2,8 @@ package ru.aizen.domain.util;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.lang3.math.NumberUtils;
-import ru.aizen.domain.HeroData;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class BinHexUtils {
