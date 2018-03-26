@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MainController">
     <MenuBar AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" prefHeight="25" stylesheets="@/css/menuBar.css">
@@ -62,39 +48,13 @@
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
         <Tab text="Hero Editor">
             <AnchorPane>
-                <fx:include fx:id="editor" source="editor.fxml"/>
+                <fx:include source="editor.fxml" fx:id="editor" >
+                </fx:include>
             </AnchorPane>
         </Tab>
         <Tab text="Hex Editor">
             <AnchorPane>
-                <HBox AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"
-                      AnchorPane.topAnchor="10">
-                    <VBox minWidth="460">
-                        <HBox>
-                            <Button onMouseClicked="#onOpenClick" prefHeight="30" text="Load"/>
-                            <Region prefWidth="10.0"/>
-                            <Label fx:id="fileName" prefHeight="30" text="File name: "/>
-                            <Region prefWidth="10.0"/>
-                            <Label fx:id="checkSumInput" prefHeight="30" text="Checksum:"/>
-                        </HBox>
-                        <Region prefHeight="10.0"/>
-                        <Label text="Input HEX"/>
-                        <TextArea fx:id="hexCodeInput" prefHeight="800.0" wrapText="true"/>
-                    </VBox>
-                    <Region prefWidth="10.0"/>
-                    <VBox minWidth="460">
-                        <HBox>
-                            <Button onMouseClicked="#onSaveClick" prefHeight="30" text="Save"/>
-                            <Region prefWidth="10.0"/>
-                            <Label fx:id="checkSumOutput" prefHeight="30" text="Checksum:"/>
-                            <Region prefWidth="10.0"/>
-                            <Button onMouseClicked="#onRestoreClick" prefHeight="30" text="Restore"/>
-                        </HBox>
-                        <Region prefHeight="10.0"/>
-                        <Label text="Output HEX"/>
-                        <TextArea fx:id="hexCodeOutput" prefHeight="800.0" wrapText="true"/>
-                    </VBox>
-                </HBox>
+              <fx:include source="hex.fxml" fx:id="hexEditor"/>
             </AnchorPane>
         </Tab>
     </TabPane>

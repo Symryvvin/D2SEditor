@@ -6,18 +6,22 @@ import ru.aizen.domain.attribute.Attributes;
 import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class Character {
     private HeroData data;
     private Attributes attributes;
 
-    public Character(HeroData data) {
-        this.data = data;
+    private AttributePacker aReader;
+
+    public Character() {
+        aReader = new AttributePacker();
     }
 
-    public void load() throws DecoderException {
+    public void load(Path path) throws DecoderException {
+        data = new HeroData(path);
         data.calculateCheckSum();
-        AttributePacker aReader = new AttributePacker();
+        aReader = new AttributePacker();
         attributes = aReader.unpackAttributes(data.getAttributesBlock());
     }
 
