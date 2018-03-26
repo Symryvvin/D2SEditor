@@ -46,7 +46,7 @@ public class MainController {
     private void openFile() throws DecoderException, IOException {
         hexEditorController.clearAll();
         loadCharacter();
-        hexEditorController.loadHexData();
+        hexEditorController.loadCharacter();
         editorController.loadCharacter();
     }
 

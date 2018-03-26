@@ -3,17 +3,15 @@ package ru.aizen.controller;
 import javafx.fxml.FXML;
 import ru.aizen.domain.Character;
 
-public class EditorController {
+public class EditorController extends AbstractController{
     @FXML private StatsController statsController;
 
-    private Character character;
-
     public void setCharacter(Character character) {
-        this.character = character;
+        super.setCharacter(character);
         statsController.setCharacter(character);
     }
 
     public void loadCharacter() {
-        statsController.loadCharacterStats();
+        statsController.loadCharacter();
     }
 }
