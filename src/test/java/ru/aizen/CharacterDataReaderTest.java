@@ -5,13 +5,17 @@ import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.aizen.domain.attribute.Attributes;
+import ru.aizen.domain.Character;
+import ru.aizen.domain.DataHeader;
+import ru.aizen.domain.GameVersion;
 import ru.aizen.domain.HeroDataReader;
 import ru.aizen.domain.attribute.AttributePacker;
+import ru.aizen.domain.attribute.Attributes;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class CharacterDataReaderTest {
@@ -52,6 +56,18 @@ public class CharacterDataReaderTest {
         AttributePacker packer = new AttributePacker();
         Attributes attributes = packer.unpackAttributes(packedAttributes);
         Assert.assertEquals(expected, attributes);
+    }
+
+    @Test
+    public void testDataHeader() throws URISyntaxException, DecoderException, IOException {
+        Character character = new Character();
+        Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
+        character.load(path);
+        DataHeader dataHeader = character.getCharacterData().getReader().readHeader();
+        Assert.assertEquals("55aa55aa", dataHeader.getSignature());
+        Assert.assertEquals(GameVersion.VERSION_1_10, dataHeader.getVersion());
+        Assert.assertEquals(998, dataHeader.getFileSize());
+        Assert.assertEquals(-667916153, dataHeader.getChecksum());
     }
 
 }

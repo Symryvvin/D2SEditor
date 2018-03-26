@@ -105,4 +105,8 @@ public class CharacterData {
     public int getCheckSum() {
         return checkSum;
     }
+
+    public HeroDataReader getReader() {
+        return reader;
+    }
 }
