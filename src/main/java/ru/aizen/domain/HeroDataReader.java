@@ -10,9 +10,10 @@ import java.util.List;
 
 /**
  * This class keep save file data and can give byte block of different parts saved hero data
- *
  */
 public class HeroDataReader {
+    private static final int HEADER_BLOCK_START = 0;
+    private static final int HEADER_BLOCK_SIZE = 16;
     private static final String ATTRIBUTES_BLOCK_START = "6766";
     private static final String SKILLS_BLOCK_START = "6966";
 
@@ -20,6 +21,14 @@ public class HeroDataReader {
 
     public HeroDataReader(byte[] data) {
         this.data = data;
+    }
+
+    /**
+     * Read header of file from 0 to 12 bytes
+     * @return bytes of header block
+     */
+    public DataHeader readHeader() {
+        return new DataHeader(Arrays.copyOfRange(data, HEADER_BLOCK_START, HEADER_BLOCK_SIZE));
     }
 
     /**
