@@ -1,6 +1,9 @@
 package ru.aizen.domain.character;
 
+import java.util.Arrays;
+
 public enum CharacterClass {
+    UNDEFINED("Undefined", -1),
     AMAZON(" Amazon", 0),
     SORCERESS("Sorceress", 1),
     NECROMANCER("Necromancer", 2),
@@ -17,21 +20,18 @@ public enum CharacterClass {
         this.value = value;
     }
 
-    public CharacterClass parse(byte value) {
-        for (CharacterClass characterClass : CharacterClass.values()) {
-            if (characterClass.value == value)
-                return characterClass;
-        }
-        return null;
+    public static CharacterClass parse(byte value) throws Exception {
+        if (Arrays.stream(CharacterClass.values()).anyMatch(item -> item.value == value)) {
+            for (CharacterClass characterClass : CharacterClass.values()) {
+                if (characterClass.value == value)
+                    return characterClass;
+            }
+        } else
+            throw new Exception(String.format("Unsupported byte value [%s] for character class.", value));
+        return UNDEFINED;
     }
 
     public String getName() {
         return name;
     }
-
-    public int getValue() {
-        return value;
-    }
-
-
 }
