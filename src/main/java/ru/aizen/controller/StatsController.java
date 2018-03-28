@@ -1,12 +1,15 @@
 package ru.aizen.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import ru.aizen.domain.Character;
+import javafx.util.StringConverter;
 import ru.aizen.domain.attribute.Attributes;
+import ru.aizen.domain.character.CharacterClass;
 
 public class StatsController extends AbstractController{
+    @FXML private ComboBox<CharacterClass> characterClass;
     @FXML private Label strLabel;
     @FXML private Label dexLabel;
     @FXML private Label vitLabel;
@@ -26,6 +29,18 @@ public class StatsController extends AbstractController{
         dexLabel.setText(Attributes.DEXTERITY);
         vitLabel.setText(Attributes.VITALITY);
         intLabel.setText(Attributes.ENERGY);
+        characterClass.getItems().addAll(CharacterClass.values());
+        characterClass.setConverter(new StringConverter<CharacterClass>() {
+            @Override
+            public String toString(CharacterClass object) {
+                return object.getName();
+            }
+
+            @Override
+            public CharacterClass fromString(String string) {
+                return null;
+            }
+        });
     }
 
     @Override

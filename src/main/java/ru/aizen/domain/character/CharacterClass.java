@@ -4,13 +4,13 @@ import java.util.Arrays;
 
 public enum CharacterClass {
     UNDEFINED("Undefined", -1),
-    AMAZON(" Amazon", 0),
+    AMAZON("Amazon", 0),
     SORCERESS("Sorceress", 1),
     NECROMANCER("Necromancer", 2),
     PALADIN("Paladin", 3),
     BARBARIAN("Barbarian", 4),
     DRUID("Druid", 5),
-    ASSASSIN(" Assassin", 6);
+    ASSASSIN("Assassin", 6);
 
     private final String name;
     private int value;
