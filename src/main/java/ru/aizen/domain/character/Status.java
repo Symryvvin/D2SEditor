@@ -20,10 +20,9 @@ public class Status {
 
     private void readStatus(byte b){
         String bin = BinaryUtils.toBinaryString(b, true);
-        System.out.println(bin);
         this.isExpansion = parseChar(bin.charAt(5));
-        this.isHardcode = parseChar(bin.charAt(3));
-        this.isDead = parseChar(bin.charAt(2));
+        this.isHardcode = parseChar(bin.charAt(2));
+        this.isDead = parseChar(bin.charAt(3));
     }
 
     private boolean parseChar(char ch){
