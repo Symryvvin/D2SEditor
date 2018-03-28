@@ -7,8 +7,10 @@ import ru.aizen.domain.util.BinaryUtils;
  */
 public class Status {
     private boolean isExpansion;
-    private boolean isHardcode;
+    private boolean isHardcore;
     private boolean isDead;
+
+    public Status(){}
 
     public Status(byte b) {
         readStatus(b);
@@ -21,7 +23,7 @@ public class Status {
     private void readStatus(byte b){
         String bin = BinaryUtils.toBinaryString(b, true);
         this.isExpansion = parseChar(bin.charAt(5));
-        this.isHardcode = parseChar(bin.charAt(2));
+        this.isHardcore = parseChar(bin.charAt(2));
         this.isDead = parseChar(bin.charAt(3));
     }
 
@@ -41,12 +43,12 @@ public class Status {
         isExpansion = expansion;
     }
 
-    public boolean isHardcode() {
-        return isHardcode;
+    public boolean isHardcore() {
+        return isHardcore;
     }
 
-    public void setHardcode(boolean hardcode) {
-        isHardcode = hardcode;
+    public void setHardcore(boolean hardcore) {
+        isHardcore = hardcore;
     }
 
     public boolean isDead() {
@@ -61,7 +63,7 @@ public class Status {
     public String toString() {
         return "Status{" +
                 "isExpansion=" + isExpansion +
-                ", isHardcode=" + isHardcode +
+                ", isHardcore=" + isHardcore +
                 ", isDead=" + isDead +
                 '}';
     }
