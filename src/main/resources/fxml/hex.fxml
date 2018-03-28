@@ -7,18 +7,16 @@
             fx:controller="ru.aizen.controller.HexEditorController">
     <HBox AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"
           AnchorPane.topAnchor="10">
-        <VBox minWidth="460">
-            <Label fx:id="checkSumInput" prefHeight="30" text="Checksum:"/>
+        <VBox minWidth="450">
             <Region prefHeight="10.0"/>
             <Label text="Input HEX"/>
-            <TextArea fx:id="hexCodeInput" prefHeight="800.0" wrapText="true"/>
+            <TextArea fx:id="hexCodeInput" wrapText="true" VBox.vgrow="ALWAYS"/>
         </VBox>
         <Region prefWidth="10.0"/>
-        <VBox minWidth="460">
-            <Label fx:id="checkSumOutput" prefHeight="30" text="Checksum:"/>
+        <VBox minWidth="450">
             <Region prefHeight="10.0"/>
             <Label text="Output HEX"/>
-            <TextArea fx:id="hexCodeOutput" prefHeight="800.0" wrapText="true"/>
+            <TextArea fx:id="hexCodeOutput" wrapText="true" VBox.vgrow="ALWAYS"/>
         </VBox>
     </HBox>
 </AnchorPane>

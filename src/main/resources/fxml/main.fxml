@@ -6,34 +6,39 @@
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MainController">
-    <MenuBar AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" prefHeight="25" stylesheets="@/css/menuBar.css">
+    <MenuBar AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" prefHeight="25"
+             stylesheets="@/css/menuBar.css">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" text="Open" onAction="#onOpenClick">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                    <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                 </accelerator>
             </MenuItem>
             <MenuItem mnemonicParsing="false" text="Save" onAction="#onSaveClick"/>
             <MenuItem mnemonicParsing="false" text="Exit"/>
         </Menu>
     </MenuBar>
-    <ButtonBar AnchorPane.rightAnchor="0" AnchorPane.topAnchor="25" AnchorPane.leftAnchor="10" prefHeight="55" buttonMinWidth="40">
+    <ButtonBar AnchorPane.rightAnchor="0" AnchorPane.topAnchor="25" AnchorPane.leftAnchor="10" prefHeight="55"
+               buttonMinWidth="40">
         <buttons>
-            <Button onMouseClicked="#onOpenClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT" focusTraversable="false">
+            <Button onMouseClicked="#onOpenClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT"
+                    focusTraversable="false">
                 <graphic>
                     <ImageView>
                         <Image url="@/icons/open.png"/>
                     </ImageView>
                 </graphic>
             </Button>
-            <Button onMouseClicked="#onSaveClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT" focusTraversable="false">
+            <Button onMouseClicked="#onSaveClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT"
+                    focusTraversable="false">
                 <graphic>
                     <ImageView>
                         <Image url="@/icons/save.png"/>
                     </ImageView>
                 </graphic>
             </Button>
-            <Button onMouseClicked="#onRestoreClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT" focusTraversable="false">
+            <Button onMouseClicked="#onRestoreClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT"
+                    focusTraversable="false">
                 <graphic>
                     <ImageView>
                         <Image url="@/icons/undo.png"/>
@@ -41,21 +46,16 @@
                 </graphic>
             </Button>
             <CheckBox mnemonicParsing="false" text="Lock" selected="true" ButtonBar.buttonData="LEFT"/>
-            <Region HBox.hgrow="ALWAYS" />
+            <Region HBox.hgrow="ALWAYS"/>
         </buttons>
     </ButtonBar>
     <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
         <Tab text="Hero Editor">
-            <AnchorPane>
-                <fx:include source="editor.fxml" fx:id="editor" >
-                </fx:include>
-            </AnchorPane>
+            <fx:include source="editor.fxml" fx:id="editor"/>
         </Tab>
         <Tab text="Hex Editor">
-            <AnchorPane>
-              <fx:include source="hex.fxml" fx:id="hexEditor"/>
-            </AnchorPane>
+            <fx:include source="hex.fxml" fx:id="hexEditor"/>
         </Tab>
     </TabPane>
 </AnchorPane>
