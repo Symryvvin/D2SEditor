@@ -38,7 +38,6 @@ public class Character {
 
     public void save(byte[] toSave) throws IOException {
         characterData.setOutputData(toSave);
-        characterData.calculateCheckSum();
         FileUtils.save(characterData);
     }
 

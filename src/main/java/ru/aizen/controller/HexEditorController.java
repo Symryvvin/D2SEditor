@@ -6,26 +6,20 @@ import javafx.scene.control.TextArea;
 import ru.aizen.domain.util.BinHexUtils;
 
 public class HexEditorController extends AbstractController{
-    @FXML private Label checkSumInput;
     @FXML private TextArea hexCodeInput;
-    @FXML private Label checkSumOutput;
     @FXML private TextArea hexCodeOutput;
     
     private void loadHexData(){
-        checkSumInput.setText("Checksum: " + character.getCharacterData().getCheckSum());
         hexCodeInput.setText(BinHexUtils.getFormattedHexString(character.getCharacterData().getBytes()));
     }
 
     public void setOutputData(byte[] output) {
-        checkSumOutput.setText("Checksum: " + character.getCharacterData().getCheckSum());
         hexCodeOutput.setText(BinHexUtils.getFormattedHexString(output));
     }
 
     public void clearAll() {
         hexCodeInput.clear();
         hexCodeOutput.clear();
-        checkSumInput.setText("");
-        checkSumOutput.setText("");
     }
 
     public TextArea getHexCodeInput() {

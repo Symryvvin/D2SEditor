@@ -21,7 +21,6 @@ public class CharacterData {
     private byte[] preData;
     private byte[] postData;
 
-    private int checkSum;
     private short sizeInBytes;
 
     private DataReader reader;
@@ -35,7 +34,6 @@ public class CharacterData {
         this.bytes = Files.readAllBytes(input);
         this.reader = new DataReader(bytes);
         splitData(bytes);
-        calculateCheckSum();
     }
 
     public void setOutputData(byte[] data) {
@@ -52,15 +50,12 @@ public class CharacterData {
         return reader.getAttributesBlock();
     }
 
-    public void calculateCheckSum() throws IOException {
+    public byte[] getDataToSave() throws IOException {
         byte[] zero = new byte[4];
         Arrays.fill(zero, NumberUtils.BYTE_ZERO);
         replaceFileSize();
-        checkSum = checksum(BinHexUtils.getUnsignedByteList(concatAllBytes(zero)));
-    }
-
-    public byte[] getDataToSave() throws IOException {
-        Integer reversed = Integer.reverseBytes(checkSum);
+        int checksum =  checksum(BinHexUtils.getUnsignedByteList(concatAllBytes(zero)));
+        Integer reversed = Integer.reverseBytes(checksum);
         return concatAllBytes(ByteBuffer.allocate(4).putInt(reversed).array());
     }
 
@@ -70,12 +65,6 @@ public class CharacterData {
         outputStream.write(checksum);
         outputStream.write(postData);
         return outputStream.toByteArray();
-    }
-
-    public byte[] calculateFileSize() {
-        return ByteBuffer.allocate(2)
-                .putShort(Short.reverseBytes(sizeInBytes))
-                .array();
     }
 
     private void replaceFileSize() {
@@ -99,10 +88,6 @@ public class CharacterData {
 
     public byte[] getBytes() {
         return bytes;
-    }
-
-    public int getCheckSum() {
-        return checkSum;
     }
 
     public DataReader getReader() {

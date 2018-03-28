@@ -60,7 +60,7 @@ public class MainController {
         try {
             byte[] toSave = BinHexUtils.getDecodeHexString(hexEditorController.getHexCodeInput().getText());
             character.save(toSave);
-            hexEditorController.setOutputData(toSave);
+            hexEditorController.setOutputData(character.getCharacterData().getDataToSave());
         } catch (IOException | DecoderException e) {
             e.printStackTrace();
         }
