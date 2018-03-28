@@ -24,7 +24,7 @@ public class CharacterData {
     private int checkSum;
     private short sizeInBytes;
 
-    private HeroDataReader reader;
+    private DataReader reader;
 
     public CharacterData(Path filePath) {
         this.input = filePath;
@@ -32,9 +32,8 @@ public class CharacterData {
     }
 
     public void read() throws IOException {
-        System.out.println(input);
         this.bytes = Files.readAllBytes(input);
-        this.reader = new HeroDataReader(bytes);
+        this.reader = new DataReader(bytes);
         splitData(bytes);
         calculateCheckSum();
     }
@@ -106,7 +105,7 @@ public class CharacterData {
         return checkSum;
     }
 
-    public HeroDataReader getReader() {
+    public DataReader getReader() {
         return reader;
     }
 }

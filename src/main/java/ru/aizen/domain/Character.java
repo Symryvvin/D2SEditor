@@ -1,15 +1,26 @@
 package ru.aizen.domain;
 
 import org.apache.commons.codec.DecoderException;
+import ru.aizen.domain.CharacterData;
 import ru.aizen.domain.attribute.AttributePacker;
 import ru.aizen.domain.attribute.Attributes;
+import ru.aizen.domain.character.CharacterClass;
+import ru.aizen.domain.character.Status;
+import ru.aizen.domain.character.Title;
 import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * Class keep all data of character witch can be present on application forms
+ */
 public class Character {
     private CharacterData characterData;
+    private String name;
+    private Status status;
+    private Title title;
+    private CharacterClass characterClass;
     private Attributes attributes;
 
     private AttributePacker aReader;
@@ -18,7 +29,7 @@ public class Character {
         aReader = new AttributePacker();
     }
 
-    public void load(Path path) throws DecoderException, IOException {
+    public void load(Path path) throws IOException, DecoderException {
         characterData = new CharacterData(path);
         characterData.read();
         aReader = new AttributePacker();
@@ -50,7 +61,6 @@ public class Character {
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
-
 
 
 }

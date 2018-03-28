@@ -10,9 +10,9 @@ public enum GameVersion {
         this.value = value;
     }
 
-    public static GameVersion parse(String hex) {
-        switch (hex) {
-            case "60":
+    public static GameVersion parse(int value) {
+        switch (value) {
+            case 96:
                 return VERSION_1_10;
             default:
                 return UNDEFINED;

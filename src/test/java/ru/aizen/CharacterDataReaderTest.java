@@ -6,9 +6,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.aizen.domain.Character;
-import ru.aizen.domain.DataHeader;
+import ru.aizen.domain.character.Header;
 import ru.aizen.domain.GameVersion;
-import ru.aizen.domain.HeroDataReader;
+import ru.aizen.domain.DataReader;
 import ru.aizen.domain.attribute.AttributePacker;
 import ru.aizen.domain.attribute.Attributes;
 
@@ -19,17 +19,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class CharacterDataReaderTest {
-    private HeroDataReader reader;
+    private DataReader reader;
 
     @Before
     public void getTestData() throws IOException, URISyntaxException {
         String fileName = "/test.d2s";
-        reader = new HeroDataReader(Files.readAllBytes(Paths.get(getClass().getResource(fileName).toURI())));
+        reader = new DataReader(Files.readAllBytes(Paths.get(getClass().getResource(fileName).toURI())));
     }
 
     @Test
     public void testFindAttributeSection() throws DecoderException {
         String hex = "001E084081000A066440A0800201060071C001401C8000C0022400B0000A00AAC002802AC040D000430000C0C100008007040000FE03";
+        System.out.println(Hex.decodeHex(hex).length);
         Assert.assertArrayEquals(Hex.decodeHex(hex), reader.getAttributesBlock());
     }
 
@@ -63,11 +64,11 @@ public class CharacterDataReaderTest {
         Character character = new Character();
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
-        DataHeader dataHeader = character.getCharacterData().getReader().readHeader();
-        Assert.assertEquals("55aa55aa", dataHeader.getSignature());
-        Assert.assertEquals(GameVersion.VERSION_1_10, dataHeader.getVersion());
-        Assert.assertEquals(998, dataHeader.getFileSize());
-        Assert.assertEquals(-667916153, dataHeader.getChecksum());
+        Header header = character.getCharacterData().getReader().readHeader();
+        Assert.assertEquals(-1437226411, header.getSignature());
+        Assert.assertEquals(GameVersion.VERSION_1_10, header.getVersion());
+        Assert.assertEquals(998, header.getFileSize());
+        Assert.assertEquals(-667916153, header.getChecksum());
     }
 
 }
