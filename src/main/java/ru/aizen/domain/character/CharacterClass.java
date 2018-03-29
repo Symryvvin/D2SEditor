@@ -1,9 +1,11 @@
 package ru.aizen.domain.character;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum CharacterClass {
-    UNDEFINED("Undefined", -1),
     AMAZON("Amazon", 0),
     SORCERESS("Sorceress", 1),
     NECROMANCER("Necromancer", 2),
@@ -12,7 +14,7 @@ public enum CharacterClass {
     DRUID("Druid", 5),
     ASSASSIN("Assassin", 6);
 
-    private final String name;
+    private String name;
     private int value;
 
     CharacterClass(String name, int value) {
@@ -20,18 +22,17 @@ public enum CharacterClass {
         this.value = value;
     }
 
-    public static CharacterClass parse(byte value) throws Exception {
-        if (Arrays.stream(CharacterClass.values()).anyMatch(item -> item.value == value)) {
-            for (CharacterClass characterClass : CharacterClass.values()) {
-                if (characterClass.value == value)
-                    return characterClass;
-            }
-        } else
-            throw new Exception(String.format("Unsupported byte value [%s] for character class.", value));
-        return UNDEFINED;
+    public static CharacterClass parse(byte value) {
+        Map<Integer, CharacterClass> classes = Arrays.stream(CharacterClass.values())
+                .collect(Collectors.toMap(CharacterClass::getValue, Function.identity()));
+        return classes.get((int)value);
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
