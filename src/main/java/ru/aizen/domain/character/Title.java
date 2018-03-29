@@ -1,5 +1,7 @@
 package ru.aizen.domain.character;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum Title {
@@ -66,6 +68,19 @@ public enum Title {
             return find(vanillaHardcoreSet(), value);
         }
         return UNKNOWN;
+    }
+
+    public static List<Title> getTitleListFromStatus(Status status) {
+        if (status.isExpansion()) {
+            if (status.isHardcore())
+                return expansionHardCoreSet().collect(Collectors.toList());
+            return expansionSet().collect(Collectors.toList());
+        } else {
+            if (status.isHardcore()) {
+                return vanillaHardcoreSet().collect(Collectors.toList());
+            }
+            return vanillaSet().collect(Collectors.toList());
+        }
     }
 
     private static Title find(Stream<Title> stream, byte value) {

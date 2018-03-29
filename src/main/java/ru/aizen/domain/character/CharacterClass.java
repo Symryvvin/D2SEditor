@@ -1,6 +1,7 @@
 package ru.aizen.domain.character;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -26,6 +27,10 @@ public enum CharacterClass {
         Map<Integer, CharacterClass> classes = Arrays.stream(CharacterClass.values())
                 .collect(Collectors.toMap(CharacterClass::getValue, Function.identity()));
         return classes.get((int)value);
+    }
+
+    public static List<CharacterClass> getCharacterClassList(){
+        return Arrays.asList(CharacterClass.values());
     }
 
     public String getName() {
