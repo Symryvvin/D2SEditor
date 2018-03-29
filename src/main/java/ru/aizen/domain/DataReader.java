@@ -3,6 +3,7 @@ package ru.aizen.domain;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import ru.aizen.domain.character.Header;
+import ru.aizen.domain.character.Meta;
 import ru.aizen.domain.util.BinHexUtils;
 
 import java.nio.ByteBuffer;
@@ -15,6 +16,8 @@ import java.util.List;
 public class DataReader {
     private static final int HEADER_BLOCK_START = 0;
     private static final int HEADER_BLOCK_SIZE = 16;
+    private static final int META_BLOCK_START = HEADER_BLOCK_SIZE;
+    private static final int META_BLOCK_SIZE = 40;
     private static final String ATTRIBUTES_BLOCK_START = "6766";
     private static final String SKILLS_BLOCK_START = "6966";
 
@@ -26,7 +29,7 @@ public class DataReader {
     }
 
     /**
-     * Read header of file from 0 to 12 bytes
+     * Read header of file from 0 to 16 bytes
      * @return bytes of header block
      */
     public Header readHeader() {
@@ -34,6 +37,17 @@ public class DataReader {
         data.position(HEADER_BLOCK_START);
         data.get(header, 0, header.length);
         return new Header(header);
+    }
+
+    /**
+     * Read meta block from 12 to 56 bytes
+     * @return bytes of header block
+     */
+    public Meta readMeta() {
+        byte[] meta = new byte[META_BLOCK_SIZE];
+        data.position(META_BLOCK_START);
+        data.get(meta, 0, meta.length);
+        return new Meta(meta);
     }
 
     /**
