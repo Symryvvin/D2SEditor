@@ -1,9 +1,19 @@
 package ru.aizen;
 
+import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
+import ru.aizen.domain.Character;
+import ru.aizen.domain.character.CharacterClass;
+import ru.aizen.domain.character.Meta;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 public class CharacterTest {
 
@@ -54,4 +64,21 @@ public class CharacterTest {
         Title title = Title.parse(hex, status);
         Assert.assertEquals(Title.CONQUEROR, title);
     }
+
+    @Test
+    public void testCharacterMeta() throws URISyntaxException, IOException, DecoderException {
+        Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
+        Character character = new Character();
+        character.load(path);
+        Meta meta = character.getCharacterData().getReader().readMeta();
+        Assert.assertEquals("Test", meta.getName());
+        Assert.assertEquals(true, meta.getStatus().isExpansion());
+        Assert.assertEquals(false, meta.getStatus().isHardcore());
+        Assert.assertEquals(false, meta.getStatus().isDead());
+        Assert.assertEquals(Title.NO_TITLE, meta.getTitle());
+        Assert.assertEquals(CharacterClass.DRUID, meta.getCharacterClass());
+        Assert.assertEquals(LocalDateTime.parse("2018-03-25T09:17:11"), meta.getTime());
+    }
+
+
 }
