@@ -11,8 +11,7 @@ public class Header {
     private int fileSize;
     private int checksum;
 
-    public Header(byte[] header) {
-        ByteBuffer buffer = ByteBuffer.wrap(header);
+    public Header(ByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.signature = buffer.getInt();
         this.version = GameVersion.parse(buffer.getInt());

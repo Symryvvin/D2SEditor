@@ -16,8 +16,7 @@ public class Meta {
     private int activeHand;
     private LocalDateTime time;
 
-    public Meta(byte[] meta) {
-        ByteBuffer buffer = ByteBuffer.wrap(meta);
+    public Meta(ByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.activeHand = buffer.getInt();
         byte[] name = new byte[NAME_LENGTH];
