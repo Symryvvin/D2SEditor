@@ -1,4 +1,4 @@
-package ru.aizen.domain.character;
+package ru.aizen.domain.character.block;
 
 import java.nio.ByteBuffer;
 

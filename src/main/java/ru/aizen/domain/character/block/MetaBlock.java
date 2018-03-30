@@ -1,4 +1,9 @@
-package ru.aizen.domain.character;
+package ru.aizen.domain.character.block;
+
+import ru.aizen.domain.character.CharacterClass;
+import ru.aizen.domain.character.Status;
+import ru.aizen.domain.character.Title;
+import ru.aizen.domain.data.BlockSize;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -6,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 public class MetaBlock implements DataBlock {
-    private static final int SIZE = 40;
     private static final int NAME_LENGTH = 16;
 
     private String name;
@@ -40,7 +44,7 @@ public class MetaBlock implements DataBlock {
 
     @Override
     public ByteBuffer collect() {
-        ByteBuffer buffer = ByteBuffer.allocate(SIZE)
+        ByteBuffer buffer = ByteBuffer.allocate(BlockSize.META_BLOCK_SIZE)
                 .putInt(activeHand)
                 .put(name.getBytes())
                 .put(status.toByte())
@@ -109,7 +113,7 @@ public class MetaBlock implements DataBlock {
     }
 
     public void setTime(LocalDateTime timestamp) {
-        this.time = time;
+        this.time = timestamp;
     }
 
     @Override

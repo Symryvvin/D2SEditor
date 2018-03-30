@@ -1,12 +1,12 @@
-package ru.aizen.domain.character;
+package ru.aizen.domain.character.block;
 
+import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.GameVersion;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class HeaderBlock implements DataBlock {
-    private static final int SIZE = 16;
 
     private int signature;
     private GameVersion version;
@@ -28,7 +28,7 @@ public class HeaderBlock implements DataBlock {
 
     @Override
     public ByteBuffer collect() {
-        ByteBuffer buffer = ByteBuffer.allocate(SIZE)
+        ByteBuffer buffer = ByteBuffer.allocate(BlockSize.HEADER_BLOCK_SIZE)
                 .putInt(signature)
                 .putInt(96) //hardcoded 1.10+ version
                 .putInt(fileSize)

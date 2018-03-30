@@ -1,8 +1,10 @@
 package ru.aizen.domain.character;
 
 import org.apache.commons.codec.DecoderException;
+import ru.aizen.domain.character.block.HeaderBlock;
+import ru.aizen.domain.character.block.MetaBlock;
 import ru.aizen.domain.data.CharacterData;
-import ru.aizen.domain.attribute.AttributesBlock;
+import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;

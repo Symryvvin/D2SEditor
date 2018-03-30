@@ -1,6 +1,7 @@
-package ru.aizen.domain.attribute;
+package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.character.DataBlock;
+import ru.aizen.domain.character.attribute.Attribute;
+import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.util.BinaryUtils;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 public class AttributesBlock extends HashMap<String, Integer> implements DataBlock {
     private static final String STOP_CODE = "01FF";
+    private static int SIZE;
 
     public static final String STRENGTH = "Strength";
     public static final String ENERGY = "Energy";
@@ -52,13 +54,14 @@ public class AttributesBlock extends HashMap<String, Integer> implements DataBlo
 
     @Override
     public DataBlock parse(ByteBuffer buffer) {
+        SIZE = buffer.capacity();
         unpack(buffer.array());
         return this;
     }
 
     @Override
     public ByteBuffer collect() {
-        return null;
+        return ByteBuffer.wrap(pack());
     }
 
     @Override
@@ -85,6 +88,11 @@ public class AttributesBlock extends HashMap<String, Integer> implements DataBlo
             put(attribute.getName(), readValue(bits, cursor, end) / attribute.getDivide());
             cursor = end;
         }
+    }
+
+    private byte[] pack(){
+        //TODO pack data to byte array from this map
+        return new byte[SIZE];
     }
 
     private int readValue(String bits, int initial, int length) {

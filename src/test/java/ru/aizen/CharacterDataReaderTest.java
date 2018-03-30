@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.aizen.domain.data.DataReader;
 import ru.aizen.domain.data.GameVersion;
-import ru.aizen.domain.attribute.AttributesBlock;
+import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.Character;
-import ru.aizen.domain.character.HeaderBlock;
+import ru.aizen.domain.character.block.HeaderBlock;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

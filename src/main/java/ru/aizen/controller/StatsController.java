@@ -6,7 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-import ru.aizen.domain.attribute.AttributesBlock;
+import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Title;
 
