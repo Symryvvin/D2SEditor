@@ -1,6 +1,6 @@
 package ru.aizen.domain.util;
 
-import ru.aizen.domain.CharacterData;
+import ru.aizen.domain.data.CharacterData;
 
 import java.io.IOException;
 import java.nio.file.Files;

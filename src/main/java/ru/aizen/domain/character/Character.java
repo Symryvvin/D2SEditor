@@ -1,7 +1,7 @@
 package ru.aizen.domain.character;
 
 import org.apache.commons.codec.DecoderException;
-import ru.aizen.domain.CharacterData;
+import ru.aizen.domain.data.CharacterData;
 import ru.aizen.domain.attribute.AttributesBlock;
 import ru.aizen.domain.util.FileUtils;
 

@@ -1,6 +1,6 @@
 package ru.aizen.domain.character;
 
-import ru.aizen.domain.GameVersion;
+import ru.aizen.domain.data.GameVersion;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
