@@ -3,8 +3,7 @@ package ru.aizen;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.aizen.domain.Character;
-import ru.aizen.domain.CharacterData;
+import ru.aizen.domain.character.Character;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,13 +12,13 @@ import java.nio.file.Paths;
 public class SaveFileTest {
 
     @Test
-    public void  testCheckSum() {
+    public void testCheckSum() {
         Character character = getTestCharacter();
         Assert.assertEquals(-667916153, character.getCharacterData().getReader().readHeader().getChecksum());
     }
 
     @Test
-    public void  testInputOutputArrays() throws IOException {
+    public void testInputOutputArrays() throws IOException {
         Character character = getTestCharacter();
         Assert.assertArrayEquals(character.getCharacterData().getBytes(), character.getCharacterData().getDataToSave());
     }

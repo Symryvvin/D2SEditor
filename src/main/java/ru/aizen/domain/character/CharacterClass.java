@@ -24,9 +24,9 @@ public enum CharacterClass {
     }
 
     public static CharacterClass parse(byte value) {
-        Map<Integer, CharacterClass> classes = Arrays.stream(CharacterClass.values())
+        Map<Byte, CharacterClass> classes = Arrays.stream(CharacterClass.values())
                 .collect(Collectors.toMap(CharacterClass::getValue, Function.identity()));
-        return classes.get((int)value);
+        return classes.get(value);
     }
 
     public static List<CharacterClass> getCharacterClassList(){
@@ -37,7 +37,7 @@ public enum CharacterClass {
         return name;
     }
 
-    public int getValue() {
-        return value;
+    public byte getValue() {
+        return (byte)value;
     }
 }

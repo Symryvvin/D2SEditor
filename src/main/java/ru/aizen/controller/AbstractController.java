@@ -1,6 +1,6 @@
 package ru.aizen.controller;
 
-import ru.aizen.domain.Character;
+import ru.aizen.domain.character.Character;
 
 public abstract class AbstractController {
     protected Character character;

@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.codec.DecoderException;
-import ru.aizen.domain.Character;
+import ru.aizen.domain.character.Character;
 import ru.aizen.domain.util.BinHexUtils;
 
 import java.io.File;

@@ -3,9 +3,8 @@ package ru.aizen;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.aizen.domain.Character;
+import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
-import ru.aizen.domain.character.Meta;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
 
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 
 public class CharacterTest {
 

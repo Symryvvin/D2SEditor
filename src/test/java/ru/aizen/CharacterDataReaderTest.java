@@ -5,12 +5,12 @@ import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.aizen.domain.Character;
-import ru.aizen.domain.character.Header;
+import ru.aizen.domain.character.Character;
 import ru.aizen.domain.GameVersion;
 import ru.aizen.domain.DataReader;
 import ru.aizen.domain.attribute.AttributePacker;
 import ru.aizen.domain.attribute.Attributes;
+import ru.aizen.domain.character.HeaderBlock;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -64,7 +64,7 @@ public class CharacterDataReaderTest {
         Character character = new Character();
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
-        Header header = character.getCharacterData().getReader().readHeader();
+        HeaderBlock header = character.getCharacterData().getReader().readHeader();
         Assert.assertEquals(-1437226411, header.getSignature());
         Assert.assertEquals(GameVersion.VERSION_1_10, header.getVersion());
         Assert.assertEquals(998, header.getFileSize());

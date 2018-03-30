@@ -2,8 +2,9 @@ package ru.aizen.domain;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
-import ru.aizen.domain.character.Header;
-import ru.aizen.domain.character.Meta;
+import ru.aizen.domain.character.DataBlock;
+import ru.aizen.domain.character.HeaderBlock;
+import ru.aizen.domain.character.MetaBlock;
 import ru.aizen.domain.util.BinHexUtils;
 
 import java.nio.ByteBuffer;
@@ -32,16 +33,16 @@ public class DataReader {
      * Read header of file from 0 to 16 bytes
      * @return header object
      */
-    public Header readHeader() {
-        return new Header(getBlockBuffer(HEADER_BLOCK_OFFSET, HEADER_BLOCK_SIZE));
+    public HeaderBlock readHeader() {
+        return (HeaderBlock) new HeaderBlock().parse(getBlockBuffer(HEADER_BLOCK_OFFSET, HEADER_BLOCK_SIZE));
     }
 
     /**
      * Read meta block from 12 to 56 bytes
      * @return meta object
      */
-    public Meta readMeta() {
-        return new Meta(getBlockBuffer(META_BLOCK_OFFSET, META_BLOCK_SIZE));
+    public MetaBlock readMeta() {
+        return (MetaBlock) new MetaBlock().parse(getBlockBuffer(META_BLOCK_OFFSET, META_BLOCK_SIZE));
     }
 
     /**

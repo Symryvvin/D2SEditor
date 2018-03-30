@@ -5,18 +5,22 @@ import java.nio.ByteOrder;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-public class Meta {
+public class MetaBlock implements DataBlock {
+    private static final int SIZE = 40;
     private static final int NAME_LENGTH = 16;
 
     private String name;
     private Status status;
     private Title title;
     private CharacterClass characterClass;
-    private int level;
+    private byte level;
     private int activeHand;
     private LocalDateTime time;
 
-    public Meta(ByteBuffer buffer) {
+    public MetaBlock() {}
+
+    @Override
+    public DataBlock parse(ByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.activeHand = buffer.getInt();
         byte[] name = new byte[NAME_LENGTH];
@@ -24,13 +28,32 @@ public class Meta {
         this.name = new String(name).trim();
         this.status = new Status(buffer.get());
         this.title = Title.parse(buffer.get(), status);
-        buffer.getShort();//skip 2 byte
+        buffer.getShort();//skip 2 bytes
         this.characterClass = CharacterClass.parse(buffer.get());
-        buffer.getShort();//skip 2 byte
+        buffer.getShort();//skip 2 bytes
         this.level = buffer.get();
-        buffer.getInt();
+        buffer.getInt();//skip 4 bytes
         time = LocalDateTime.ofEpochSecond(buffer.getInt(), 0, ZoneOffset.UTC);
-        buffer.getInt();
+        buffer.getInt();//skip 4 bytes
+        return this;
+    }
+
+    @Override
+    public ByteBuffer collect() {
+        ByteBuffer buffer = ByteBuffer.allocate(SIZE)
+                .putInt(activeHand)
+                .put(name.getBytes())
+                .put(status.toByte())
+                .put(title.getValue())
+                .putShort((short)0)
+                .putInt(characterClass.getValue())
+                .putShort((short)0)
+                .put(level)
+                .putInt(0)
+                .putInt((int)time.toEpochSecond(ZoneOffset.UTC))
+                .putInt(0);
+        buffer.flip();
+        return buffer;
     }
 
     public void clearTime(){
@@ -69,11 +92,7 @@ public class Meta {
         this.characterClass = characterClass;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
+    public void setLevel(byte level) {
         this.level = level;
     }
 
@@ -95,7 +114,7 @@ public class Meta {
 
     @Override
     public String toString() {
-        return "Meta{" +
+        return "MetaBlock{" +
                 "name='" + name + '\'' +
                 ", status=" + status +
                 ", title=" + title +

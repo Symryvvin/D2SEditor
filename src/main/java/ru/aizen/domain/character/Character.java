@@ -1,9 +1,9 @@
-package ru.aizen.domain;
+package ru.aizen.domain.character;
 
 import org.apache.commons.codec.DecoderException;
+import ru.aizen.domain.CharacterData;
 import ru.aizen.domain.attribute.AttributePacker;
 import ru.aizen.domain.attribute.Attributes;
-import ru.aizen.domain.character.*;
 import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;
@@ -14,8 +14,8 @@ import java.nio.file.Path;
  */
 public class Character {
     private CharacterData characterData;
-    private Header header;
-    private Meta meta;
+    private HeaderBlock headerBlock;
+    private MetaBlock metaBlock;
     private Attributes attributes;
 
     private AttributePacker aReader;
@@ -27,8 +27,8 @@ public class Character {
     public void load(Path path) throws IOException, DecoderException {
         characterData = new CharacterData(path);
         characterData.read();
-        header = characterData.getReader().readHeader();
-        meta = characterData.getReader().readMeta();
+        headerBlock = (HeaderBlock) characterData.getReader().readHeader();
+        metaBlock = (MetaBlock) characterData.getReader().readMeta();
         aReader = new AttributePacker();
         attributes = aReader.unpackAttributes(characterData.getAttributesBlock());
     }
@@ -47,19 +47,19 @@ public class Character {
     }
 
     public String getName(){
-        return meta.getName();
+        return metaBlock.getName();
     }
 
     public Status getStatus(){
-        return meta.getStatus();
+        return metaBlock.getStatus();
     }
 
     public Title getTitle(){
-        return meta.getTitle();
+        return metaBlock.getTitle();
     }
 
     public CharacterClass getCharacterClass(){
-        return meta.getCharacterClass();
+        return metaBlock.getCharacterClass();
     }
 
     public CharacterData getCharacterData() {
