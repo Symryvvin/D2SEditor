@@ -2,6 +2,8 @@ package ru.aizen.domain;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
+import ru.aizen.domain.attribute.Attribute;
+import ru.aizen.domain.attribute.AttributesBlock;
 import ru.aizen.domain.character.DataBlock;
 import ru.aizen.domain.character.HeaderBlock;
 import ru.aizen.domain.character.MetaBlock;
@@ -50,13 +52,10 @@ public class DataReader {
      * and [69 66] (start of skills block) bytes
      * @return bytes of attributes
      */
-    public byte[] getAttributesBlock() throws DecoderException {
+    public AttributesBlock readAttributes() throws DecoderException {
         int start = getPositionInDataByHexCode(ATTRIBUTES_BLOCK_START) + 2;
         int end = getPositionInDataByHexCode(SKILLS_BLOCK_START);
-        byte[] attributes = new byte[end - start];
-        data.position(start);
-        data.get(attributes, 0, attributes.length);
-        return attributes;
+        return (AttributesBlock) new AttributesBlock().parse(getBlockBuffer(start, end - start));
     }
 
     private ByteBuffer getBlockBuffer(int offset, int size){

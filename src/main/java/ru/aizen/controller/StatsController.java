@@ -6,13 +6,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-import ru.aizen.domain.attribute.Attributes;
+import ru.aizen.domain.attribute.AttributesBlock;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Title;
 
-import java.util.stream.Collectors;
-
-public class StatsController extends AbstractController{
+public class StatsController extends AbstractController {
     @FXML private ComboBox<Title> title;
     @FXML private TextField name;
     @FXML private ComboBox<CharacterClass> characterClass;
@@ -28,18 +26,18 @@ public class StatsController extends AbstractController{
     @FXML private TextField level;
     @FXML private TextField experience;
 
-    private Attributes attributes;
+    private AttributesBlock attributesBlock;
 
     public void initialize() {
         initTitle();
         initCharacterClass();
-        strLabel.setText(Attributes.STRENGTH);
-        dexLabel.setText(Attributes.DEXTERITY);
-        vitLabel.setText(Attributes.VITALITY);
-        intLabel.setText(Attributes.ENERGY);
+        strLabel.setText(AttributesBlock.STRENGTH);
+        dexLabel.setText(AttributesBlock.DEXTERITY);
+        vitLabel.setText(AttributesBlock.VITALITY);
+        intLabel.setText(AttributesBlock.ENERGY);
     }
 
-    private void initCharacterClass(){
+    private void initCharacterClass() {
         characterClass.getItems().addAll(
                 new ObservableListWrapper<>(
                         CharacterClass.getCharacterClassList()));
@@ -56,7 +54,7 @@ public class StatsController extends AbstractController{
         });
     }
 
-    private void initTitle(){
+    private void initTitle() {
         title.setConverter(new StringConverter<Title>() {
             @Override
             public String toString(Title object) {
@@ -82,17 +80,19 @@ public class StatsController extends AbstractController{
                         Title.getTitleListFromStatus(character.getStatus())));
         title.getSelectionModel().select(character.getTitle());
         characterClass.getSelectionModel().select(character.getCharacterClass());
-        attributes = character.getAttributes();
-        strength.setText(getAttributeValue(Attributes.STRENGTH));
-        dexterity.setText(getAttributeValue(Attributes.DEXTERITY));
-        vitality.setText(getAttributeValue(Attributes.VITALITY));
-        energy.setText(getAttributeValue(Attributes.ENERGY));
-        level.setText(getAttributeValue(Attributes.LEVEL));
-        experience.setText(getAttributeValue(Attributes.EXPERIENCE));
+        attributesBlock = character.getAttributesBlock();
+        strength.setText(getAttributeValue(AttributesBlock.STRENGTH));
+        dexterity.setText(getAttributeValue(AttributesBlock.DEXTERITY));
+        vitality.setText(getAttributeValue(AttributesBlock.VITALITY));
+        energy.setText(getAttributeValue(AttributesBlock.ENERGY));
+        level.setText(getAttributeValue(AttributesBlock.LEVEL));
+        experience.setText(getAttributeValue(AttributesBlock.EXPERIENCE));
     }
 
     private String getAttributeValue(String name) {
-        return attributes.get(name).toString();
+        if (attributesBlock.containsKey(name))
+            return attributesBlock.get(name).toString();
+        return "0";
     }
 
 

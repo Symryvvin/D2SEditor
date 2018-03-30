@@ -1,14 +1,20 @@
 package ru.aizen.domain.attribute;
 
+import ru.aizen.domain.character.DataBlock;
+import ru.aizen.domain.util.BinaryUtils;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Attributes extends HashMap<String, Integer> {
+public class AttributesBlock extends HashMap<String, Integer> implements DataBlock {
+    private static final String STOP_CODE = "01FF";
+
     public static final String STRENGTH = "Strength";
     public static final String ENERGY = "Energy";
     public static final String DEXTERITY = "Dexterity";
@@ -31,22 +37,29 @@ public class Attributes extends HashMap<String, Integer> {
 
     static {
         try {
-            attributeMap = Files.readAllLines(Paths.get(Attributes.class.getResource(ATTRIBUTES_DATA).toURI()))
+            attributeMap = Files.readAllLines(Paths.get(AttributesBlock.class.getResource(ATTRIBUTES_DATA).toURI()))
                     .stream()
                     .skip(1).map(i -> i.split(";"))
                     .map(i -> new Attribute(i[0], i[1], i[2], i[3]))
                     .collect(Collectors.toMap(Attribute::getId, a -> a));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
     }
 
-    public Attributes() {
+    public AttributesBlock() {
     }
 
+    @Override
+    public DataBlock parse(ByteBuffer buffer) {
+        unpack(buffer.array());
+        return this;
+    }
 
+    @Override
+    public ByteBuffer collect() {
+        return null;
+    }
 
     @Override
     public Integer put(String key, Integer value) {
@@ -55,5 +68,26 @@ public class Attributes extends HashMap<String, Integer> {
 
     public Attribute getBy(int id) {
         return attributeMap.get(id);
+    }
+
+    private void unpack(byte[] data) {
+        String bits = BinaryUtils.getBitString(data, true);
+        int stopId = Integer.parseInt(STOP_CODE, 16);
+        int cursor = 0;
+        int end;
+        while (true) {
+            int id = readValue(bits, cursor, cursor + Attribute.ID_OFFSET);
+            if (id == stopId)
+                break;
+            cursor += Attribute.ID_OFFSET;
+            Attribute attribute = getBy(id);
+            end = cursor + attribute.getLength();
+            put(attribute.getName(), readValue(bits, cursor, end) / attribute.getDivide());
+            cursor = end;
+        }
+    }
+
+    private int readValue(String bits, int initial, int length) {
+        return BinaryUtils.reversedBitsToInt(bits.substring(initial, length));
     }
 }

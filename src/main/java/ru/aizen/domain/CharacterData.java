@@ -46,10 +46,6 @@ public class CharacterData {
         this.sizeInBytes = (short) (preData.length + postData.length + 4);
     }
 
-    public byte[] getAttributesBlock() throws DecoderException {
-        return reader.getAttributesBlock();
-    }
-
     public byte[] getDataToSave() throws IOException {
         byte[] zero = new byte[4];
         Arrays.fill(zero, NumberUtils.BYTE_ZERO);

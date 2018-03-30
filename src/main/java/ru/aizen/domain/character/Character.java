@@ -2,8 +2,7 @@ package ru.aizen.domain.character;
 
 import org.apache.commons.codec.DecoderException;
 import ru.aizen.domain.CharacterData;
-import ru.aizen.domain.attribute.AttributePacker;
-import ru.aizen.domain.attribute.Attributes;
+import ru.aizen.domain.attribute.AttributesBlock;
 import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;
@@ -16,21 +15,17 @@ public class Character {
     private CharacterData characterData;
     private HeaderBlock headerBlock;
     private MetaBlock metaBlock;
-    private Attributes attributes;
-
-    private AttributePacker aReader;
+    private AttributesBlock attributesBlock;
 
     public Character() {
-        aReader = new AttributePacker();
     }
 
     public void load(Path path) throws IOException, DecoderException {
         characterData = new CharacterData(path);
         characterData.read();
-        headerBlock = (HeaderBlock) characterData.getReader().readHeader();
-        metaBlock = (MetaBlock) characterData.getReader().readMeta();
-        aReader = new AttributePacker();
-        attributes = aReader.unpackAttributes(characterData.getAttributesBlock());
+        headerBlock = characterData.getReader().readHeader();
+        metaBlock = characterData.getReader().readMeta();
+        attributesBlock = characterData.getReader().readAttributes();
     }
 
     public void save(byte[] toSave) throws IOException {
@@ -66,12 +61,12 @@ public class Character {
         return characterData;
     }
 
-    public Attributes getAttributes() {
-        return attributes;
+    public AttributesBlock getAttributesBlock() {
+        return attributesBlock;
     }
 
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
+    public void setAttributesBlock(AttributesBlock attributesBlock) {
+        this.attributesBlock = attributesBlock;
     }
 
 
