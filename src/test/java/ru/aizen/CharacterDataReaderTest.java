@@ -29,22 +29,22 @@ public class CharacterDataReaderTest {
     @Test
     public void testExtractAttributes() throws DecoderException {
         AttributesBlock expected = new AttributesBlock(0);
-        expected.put(AttributesBlock.STRENGTH, 15);
-        expected.put(AttributesBlock.ENERGY, 20);
-        expected.put(AttributesBlock.DEXTERITY, 20);
-        expected.put(AttributesBlock.VITALITY, 25);
-        expected.put(AttributesBlock.STAT_POINTS, 5);
-        expected.put(AttributesBlock.SKILL_POINTS, 1);
-        expected.put(AttributesBlock.HP, 14464);
-        expected.put(AttributesBlock.MAX_HP, 14464);
-        expected.put(AttributesBlock.MP, 5632);
-        expected.put(AttributesBlock.MAX_MP, 5632);
-        expected.put(AttributesBlock.SP, 21760);
-        expected.put(AttributesBlock.MAX_SP, 21760);
-        expected.put(AttributesBlock.LEVEL, 2);
-        expected.put(AttributesBlock.EXPERIENCE, 536);
-        expected.put(AttributesBlock.GOLD, 3);
-        expected.put(AttributesBlock.GOLD_IN_STASH, 4);
+        expected.put(AttributesBlock.STRENGTH, 15L);
+        expected.put(AttributesBlock.ENERGY, 20L);
+        expected.put(AttributesBlock.DEXTERITY, 20L);
+        expected.put(AttributesBlock.VITALITY, 25L);
+        expected.put(AttributesBlock.STAT_POINTS, 5L);
+        expected.put(AttributesBlock.SKILL_POINTS, 1L);
+        expected.put(AttributesBlock.HP, 14464L);
+        expected.put(AttributesBlock.MAX_HP, 14464L);
+        expected.put(AttributesBlock.MP, 5632L);
+        expected.put(AttributesBlock.MAX_MP, 5632L);
+        expected.put(AttributesBlock.SP, 21760L);
+        expected.put(AttributesBlock.MAX_SP, 21760L);
+        expected.put(AttributesBlock.LEVEL, 2L);
+        expected.put(AttributesBlock.EXPERIENCE, 536L);
+        expected.put(AttributesBlock.GOLD, 3L);
+        expected.put(AttributesBlock.GOLD_IN_STASH, 4L);
         AttributesBlock attributesBlock = reader.readAttributes();
         Assert.assertEquals(expected.getAttributes(), attributesBlock.getAttributes());
     }

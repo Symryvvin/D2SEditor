@@ -3,7 +3,7 @@ package ru.aizen.domain.character.attribute;
 public class Attribute {
     public static final int ID_OFFSET = 9;
 
-    private int id;
+    private long id;
     private String name;
     private int length;
     private int divide;
@@ -15,7 +15,7 @@ public class Attribute {
         this.divide = Integer.parseInt(divide);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

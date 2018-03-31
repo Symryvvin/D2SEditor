@@ -38,7 +38,7 @@ public class Character {
     }
 
     public void save() throws DecoderException, IOException {
-        metaBlock.setLevel(attributesBlock.getAttributes().get(AttributesBlock.LEVEL));
+        metaBlock.setLevel(attributesBlock.getAttributes().get(AttributesBlock.LEVEL).intValue());
         List<DataBlock> blocks = new ArrayList<>();
         blocks.add(headerBlock);
         blocks.add(metaBlock);

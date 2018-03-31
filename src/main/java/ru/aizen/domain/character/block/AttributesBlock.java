@@ -35,9 +35,9 @@ public class AttributesBlock extends DataBlock {
     public static final String GOLD_IN_STASH = "Gold in stash";
 
 
-    private Map<String, Integer> attributes;
+    private Map<String, Long> attributes;
 
-    private static Map<Integer, Attribute> attributeMap;
+    private static Map<Long, Attribute> attributeMap;
     private static final String ATTRIBUTES_DATA = "/attributes.csv";
 
     static {
@@ -77,7 +77,7 @@ public class AttributesBlock extends DataBlock {
         int cursor = 0;
         int end;
         while (true) {
-            int id = readValue(bits, cursor, cursor + Attribute.ID_OFFSET);
+            long id = readValue(bits, cursor, cursor + Attribute.ID_OFFSET);
             if (id == stopId)
                 break;
             cursor += Attribute.ID_OFFSET;
@@ -101,11 +101,11 @@ public class AttributesBlock extends DataBlock {
 
     private String getBinary() {
         StringBuilder builder = new StringBuilder();
-        Map<Integer, Integer> idValue = getIdValueMap();
-        for (Map.Entry<Integer, Integer> entry : idValue.entrySet()) {
-            int id = entry.getKey();
+        Map<Long, Long> idValue = getIdValueMap();
+        for (Map.Entry<Long, Long> entry : idValue.entrySet()) {
+            long id = entry.getKey();
             Attribute attribute = attributeMap.get(id);
-            int value = entry.getValue();
+            long value = entry.getValue();
             builder.append(getBinaryString(id, Attribute.ID_OFFSET))
                     .append(getBinaryString(value, attribute.getLength()));
         }
@@ -116,15 +116,15 @@ public class AttributesBlock extends DataBlock {
         return builder.toString();
     }
 
-    private String getBinaryString(Integer value, int length) {
+    private String getBinaryString(Long value, int length) {
         return StringUtils.reverse(String.format("%" + length + "s",
-                Integer.toBinaryString(value)).replace(' ', '0'));
+                Long.toBinaryString(value)).replace(' ', '0'));
     }
 
-    private Map<Integer, Integer> getIdValueMap() {
-        Map<Integer, Integer> result = new HashMap<>();
-        for (Map.Entry<String, Integer> entry : attributes.entrySet()) {
-            Integer id = findIdInAttributeMapByName(entry.getKey());
+    private Map<Long, Long> getIdValueMap() {
+        Map<Long, Long> result = new HashMap<>();
+        for (Map.Entry<String, Long> entry : attributes.entrySet()) {
+            Long id = findIdInAttributeMapByName(entry.getKey());
             if (id != null) {
                 result.put(id, entry.getValue());
             }
@@ -132,23 +132,23 @@ public class AttributesBlock extends DataBlock {
         return result;
     }
 
-    private Integer findIdInAttributeMapByName(String name) {
-        for (Map.Entry<Integer, Attribute> entry : attributeMap.entrySet()) {
+    private Long findIdInAttributeMapByName(String name) {
+        for (Map.Entry<Long, Attribute> entry : attributeMap.entrySet()) {
             if (entry.getValue().getName().equals(name))
                 return entry.getValue().getId();
         }
         return null;
     }
 
-    private int readValue(String bits, int initial, int length) {
+    private long readValue(String bits, int initial, int length) {
         return BinaryUtils.reversedBitsToInt(bits.substring(initial, length));
     }
 
-    public Map<String, Integer> getAttributes() {
+    public Map<String, Long> getAttributes() {
         return attributes;
     }
 
-    public void put(String key, Integer value) {
+    public void put(String key, Long value) {
         attributes.put(key, value);
     }
 
@@ -156,11 +156,11 @@ public class AttributesBlock extends DataBlock {
         return attributes.containsKey(key);
     }
 
-    public Integer get(String key) {
+    public Long get(String key) {
         return attributes.get(key);
     }
 
-    private Attribute getBy(int id) {
+    private Attribute getBy(long id) {
         return attributeMap.get(id);
     }
 }
