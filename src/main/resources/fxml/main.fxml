@@ -33,7 +33,7 @@
                     focusTraversable="false">
                 <graphic>
                     <ImageView>
-                        <Image url="@/icons/save.png"/>
+                        <Image url="@/icons/floppy.png"/>
                     </ImageView>
                 </graphic>
             </Button>
@@ -45,12 +45,12 @@
                     </ImageView>
                 </graphic>
             </Button>
-            <CheckBox mnemonicParsing="false" text="Lock" selected="true" ButtonBar.buttonData="LEFT"/>
+            <!--<CheckBox mnemonicParsing="false" text="Lock" selected="true" ButtonBar.buttonData="LEFT"/>-->
             <Region HBox.hgrow="ALWAYS"/>
         </buttons>
     </ButtonBar>
-    <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-             AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
+    <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+             AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80" disable="true">
         <Tab text="Hero Editor">
             <fx:include source="editor.fxml" fx:id="editor"/>
         </Tab>
