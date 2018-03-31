@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 public class AttributesBlock extends DataBlock {
     private static final String STOP_CODE = "01FF";
-    private static int SIZE;
 
     public static final String STRENGTH = "Strength";
     public static final String ENERGY = "Energy";
@@ -58,19 +57,15 @@ public class AttributesBlock extends DataBlock {
 
     @Override
     public DataBlock parse(ByteBuffer buffer) {
-        SIZE = buffer.capacity();
+        size = buffer.capacity();
         unpack(buffer.array());
         return this;
-    }
-
-    public int getSize(){
-        return SIZE;
     }
 
     @Override
     public ByteBuffer collect() {
         ByteBuffer buffer = ByteBuffer.wrap(pack());
-        SIZE = buffer.capacity();
+        size = buffer.capacity();
         return buffer;
     }
 
@@ -109,7 +104,7 @@ public class AttributesBlock extends DataBlock {
 
     private byte[] pack() {
         //TODO pack data to byte array from this map
-        return new byte[SIZE];
+        return new byte[size];
     }
 
     private int readValue(String bits, int initial, int length) {

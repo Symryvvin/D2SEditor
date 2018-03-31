@@ -19,6 +19,7 @@ public class HeaderBlock extends DataBlock {
 
     @Override
     public DataBlock parse(ByteBuffer buffer) {
+        size = buffer.capacity();
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.signature = buffer.getInt();
         this.version = GameVersion.parse(buffer.getInt());
@@ -30,10 +31,11 @@ public class HeaderBlock extends DataBlock {
     @Override
     public ByteBuffer collect() {
         ByteBuffer buffer = ByteBuffer.allocate(BlockSize.HEADER_BLOCK_SIZE)
+                .order(ByteOrder.LITTLE_ENDIAN)
                 .putInt(signature)
                 .putInt(96) //hardcoded 1.10+ version
-                .putInt(fileSize)
-                .putInt(checksum);
+                .putInt(0)
+                .putInt(0);
         buffer.flip();
         return buffer;
     }
