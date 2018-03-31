@@ -10,7 +10,8 @@ public class Status {
     private boolean isHardcore;
     private boolean isDead;
 
-    public Status(){}
+    public Status() {
+    }
 
     public Status(byte b) {
         readStatus(b);
@@ -20,19 +21,28 @@ public class Status {
         readStatus(Byte.parseByte(hex, 16));
     }
 
-    private void readStatus(byte b){
+    private void readStatus(byte b) {
         String bin = BinaryUtils.toBinaryString(b, true);
         this.isExpansion = parseChar(bin.charAt(5));
         this.isHardcore = parseChar(bin.charAt(2));
         this.isDead = parseChar(bin.charAt(3));
     }
 
-    private boolean parseChar(char ch){
+    private boolean parseChar(char ch) {
         return ch == '1';
     }
 
-    public byte toByte(){
-        return 0;
+    public byte toByte() {
+        return (byte) Integer.parseInt(getBinaryString(), 2);
+    }
+
+    private String getBinaryString() {
+        return "00" +
+                (isExpansion ? "1" : "0") +
+                "0" +
+                (isDead ? "1" : "0") +
+                (isHardcore ? "1" : "0") +
+                "00";
     }
 
     public boolean isExpansion() {
