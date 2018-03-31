@@ -6,14 +6,15 @@ import ru.aizen.domain.data.GameVersion;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class HeaderBlock implements DataBlock {
+public class HeaderBlock extends DataBlock {
 
     private int signature;
     private GameVersion version;
     private int fileSize;
     private int checksum;
 
-    public HeaderBlock() {
+    public HeaderBlock(int order) {
+        super(order);
     }
 
     @Override

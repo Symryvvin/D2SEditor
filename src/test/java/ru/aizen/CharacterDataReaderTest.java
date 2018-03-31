@@ -28,7 +28,7 @@ public class CharacterDataReaderTest {
 
     @Test
     public void testExtractAttributes() throws DecoderException {
-        AttributesBlock expected = new AttributesBlock();
+        AttributesBlock expected = new AttributesBlock(0);
         expected.put(AttributesBlock.STRENGTH, 15);
         expected.put(AttributesBlock.ENERGY, 20);
         expected.put(AttributesBlock.DEXTERITY, 20);
@@ -46,7 +46,7 @@ public class CharacterDataReaderTest {
         expected.put(AttributesBlock.GOLD, 3);
         expected.put(AttributesBlock.GOLD_IN_STASH, 4);
         AttributesBlock attributesBlock = reader.readAttributes();
-        Assert.assertEquals(expected, attributesBlock);
+        Assert.assertEquals(expected.getAttributes(), attributesBlock.getAttributes());
     }
 
     @Test

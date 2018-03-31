@@ -10,7 +10,7 @@ import java.nio.ByteOrder;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-public class MetaBlock implements DataBlock {
+public class MetaBlock extends DataBlock {
     private static final int NAME_LENGTH = 16;
 
     private String name;
@@ -21,7 +21,9 @@ public class MetaBlock implements DataBlock {
     private int activeHand;
     private LocalDateTime time;
 
-    public MetaBlock() {}
+    public MetaBlock(int order) {
+        super(order);
+    }
 
     @Override
     public DataBlock parse(ByteBuffer buffer) {
@@ -128,4 +130,6 @@ public class MetaBlock implements DataBlock {
                 ", timestamp=" + time +
                 '}';
     }
+
+
 }

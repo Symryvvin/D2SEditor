@@ -2,9 +2,19 @@ package ru.aizen.domain.character.block;
 
 import java.nio.ByteBuffer;
 
-public interface DataBlock {
+public abstract class DataBlock implements Comparable<DataBlock> {
+    protected final int order;
 
-    DataBlock parse(ByteBuffer buffer);
+    public DataBlock(int order) {
+        this.order = order;
+    }
 
-    ByteBuffer collect();
+    public abstract DataBlock parse(ByteBuffer buffer);
+
+    public abstract ByteBuffer collect();
+
+    @Override
+    public int compareTo(DataBlock o) {
+        return Integer.compare(order, o.order);
+    }
 }

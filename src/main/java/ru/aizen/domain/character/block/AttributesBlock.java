@@ -1,7 +1,6 @@
 package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.character.attribute.Attribute;
-import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.util.BinaryUtils;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AttributesBlock extends HashMap<String, Integer> implements DataBlock {
+public class AttributesBlock extends DataBlock {
     private static final String STOP_CODE = "01FF";
     private static int SIZE;
 
@@ -34,6 +33,9 @@ public class AttributesBlock extends HashMap<String, Integer> implements DataBlo
     public static final String GOLD = "Gold";
     public static final String GOLD_IN_STASH = "Gold in stash";
 
+
+    private Map<String, Integer> attributes;
+
     private static Map<Integer, Attribute> attributeMap;
     private static final String ATTRIBUTES_DATA = "/attributes.csv";
 
@@ -49,7 +51,9 @@ public class AttributesBlock extends HashMap<String, Integer> implements DataBlo
         }
     }
 
-    public AttributesBlock() {
+    public AttributesBlock(int order) {
+        super(order);
+        attributes = new HashMap<>();
     }
 
     @Override
@@ -64,12 +68,19 @@ public class AttributesBlock extends HashMap<String, Integer> implements DataBlo
         return ByteBuffer.wrap(pack());
     }
 
-    @Override
-    public Integer put(String key, Integer value) {
-        return super.put(key, value);
+    public void put(String key, Integer value) {
+        attributes.put(key, value);
     }
 
-    public Attribute getBy(int id) {
+    public boolean containsKey(String key) {
+        return attributes.containsKey(key);
+    }
+
+    public Integer get(String key) {
+        return attributes.get(key);
+    }
+
+    private Attribute getBy(int id) {
         return attributeMap.get(id);
     }
 
@@ -90,12 +101,16 @@ public class AttributesBlock extends HashMap<String, Integer> implements DataBlo
         }
     }
 
-    private byte[] pack(){
+    private byte[] pack() {
         //TODO pack data to byte array from this map
         return new byte[SIZE];
     }
 
     private int readValue(String bits, int initial, int length) {
         return BinaryUtils.reversedBitsToInt(bits.substring(initial, length));
+    }
+
+    public Map<String, Integer> getAttributes() {
+        return attributes;
     }
 }
