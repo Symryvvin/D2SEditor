@@ -37,11 +37,6 @@ public class Character {
         attributesBlock = reader.readAttributes();
     }
 
-    public void save(byte[] toSave) throws IOException {
-        characterData.setOutputData(toSave);
-        FileUtils.save(characterData);
-    }
-
     public void save() throws DecoderException, IOException {
         metaBlock.setLevel(attributesBlock.getAttributes().get(AttributesBlock.LEVEL));
         List<DataBlock> blocks = new ArrayList<>();

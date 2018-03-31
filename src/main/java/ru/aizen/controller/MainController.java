@@ -58,9 +58,7 @@ public class MainController {
     private void onSaveClick() {
         try {
             character.save();
-            //  byte[] toSave = BinHexUtils.getDecodeHexString(hexEditorController.getHexCodeInput().getText());
-            //    character.save(toSave);
-            //   hexEditorController.setOutputData(character.getCharacterData().getDataToSave());
+            hexEditorController.setOutputData(character.getCharacterData().getBytes());
         } catch (IOException | DecoderException e) {
             e.printStackTrace();
         }

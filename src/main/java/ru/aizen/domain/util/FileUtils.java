@@ -21,11 +21,7 @@ public final class FileUtils {
         Files.copy(characterData.getBackUp(), characterData.getInput(), StandardCopyOption.REPLACE_EXISTING);
     }
 
-    public static void save(CharacterData characterData) throws IOException {
-        Files.write(characterData.getInput(), characterData.getDataToSave());
-    }
-
     public static void save(Path destination, byte[] data) throws IOException {
-        //Files.write(destination, data);
+        Files.write(destination, data);
     }
 }
