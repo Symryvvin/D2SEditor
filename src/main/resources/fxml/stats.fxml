@@ -20,7 +20,7 @@
                 </rowConstraints>
                 <VBox GridPane.rowIndex="0">
                     <Label text="Title"/>
-                    <ComboBox fx:id="title" prefWidth="150"/>
+                    <ComboBox fx:id="title" prefWidth="150" onAction="#onChangeTitle"/>
                 </VBox>
                 <VBox GridPane.rowIndex="1">
                     <Label text="Name"/>
@@ -43,11 +43,11 @@
                     <Label fx:id="nextLevel" text="" />
                 </VBox>
                 <VBox GridPane.rowSpan="3" GridPane.columnIndex="1"  alignment="CENTER">
-                    <CheckBox fx:id="isExpansion" text="Expansion"/>
+                    <CheckBox fx:id="isExpansion" text="Expansion" onMouseClicked="#onChangeExpansion"/>
                     <Region minHeight="10" prefWidth="10"/>
-                    <CheckBox fx:id="isHardcore" text="Hardcore"/>
+                    <CheckBox fx:id="isHardcore" text="Hardcore" onMouseClicked="#onChangeMode"/>
                     <Region minHeight="10" prefWidth="10"/>
-                    <CheckBox fx:id="isDead" text="Dead"/>
+                    <CheckBox fx:id="isDead" text="Dead" onMouseClicked="#onChangeDead" disable="true"/>
                 </VBox>
             </GridPane>
             <Region minHeight="10" prefWidth="10"/>

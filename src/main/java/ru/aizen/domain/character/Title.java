@@ -5,31 +5,33 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum Title {
-    NO_TITLE("", "00"),
-    UNKNOWN("UNKNOWN", "70"),
+    NO_TITLE("", "00", Difficult.START),
+    UNKNOWN("UNKNOWN", "70", Difficult.UNKNOWN),
     // vanilla
-    SIR_DAME("Sir/Dame", "04"),
-    LORD_LADY("Lord/Lady", "08"),
-    BARON_BARONESS("Baron/Baroness", "0C"),
+    SIR_DAME("Sir/Dame", "04", Difficult.NORMAL),
+    LORD_LADY("Lord/Lady", "08", Difficult.NIGHTMARE),
+    BARON_BARONESS("Baron/Baroness", "0C", Difficult.HELL),
     // vanilla hardcore
-    COUNT_COUNTESS("Count/Countess", "04"),
-    DUKE_DUCHESS("Duke/Duchess", "08"),
-    KING_QUEEN("King/Queen", "0C"),
+    COUNT_COUNTESS("Count/Countess", "04",Difficult.NORMAL),
+    DUKE_DUCHESS("Duke/Duchess", "08", Difficult.NIGHTMARE),
+    KING_QUEEN("King/Queen", "0C", Difficult.HELL),
     // expansion
-    SLAYER("Slayer", "05"),
-    CHAMPION("Champion", "0A"),
-    PATRIARCH_MATRIARCH("Patriarch/Matriarch", "0F"),
+    SLAYER("Slayer", "05",Difficult.NORMAL),
+    CHAMPION("Champion", "0A", Difficult.NIGHTMARE),
+    PATRIARCH_MATRIARCH("Patriarch/Matriarch", "0F", Difficult.HELL),
     // expansion hardcore
-    DESTROYER("Destroyer", "05"),
-    CONQUEROR("Conqueror", "0A"),
-    GUARDIAN("Guardian", "0F");
+    DESTROYER("Destroyer", "05",Difficult.NORMAL),
+    CONQUEROR("Conqueror", "0A", Difficult.NIGHTMARE),
+    GUARDIAN("Guardian", "0F", Difficult.HELL);
 
     private String name;
     private String value;
+    private Difficult difficult;
 
-    Title(String name, String value) {
+    Title(String name, String value, Difficult difficult) {
         this.name = name;
         this.value = value;
+        this.difficult = difficult;
     }
 
     public static Stream<Title> vanillaSet() {
@@ -50,6 +52,10 @@ public enum Title {
 
     public static Title parse(String value, Status status) {
         return parse(Byte.parseByte(value, 16), status);
+    }
+
+    public static Title parse(Difficult difficult, List<Title> titles) {
+        return titles.stream().filter(title -> title.difficult == difficult).findFirst().orElse(Title.UNKNOWN);
     }
 
     public static Title parse(byte value, Status status) {
@@ -92,6 +98,10 @@ public enum Title {
         return name;
     }
 
+    public Difficult getDifficult() {
+        return difficult;
+    }
+
     public byte getValue() {
         return Byte.parseByte(value, 16);
     }
@@ -102,5 +112,14 @@ public enum Title {
                 "name='" + name + '\'' +
                 ", value='" + value +
                 '}';
+    }
+
+
+    public enum Difficult {
+        UNKNOWN,
+        START,
+        NORMAL,
+        NIGHTMARE,
+        HELL
     }
 }

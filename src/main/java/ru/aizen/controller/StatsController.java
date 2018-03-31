@@ -11,10 +11,14 @@ import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
 import ru.aizen.domain.character.block.AttributesBlock;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class StatsController extends AbstractController {
     @FXML private CheckBox isExpansion;
     @FXML private CheckBox isHardcore;
     @FXML private CheckBox isDead;
+    private Title.Difficult difficult;
     @FXML private ComboBox<Title> title;
     @FXML private TextField name;
     @FXML private ComboBox<CharacterClass> characterClass;
@@ -125,7 +129,9 @@ public class StatsController extends AbstractController {
         goldInStash.setText(getAttributeValue(AttributesBlock.GOLD_IN_STASH));
         isExpansion.setSelected(character.getStatus().isExpansion());
         isHardcore.setSelected(character.getStatus().isHardcore());
+        isDead.setDisable(!isHardcore.isSelected());
         isDead.setSelected(character.getStatus().isDead());
+        difficult = character.getTitle().getDifficult();
     }
 
     private String getAttributeValue(String name) {
@@ -140,6 +146,43 @@ public class StatsController extends AbstractController {
                 return String.valueOf(attributesBlock.get(name));
         }
         return "0";
+    }
+
+    public void onChangeTitle() {
+        if (title.getSelectionModel().getSelectedItem() != null)
+            difficult = title.getSelectionModel().getSelectedItem().getDifficult();
+    }
+
+    public void onChangeExpansion() {
+        changeTitleList();
+        title.getSelectionModel().select(Title.parse(difficult, title.getItems()));
+    }
+
+    public void onChangeMode() {
+        changeTitleList();
+        title.getSelectionModel().select(Title.parse(difficult, title.getItems()));
+        isDead.setDisable(!isHardcore.isSelected());
+        isDead.setSelected(false);
+        changeTitleList();
+    }
+
+    private void changeTitleList() {
+        List<Title> titles;
+        if (isExpansion.isSelected()) {
+            if (isHardcore.isSelected())
+                titles = Title.expansionHardCoreSet().collect(Collectors.toList());
+            else
+                titles = Title.expansionSet().collect(Collectors.toList());
+        } else {
+            if (isHardcore.isSelected())
+                titles = Title.vanillaHardcoreSet().collect(Collectors.toList());
+            else
+                titles = Title.vanillaSet().collect(Collectors.toList());
+        }
+        title.setItems(new ObservableListWrapper<>(titles));
+    }
+
+    public void onChangeDead() {
     }
 
 
