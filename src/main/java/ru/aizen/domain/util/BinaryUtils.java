@@ -48,11 +48,11 @@ public final class BinaryUtils {
         return result.toString();
     }
 
-    public static int bitsToInt(String bits) {
-        return Integer.parseInt(bits, 2);
+    public static long bitsToInt(String bits) {
+        return Long.parseLong(bits, 2);
     }
 
-    public static int reversedBitsToInt(String bits) {
+    public static long reversedBitsToInt(String bits) {
         return bitsToInt(StringUtils.reverse(bits));
     }
 }
