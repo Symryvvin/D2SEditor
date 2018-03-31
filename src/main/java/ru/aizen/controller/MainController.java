@@ -57,6 +57,7 @@ public class MainController {
     @FXML
     private void onSaveClick() {
         try {
+            editorController.saveCharacter();
             character.save();
             hexEditorController.setOutputData(character.getCharacterData().getBytes());
         } catch (IOException | DecoderException e) {

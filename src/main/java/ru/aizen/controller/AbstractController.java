@@ -10,4 +10,6 @@ public abstract class AbstractController {
     }
 
     protected abstract void loadCharacter();
+
+    public abstract void saveCharacter();
 }

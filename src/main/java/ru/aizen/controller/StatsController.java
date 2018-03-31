@@ -3,21 +3,19 @@ package ru.aizen.controller;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Title;
+import ru.aizen.domain.character.block.AttributesBlock;
 
 public class StatsController extends AbstractController {
     @FXML private ComboBox<Title> title;
     @FXML private TextField name;
     @FXML private ComboBox<CharacterClass> characterClass;
-    @FXML private Label strLabel;
-    @FXML private Label dexLabel;
-    @FXML private Label vitLabel;
-    @FXML private Label intLabel;
+    @FXML private TextField hp;
+    @FXML private TextField mp;
+    @FXML private TextField sp;
 
     @FXML private TextField strength;
     @FXML private TextField dexterity;
@@ -31,10 +29,6 @@ public class StatsController extends AbstractController {
     public void initialize() {
         initTitle();
         initCharacterClass();
-        strLabel.setText(AttributesBlock.STRENGTH);
-        dexLabel.setText(AttributesBlock.DEXTERITY);
-        vitLabel.setText(AttributesBlock.VITALITY);
-        intLabel.setText(AttributesBlock.ENERGY);
     }
 
     private void initCharacterClass() {
@@ -73,6 +67,10 @@ public class StatsController extends AbstractController {
         loadCharacterStats();
     }
 
+    @Override
+    public void saveCharacter() {
+    }
+
     private void loadCharacterStats() {
         name.setText(character.getName());
         title.setItems(
@@ -87,11 +85,22 @@ public class StatsController extends AbstractController {
         energy.setText(getAttributeValue(AttributesBlock.ENERGY));
         level.setText(getAttributeValue(AttributesBlock.LEVEL));
         experience.setText(getAttributeValue(AttributesBlock.EXPERIENCE));
+        hp.setText(getAttributeValue(AttributesBlock.MAX_HP, true));
+        mp.setText(getAttributeValue(AttributesBlock.MAX_MP, true));
+        sp.setText(getAttributeValue(AttributesBlock.MAX_SP, true));
     }
 
     private String getAttributeValue(String name) {
-        if (attributesBlock.containsKey(name))
-            return attributesBlock.get(name).toString();
+        return getAttributeValue(name, false);
+    }
+
+    private String getAttributeValue(String name, boolean divide) {
+        if (attributesBlock.containsKey(name)) {
+            if (divide)
+                return String.valueOf(attributesBlock.get(name) / 256);
+            else
+                return String.valueOf(attributesBlock.get(name));
+        }
         return "0";
     }
 

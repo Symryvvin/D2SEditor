@@ -14,4 +14,9 @@ public class EditorController extends AbstractController{
     public void loadCharacter() {
         statsController.loadCharacter();
     }
+
+    @Override
+    public void saveCharacter() {
+        statsController.saveCharacter();
+    }
 }

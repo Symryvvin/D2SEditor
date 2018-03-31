@@ -1,7 +1,6 @@
 package ru.aizen.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import ru.aizen.domain.util.BinHexUtils;
 
@@ -29,5 +28,10 @@ public class HexEditorController extends AbstractController{
     @Override
     protected void loadCharacter() {
         loadHexData();
+    }
+
+    @Override
+    public void saveCharacter() {
+        //not for implementing now
     }
 }
