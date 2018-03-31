@@ -50,7 +50,7 @@ public class DataReader {
      * @return bytes of attributes
      */
     public AttributesBlock readAttributes() throws DecoderException {
-        int start = BlockSize.getAttributesBlockStart(data.array()) + 2;
+        int start = BlockSize.getAttributesBlockStart(data.array());
         int end = BlockSize.getSkillsBlockStart(data.array());
         return (AttributesBlock) new AttributesBlock(4).parse(getBlockBuffer(start, end - start));
     }

@@ -23,6 +23,15 @@ public class SaveFileTest {
         Assert.assertArrayEquals(character.getCharacterData().getBytes(), character.getCharacterData().getDataToSave());
     }
 
+    @Test
+    public void testWriter() throws DecoderException, IOException {
+        Character character = getTestCharacter();
+        byte[] expected = character.getCharacterData().getBytes();
+        character.save();
+        Assert.assertArrayEquals(expected, character.getCharacterData().getBytes());
+
+    }
+
     private Character getTestCharacter() {
         String fileName = "/test.d2s";
         Character character = new Character();

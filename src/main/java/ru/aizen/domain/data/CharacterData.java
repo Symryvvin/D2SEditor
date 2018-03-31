@@ -1,6 +1,5 @@
 package ru.aizen.domain.data;
 
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.math.NumberUtils;
 import ru.aizen.domain.character.block.DataBlock;
 import ru.aizen.domain.util.BinHexUtils;
@@ -34,7 +33,6 @@ public class CharacterData {
 
     public void read() throws IOException {
         this.bytes = Files.readAllBytes(input);
-        System.out.println(Hex.encodeHexString(bytes));
         this.reader = new DataReader(bytes);
         this.writer = new DataWriter(input);
         splitData(bytes);
@@ -51,7 +49,8 @@ public class CharacterData {
         buffer.flip();
         bytes = buffer.array();
         splitData(bytes);
-        writer.write(getDataToSave());
+        bytes = getDataToSave();
+        writer.write(bytes);
     }
 
     public DataBlock createStubBlock(int order, int start, int size) {

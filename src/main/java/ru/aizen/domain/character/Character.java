@@ -58,15 +58,14 @@ public class Character {
      * @return
      */
     private List<DataBlock> stubs() throws DecoderException {
-        int hotKeysMercenaryQuestWayPointsNPCStart = headerBlock.getSize() + metaBlock.getSize();
-        int hotKeysMercenaryQuestWayPointsNPCSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) +
-                hotKeysMercenaryQuestWayPointsNPCStart - 2;
+       int hotKeysMercenaryQuestWayPointsNPCStart = headerBlock.getSize() + metaBlock.getSize();
+        int hotKeysMercenaryQuestWayPointsNPCSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) -
+                hotKeysMercenaryQuestWayPointsNPCStart;
         DataBlock hotKeysMercenaryQuestWayPointsNPC = characterData.createStubBlock(3,
                 hotKeysMercenaryQuestWayPointsNPCStart,
                 hotKeysMercenaryQuestWayPointsNPCSize);
-        int skillsItemsStart = headerBlock.getSize() + metaBlock.getSize();
-        int skillsItemsSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) +
-                skillsItemsStart - 2;
+        int skillsItemsStart = BlockSize.getSkillsBlockStart(characterData.getBytes());
+        int skillsItemsSize = characterData.getBytes().length - skillsItemsStart;
         DataBlock skillsItems = characterData.createStubBlock(5,
                 skillsItemsStart,
                 skillsItemsSize);

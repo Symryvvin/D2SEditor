@@ -5,7 +5,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.codec.DecoderException;
 import ru.aizen.domain.character.Character;
-import ru.aizen.domain.util.BinHexUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,9 +57,10 @@ public class MainController {
     @FXML
     private void onSaveClick() {
         try {
-            byte[] toSave = BinHexUtils.getDecodeHexString(hexEditorController.getHexCodeInput().getText());
-            character.save(toSave);
-            hexEditorController.setOutputData(character.getCharacterData().getDataToSave());
+            character.save();
+            //  byte[] toSave = BinHexUtils.getDecodeHexString(hexEditorController.getHexCodeInput().getText());
+            //    character.save(toSave);
+            //   hexEditorController.setOutputData(character.getCharacterData().getDataToSave());
         } catch (IOException | DecoderException e) {
             e.printStackTrace();
         }

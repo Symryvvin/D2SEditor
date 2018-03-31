@@ -1,5 +1,6 @@
 package ru.aizen.domain.character.block;
 
+import org.apache.commons.lang3.StringUtils;
 import ru.aizen.domain.character.attribute.Attribute;
 import ru.aizen.domain.util.BinaryUtils;
 
@@ -8,6 +9,7 @@ import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -69,6 +71,83 @@ public class AttributesBlock extends DataBlock {
         return buffer;
     }
 
+    private void unpack(byte[] data) {
+        String bits = BinaryUtils.getBitString(crapStartCode(data), true);
+        int stopId = Integer.parseInt(STOP_CODE, 16);
+        int cursor = 0;
+        int end;
+        while (true) {
+            int id = readValue(bits, cursor, cursor + Attribute.ID_OFFSET);
+            if (id == stopId)
+                break;
+            cursor += Attribute.ID_OFFSET;
+            Attribute attribute = getBy(id);
+            end = cursor + attribute.getLength();
+            put(attribute.getName(), readValue(bits, cursor, end));
+            cursor = end;
+        }
+    }
+
+    private byte[] crapStartCode(byte[] data) {
+        return Arrays.copyOfRange(data, 2, data.length);
+    }
+
+    private byte[] pack() {
+        byte[] result = BinaryUtils.fromBinaryString(getBinary(), true);
+        ByteBuffer buffer = ByteBuffer.allocate(2 + result.length);
+        buffer.put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 103).put((byte) 102).flip()).put(result).flip();
+        return buffer.array();
+    }
+
+    private String getBinary() {
+        StringBuilder builder = new StringBuilder();
+        Map<Integer, Integer> idValue = getIdValueMap();
+        for (Map.Entry<Integer, Integer> entry : idValue.entrySet()) {
+            int id = entry.getKey();
+            Attribute attribute = attributeMap.get(id);
+            int value = entry.getValue();
+            builder.append(getBinaryString(id, Attribute.ID_OFFSET))
+                    .append(getBinaryString(value, attribute.getLength()));
+        }
+        builder.append("111111111");
+        while (builder.length() % 8 != 0) {
+            builder.append("0");
+        }
+        return builder.toString();
+    }
+
+    private String getBinaryString(Integer value, int length) {
+        return StringUtils.reverse(String.format("%" + length + "s",
+                Integer.toBinaryString(value)).replace(' ', '0'));
+    }
+
+    private Map<Integer, Integer> getIdValueMap() {
+        Map<Integer, Integer> result = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : attributes.entrySet()) {
+            Integer id = findIdInAttributeMapByName(entry.getKey());
+            if (id != null) {
+                result.put(id, entry.getValue());
+            }
+        }
+        return result;
+    }
+
+    private Integer findIdInAttributeMapByName(String name) {
+        for (Map.Entry<Integer, Attribute> entry : attributeMap.entrySet()) {
+            if (entry.getValue().getName().equals(name))
+                return entry.getValue().getId();
+        }
+        return null;
+    }
+
+    private int readValue(String bits, int initial, int length) {
+        return BinaryUtils.reversedBitsToInt(bits.substring(initial, length));
+    }
+
+    public Map<String, Integer> getAttributes() {
+        return attributes;
+    }
+
     public void put(String key, Integer value) {
         attributes.put(key, value);
     }
@@ -83,35 +162,5 @@ public class AttributesBlock extends DataBlock {
 
     private Attribute getBy(int id) {
         return attributeMap.get(id);
-    }
-
-    private void unpack(byte[] data) {
-        String bits = BinaryUtils.getBitString(data, true);
-        int stopId = Integer.parseInt(STOP_CODE, 16);
-        int cursor = 0;
-        int end;
-        while (true) {
-            int id = readValue(bits, cursor, cursor + Attribute.ID_OFFSET);
-            if (id == stopId)
-                break;
-            cursor += Attribute.ID_OFFSET;
-            Attribute attribute = getBy(id);
-            end = cursor + attribute.getLength();
-            put(attribute.getName(), readValue(bits, cursor, end) / attribute.getDivide());
-            cursor = end;
-        }
-    }
-
-    private byte[] pack() {
-        //TODO pack data to byte array from this map
-        return new byte[size];
-    }
-
-    private int readValue(String bits, int initial, int length) {
-        return BinaryUtils.reversedBitsToInt(bits.substring(initial, length));
-    }
-
-    public Map<String, Integer> getAttributes() {
-        return attributes;
     }
 }
