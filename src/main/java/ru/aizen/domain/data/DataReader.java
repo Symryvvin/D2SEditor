@@ -66,5 +66,7 @@ public class DataReader {
         return data.capacity();
     }
 
-
+    public void setData(ByteBuffer data) {
+        this.data = data;
+    }
 }

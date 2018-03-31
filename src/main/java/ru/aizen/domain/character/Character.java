@@ -59,7 +59,7 @@ public class Character {
         DataBlock hotKeysMercenaryQuestWayPointsNPC = characterData.createStubBlock(3,
                 hotKeysMercenaryQuestWayPointsNPCStart,
                 hotKeysMercenaryQuestWayPointsNPCSize);
-        int skillsItemsStart = BlockSize.getSkillsBlockStart(characterData.getBytes());
+        int skillsItemsStart = BlockSize.getAttributesBlockStart(characterData.getBytes()) + attributesBlock.getSize();
         int skillsItemsSize = characterData.getBytes().length - skillsItemsStart;
         DataBlock skillsItems = characterData.createStubBlock(5,
                 skillsItemsStart,

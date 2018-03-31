@@ -39,6 +39,7 @@ public class CharacterData {
     }
 
     public void write(List<DataBlock> blocks) throws IOException {
+        blocks.forEach(DataBlock::collect); //need o invoke collect() method before calculating all size
         int size = blocks.stream()
                 .map(DataBlock::getSize)
                 .reduce(0, (f, s) -> f + s);
@@ -50,6 +51,7 @@ public class CharacterData {
         bytes = buffer.array();
         splitData(bytes);
         bytes = getDataToSave();
+        reader.setData(buffer);
         writer.write(bytes);
     }
 
