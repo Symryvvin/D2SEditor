@@ -17,7 +17,7 @@ public class MetaBlock extends DataBlock {
     private Status status;
     private Title title;
     private CharacterClass characterClass;
-    private byte level;
+    private int level;
     private int activeHand;
     private LocalDateTime time;
 
@@ -27,7 +27,7 @@ public class MetaBlock extends DataBlock {
 
     @Override
     public DataBlock parse(ByteBuffer buffer) {
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        size = buffer.capacity();
         this.activeHand = buffer.getInt();
         byte[] name = new byte[NAME_LENGTH];
         buffer.get(name, 0, NAME_LENGTH);
@@ -39,6 +39,7 @@ public class MetaBlock extends DataBlock {
         buffer.getShort();//skip 2 bytes
         this.level = buffer.get();
         buffer.getInt();//skip 4 bytes
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         time = LocalDateTime.ofEpochSecond(buffer.getInt(), 0, ZoneOffset.UTC);
         buffer.getInt();//skip 4 bytes
         return this;
@@ -48,21 +49,28 @@ public class MetaBlock extends DataBlock {
     public ByteBuffer collect() {
         ByteBuffer buffer = ByteBuffer.allocate(BlockSize.META_BLOCK_SIZE)
                 .putInt(activeHand)
-                .put(name.getBytes())
+                .put(fillNameWithSpaces())
                 .put(status.toByte())
                 .put(title.getValue())
-                .putShort((short)0)
-                .putInt(characterClass.getValue())
-                .putShort((short)0)
-                .put(level)
+                .putShort((short) 0)
+                .put(characterClass.getValue())
+                .put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 16).put((byte) 30).flip())
+                .put((byte)level)
                 .putInt(0)
-                .putInt((int)time.toEpochSecond(ZoneOffset.UTC))
-                .putInt(0);
+                .order(ByteOrder.LITTLE_ENDIAN)
+                .putInt((int) time.toEpochSecond(ZoneOffset.UTC))
+                .putInt(-1);
         buffer.flip();
         return buffer;
     }
 
-    public void clearTime(){
+    private byte[] fillNameWithSpaces() {
+        ByteBuffer nameBuffer = ByteBuffer.allocate(16)
+                .put(name.getBytes());
+        return nameBuffer.array();
+    }
+
+    public void clearTime() {
         time = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
     }
 
@@ -98,7 +106,7 @@ public class MetaBlock extends DataBlock {
         this.characterClass = characterClass;
     }
 
-    public void setLevel(byte level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 
