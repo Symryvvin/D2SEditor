@@ -3,12 +3,17 @@ package ru.aizen.domain.character;
 import org.apache.commons.codec.DecoderException;
 import ru.aizen.domain.character.block.HeaderBlock;
 import ru.aizen.domain.character.block.MetaBlock;
+import ru.aizen.domain.character.block.StubBlock;
+import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.CharacterData;
 import ru.aizen.domain.character.block.AttributesBlock;
+import ru.aizen.domain.data.DataReader;
 import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class keep all data of character witch can be present on application forms
@@ -19,15 +24,19 @@ public class Character {
     private MetaBlock metaBlock;
     private AttributesBlock attributesBlock;
 
+    private List<StubBlock> stubs;
+
     public Character() {
     }
 
     public void load(Path path) throws IOException, DecoderException {
         characterData = new CharacterData(path);
         characterData.read();
-        headerBlock = characterData.getReader().readHeader();
-        metaBlock = characterData.getReader().readMeta();
-        attributesBlock = characterData.getReader().readAttributes();
+        DataReader reader = characterData.getReader();
+        headerBlock = reader.readHeader();
+        metaBlock = reader.readMeta();
+        attributesBlock = reader.readAttributes();
+        stubs = new ArrayList<>();
     }
 
     public void save(byte[] toSave) throws IOException {

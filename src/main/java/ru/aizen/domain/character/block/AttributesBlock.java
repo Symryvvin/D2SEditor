@@ -63,9 +63,15 @@ public class AttributesBlock extends DataBlock {
         return this;
     }
 
+    public int getSize(){
+        return SIZE;
+    }
+
     @Override
     public ByteBuffer collect() {
-        return ByteBuffer.wrap(pack());
+        ByteBuffer buffer = ByteBuffer.wrap(pack());
+        SIZE = buffer.capacity();
+        return buffer;
     }
 
     public void put(String key, Integer value) {
