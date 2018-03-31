@@ -94,6 +94,22 @@ public class Character {
         return metaBlock.getCharacterClass();
     }
 
+    public void setName(String name) {
+        metaBlock.setName(name);
+    }
+
+    public void setStatus(Status status) {
+        metaBlock.setStatus(status);
+    }
+
+    public void setTitle(Title title) {
+        metaBlock.setTitle(title);
+    }
+
+    public void setCharacterClass(CharacterClass characterClass) {
+        metaBlock.setCharacterClass(characterClass);
+    }
+
     public CharacterData getCharacterData() {
         return characterData;
     }
