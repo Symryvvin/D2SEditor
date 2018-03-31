@@ -1,16 +1,12 @@
 package ru.aizen.domain.data;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.block.HeaderBlock;
 import ru.aizen.domain.character.block.MetaBlock;
 import ru.aizen.domain.character.block.StubBlock;
-import ru.aizen.domain.util.BinHexUtils;
 
 import java.nio.ByteBuffer;
-import java.util.Collections;
-import java.util.List;
 
 import static ru.aizen.domain.data.BlockSize.*;
 
@@ -54,8 +50,8 @@ public class DataReader {
      * @return bytes of attributes
      */
     public AttributesBlock readAttributes() throws DecoderException {
-        int start = getPositionInDataByHexCode(ATTRIBUTES_BLOCK_START) + 2;
-        int end = getPositionInDataByHexCode(SKILLS_BLOCK_START);
+        int start = BlockSize.getAttributesBlockStart(data.array()) + 2;
+        int end = BlockSize.getSkillsBlockStart(data.array());
         return (AttributesBlock) new AttributesBlock(4).parse(getBlockBuffer(start, end - start));
     }
 
@@ -68,18 +64,6 @@ public class DataReader {
 
     public int getDataSize() {
         return data.capacity();
-    }
-
-    /**
-     * Calculate position of byte sub array from hex string in data byte array
-     * @param hex hex code
-     * @return position value
-     */
-    public int getPositionInDataByHexCode(String hex) throws DecoderException {
-        byte[] subArray = Hex.decodeHex(hex);
-        List<Integer> arrayList = BinHexUtils.getUnsignedByteList(data.array());
-        List<Integer> subArrayList = BinHexUtils.getUnsignedByteList(subArray);
-        return Collections.indexOfSubList(arrayList, subArrayList);
     }
 
 
