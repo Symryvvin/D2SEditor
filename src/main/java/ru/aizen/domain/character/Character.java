@@ -1,18 +1,19 @@
 package ru.aizen.domain.character;
 
 import org.apache.commons.codec.DecoderException;
+import ru.aizen.domain.character.block.AttributesBlock;
+import ru.aizen.domain.character.block.DataBlock;
 import ru.aizen.domain.character.block.HeaderBlock;
 import ru.aizen.domain.character.block.MetaBlock;
-import ru.aizen.domain.character.block.StubBlock;
 import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.CharacterData;
-import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.data.DataReader;
 import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,8 +25,6 @@ public class Character {
     private MetaBlock metaBlock;
     private AttributesBlock attributesBlock;
 
-    private List<StubBlock> stubs;
-
     public Character() {
     }
 
@@ -36,12 +35,45 @@ public class Character {
         headerBlock = reader.readHeader();
         metaBlock = reader.readMeta();
         attributesBlock = reader.readAttributes();
-        stubs = new ArrayList<>();
     }
 
     public void save(byte[] toSave) throws IOException {
         characterData.setOutputData(toSave);
         FileUtils.save(characterData);
+    }
+
+    public void save() throws DecoderException, IOException {
+        metaBlock.setLevel(attributesBlock.getAttributes().get(AttributesBlock.LEVEL));
+        List<DataBlock> blocks = new ArrayList<>();
+        blocks.add(headerBlock);
+        blocks.add(metaBlock);
+        blocks.add(attributesBlock);
+        blocks.addAll(stubs());
+        Collections.sort(blocks);
+        characterData.write(blocks);
+    }
+
+    /**
+     * Temporary method to creating stub data block
+     * @return
+     */
+    private List<DataBlock> stubs() throws DecoderException {
+        int hotKeysMercenaryQuestWayPointsNPCStart = headerBlock.getSize() + metaBlock.getSize();
+        int hotKeysMercenaryQuestWayPointsNPCSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) +
+                hotKeysMercenaryQuestWayPointsNPCStart - 2;
+        DataBlock hotKeysMercenaryQuestWayPointsNPC = characterData.createStubBlock(3,
+                hotKeysMercenaryQuestWayPointsNPCStart,
+                hotKeysMercenaryQuestWayPointsNPCSize);
+        int skillsItemsStart = headerBlock.getSize() + metaBlock.getSize();
+        int skillsItemsSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) +
+                skillsItemsStart - 2;
+        DataBlock skillsItems = characterData.createStubBlock(5,
+                skillsItemsStart,
+                skillsItemsSize);
+        List<DataBlock> result = new ArrayList<>();
+        result.add(hotKeysMercenaryQuestWayPointsNPC);
+        result.add(skillsItems);
+        return result;
     }
 
     public void backup() throws IOException {
@@ -52,19 +84,19 @@ public class Character {
         FileUtils.restore(characterData);
     }
 
-    public String getName(){
+    public String getName() {
         return metaBlock.getName();
     }
 
-    public Status getStatus(){
+    public Status getStatus() {
         return metaBlock.getStatus();
     }
 
-    public Title getTitle(){
+    public Title getTitle() {
         return metaBlock.getTitle();
     }
 
-    public CharacterClass getCharacterClass(){
+    public CharacterClass getCharacterClass() {
         return metaBlock.getCharacterClass();
     }
 

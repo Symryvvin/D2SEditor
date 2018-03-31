@@ -25,6 +25,7 @@ public class CharacterData {
     private short sizeInBytes;
 
     private DataReader reader;
+    private DataWriter writer;
 
     public CharacterData(Path filePath) {
         this.input = filePath;
@@ -35,6 +36,22 @@ public class CharacterData {
         this.bytes = Files.readAllBytes(input);
         System.out.println(Hex.encodeHexString(bytes));
         this.reader = new DataReader(bytes);
+        this.writer = new DataWriter(input);
+        splitData(bytes);
+    }
+
+    public void write(List<DataBlock> blocks) throws IOException {
+        int size = blocks.stream()
+                .map(DataBlock::getSize)
+                .reduce(0, (f, s) -> f + s);
+        ByteBuffer buffer = ByteBuffer.allocate(size);
+        for (DataBlock block : blocks) {
+            buffer.put(block.collect());
+        }
+        buffer.flip();
+        bytes = buffer.array();
+        splitData(bytes);
+        writer.write(getDataToSave());
     }
 
     public DataBlock createStubBlock(int order, int start, int size) {

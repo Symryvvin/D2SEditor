@@ -4,6 +4,7 @@ import ru.aizen.domain.data.CharacterData;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 public final class FileUtils {
@@ -22,5 +23,9 @@ public final class FileUtils {
 
     public static void save(CharacterData characterData) throws IOException {
         Files.write(characterData.getInput(), characterData.getDataToSave());
+    }
+
+    public static void save(Path destination, byte[] data) throws IOException {
+        //Files.write(destination, data);
     }
 }
