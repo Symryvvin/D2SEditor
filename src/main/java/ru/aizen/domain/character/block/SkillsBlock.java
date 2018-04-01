@@ -52,4 +52,8 @@ public class SkillsBlock extends DataBlock{
     public List<SkillTree> getSkillTrees() {
         return skillTrees;
     }
+
+    public void setSkillTrees(List<SkillTree> skillTrees) {
+        this.skillTrees = skillTrees;
+    }
 }

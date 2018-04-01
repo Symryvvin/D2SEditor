@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import ru.aizen.control.*?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0">
+    <GridPane>
+        <columnConstraints>
+            <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
+            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
+            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
+            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
+            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
+        </rowConstraints>
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label fx:id="name1" text="name"/>
+            <ImageView fx:id="image1"/>
+            <NumericField fx:id="value1" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label fx:id="name2" text="name"/>
+            <ImageView fx:id="image2"/>
+            <NumericField fx:id="value2" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <Label fx:id="name3" text="name"/>
+            <ImageView fx:id="image3"/>
+            <NumericField fx:id="value3" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="3">
+            <Label fx:id="name4" text="name"/>
+            <ImageView fx:id="image4"/>
+            <NumericField fx:id="value4" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="4">
+            <Label fx:id="name5" text="name"/>
+            <ImageView fx:id="image5"/>
+            <NumericField fx:id="value5" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label fx:id="name6" text="name"/>
+            <ImageView fx:id="image6"/>
+            <NumericField fx:id="value6" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="name7" text="name"/>
+            <ImageView fx:id="image7"/>
+            <NumericField fx:id="value7" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label fx:id="name8" text="name"/>
+            <ImageView fx:id="image8"/>
+            <NumericField fx:id="value8" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="name9" text="name"/>
+            <ImageView fx:id="image9"/>
+            <NumericField fx:id="value9" maxValue="99"/>
+        </VBox>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label fx:id="name10" text="name"/>
+            <ImageView fx:id="image10"/>
+            <NumericField fx:id="value10" maxValue="99"/>
+        </VBox>
+    </GridPane>
+
+
+</AnchorPane>

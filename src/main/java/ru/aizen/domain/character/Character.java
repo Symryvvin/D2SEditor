@@ -1,10 +1,7 @@
 package ru.aizen.domain.character;
 
 import org.apache.commons.codec.DecoderException;
-import ru.aizen.domain.character.block.AttributesBlock;
-import ru.aizen.domain.character.block.DataBlock;
-import ru.aizen.domain.character.block.HeaderBlock;
-import ru.aizen.domain.character.block.MetaBlock;
+import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.CharacterData;
 import ru.aizen.domain.data.DataReader;
@@ -24,6 +21,7 @@ public class Character {
     private HeaderBlock headerBlock;
     private MetaBlock metaBlock;
     private AttributesBlock attributesBlock;
+    private SkillsBlock skillsBlock;
 
     public Character() {
     }
@@ -35,6 +33,7 @@ public class Character {
         headerBlock = reader.readHeader();
         metaBlock = reader.readMeta();
         attributesBlock = reader.readAttributes();
+        skillsBlock = reader.readSkills();
     }
 
     public void save() throws DecoderException, IOException {
@@ -43,6 +42,7 @@ public class Character {
         blocks.add(headerBlock);
         blocks.add(metaBlock);
         blocks.add(attributesBlock);
+        blocks.add(skillsBlock);
         blocks.addAll(stubs());
         Collections.sort(blocks);
         characterData.write(blocks);
@@ -53,17 +53,17 @@ public class Character {
      * @return
      */
     private List<DataBlock> stubs() throws DecoderException {
-       int hotKeysMercenaryQuestWayPointsNPCStart = headerBlock.getSize() + metaBlock.getSize();
+        int hotKeysMercenaryQuestWayPointsNPCStart = headerBlock.getSize() + metaBlock.getSize();
         int hotKeysMercenaryQuestWayPointsNPCSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) -
                 hotKeysMercenaryQuestWayPointsNPCStart;
         DataBlock hotKeysMercenaryQuestWayPointsNPC = characterData.createStubBlock(3,
                 hotKeysMercenaryQuestWayPointsNPCStart,
                 hotKeysMercenaryQuestWayPointsNPCSize);
-        int skillsItemsStart = BlockSize.getAttributesBlockStart(characterData.getBytes()) + attributesBlock.getSize();
-        int skillsItemsSize = characterData.getBytes().length - skillsItemsStart;
-        DataBlock skillsItems = characterData.createStubBlock(5,
-                skillsItemsStart,
-                skillsItemsSize);
+        int itemsStart = BlockSize.getSkillsBlockStart(characterData.getBytes()) + skillsBlock.getSize();
+        int itemsSize = characterData.getBytes().length - itemsStart;
+        DataBlock skillsItems = characterData.createStubBlock(6,
+                itemsStart,
+                itemsSize);
         List<DataBlock> result = new ArrayList<>();
         result.add(hotKeysMercenaryQuestWayPointsNPC);
         result.add(skillsItems);
@@ -116,6 +116,10 @@ public class Character {
 
     public AttributesBlock getAttributesBlock() {
         return attributesBlock;
+    }
+
+    public SkillsBlock getSkillsBlock() {
+        return skillsBlock;
     }
 
     public void setAttributesBlock(AttributesBlock attributesBlock) {

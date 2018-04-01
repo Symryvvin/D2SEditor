@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import ru.aizen.control.NumericField;
+import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class StatsController extends AbstractController {
+    @FXML private SkillsController skillsController;
+
     @FXML private CheckBox isExpansion;
     @FXML private CheckBox isHardcore;
     @FXML private CheckBox isDead;
@@ -42,6 +45,11 @@ public class StatsController extends AbstractController {
     public void initialize() {
         initTitle();
         initCharacterClass();
+    }
+
+    public void setCharacter(Character character) {
+        super.setCharacter(character);
+        skillsController.setCharacter(character);
     }
 
     private void initCharacterClass() {
@@ -78,10 +86,12 @@ public class StatsController extends AbstractController {
     @Override
     protected void loadCharacter() {
         loadCharacterStats();
+        skillsController.loadCharacter();
     }
 
     @Override
     public void saveCharacter() {
+        skillsController.saveCharacter();
         attributesBlock.put(AttributesBlock.STRENGTH, Long.parseLong(strength.getText()));
         attributesBlock.put(AttributesBlock.DEXTERITY, Long.parseLong(dexterity.getText()));
         attributesBlock.put(AttributesBlock.VITALITY, Long.parseLong(vitality.getText()));

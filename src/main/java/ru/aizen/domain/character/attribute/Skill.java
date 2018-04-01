@@ -21,6 +21,10 @@ public class Skill {
         this.name = name;
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
     public int getValue() {
         return value;
     }
@@ -46,4 +50,6 @@ public class Skill {
                 ", order=" + order +
                 '}';
     }
+
+
 }
