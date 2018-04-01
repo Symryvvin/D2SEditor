@@ -1,6 +1,7 @@
 package ru.aizen.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -12,7 +13,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class MainController {
-
+    @FXML private  Button restore;
+    @FXML private  Button save;
     @FXML private TabPane editorTabs;
     private String folder;
     private Path path;
@@ -53,7 +55,9 @@ public class MainController {
 
     private void loadCharacter() throws DecoderException, IOException {
         character.load(path);
-        editorTabs.setDisable(false);
+        editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
+        save.setDisable(false);
+        restore.setDisable(false);
         character.backup();
     }
 

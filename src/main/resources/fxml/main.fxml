@@ -29,7 +29,8 @@
                     </ImageView>
                 </graphic>
             </Button>
-            <Button onMouseClicked="#onSaveClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT"
+            <Button fx:id="save" onMouseClicked="#onSaveClick" disable="true" maxHeight="32" maxWidth="32"
+                    ButtonBar.buttonData="LEFT"
                     focusTraversable="false">
                 <graphic>
                     <ImageView>
@@ -37,7 +38,8 @@
                     </ImageView>
                 </graphic>
             </Button>
-            <Button onMouseClicked="#onRestoreClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT"
+            <Button fx:id="restore" onMouseClicked="#onRestoreClick" disable="true" maxHeight="32" maxWidth="32"
+                    ButtonBar.buttonData="LEFT"
                     focusTraversable="false">
                 <graphic>
                     <ImageView>
@@ -50,11 +52,11 @@
         </buttons>
     </ButtonBar>
     <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-             AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80" disable="true">
-        <Tab text="Hero Editor">
+             AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
+        <Tab text="Hero Editor" disable="true">
             <fx:include source="editor.fxml" fx:id="editor"/>
         </Tab>
-        <Tab text="Hex Editor">
+        <Tab text="Hex Editor" disable="true">
             <fx:include source="hex.fxml" fx:id="hexEditor"/>
         </Tab>
     </TabPane>
