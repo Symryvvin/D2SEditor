@@ -1,10 +1,7 @@
 package ru.aizen.domain.data;
 
 import org.apache.commons.codec.DecoderException;
-import ru.aizen.domain.character.block.AttributesBlock;
-import ru.aizen.domain.character.block.HeaderBlock;
-import ru.aizen.domain.character.block.MetaBlock;
-import ru.aizen.domain.character.block.StubBlock;
+import ru.aizen.domain.character.block.*;
 
 import java.nio.ByteBuffer;
 
@@ -45,14 +42,23 @@ public class DataReader {
     }
 
     /**
-     * Attribute block placed between [67 66] (+2 because 67 66 is not interested value)
+     * Attribute block placed between [67 66]
      * and [69 66] (start of skills block) bytes
-     * @return bytes of attributes
+     * @return block of attributes
      */
     public AttributesBlock readAttributes() throws DecoderException {
         int start = BlockSize.getAttributesBlockStart(data.array());
         int end = BlockSize.getSkillsBlockStart(data.array());
         return (AttributesBlock) new AttributesBlock(4).parse(getBlockBuffer(start, end - start));
+    }
+
+    /**
+     * Attribute block start from [69 66] and size is 30
+     * @return block of skills
+     */
+    public SkillsBlock readSkills() throws DecoderException {
+        int start = BlockSize.getSkillsBlockStart(data.array());
+        return (SkillsBlock) new SkillsBlock(5).parse(getBlockBuffer(start, BlockSize.SKILLS_BLOCK_SIZE));
     }
 
     private ByteBuffer getBlockBuffer(int offset, int size) {
