@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import ru.aizen.control.*?>
 <AnchorPane stylesheets="@/css/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.aizen.controller.StatsController">
     <HBox>
@@ -32,11 +33,11 @@
                 </VBox>
                 <VBox GridPane.rowIndex="3">
                     <Label text="Level"/>
-                    <TextField fx:id="level"/>
+                    <NumericField fx:id="level" maxValue="99"/>
                 </VBox>
                 <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <Label text="Experience" />
-                    <TextField fx:id="experience" />
+                    <NumericField fx:id="experience" maxValue="3520485255" />
                 </VBox>
                 <VBox GridPane.columnIndex="2" GridPane.rowIndex="3">
                     <Label text="Next level" />
@@ -65,19 +66,19 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                 </rowConstraints>
                 <Label text="Strength" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="strength" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <NumericField fx:id="strength" GridPane.columnIndex="1" GridPane.rowIndex="0" maxValue="1023"/>
                 <Label text="Dexterity" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="dexterity" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <NumericField fx:id="dexterity"  GridPane.columnIndex="1" GridPane.rowIndex="1"  maxValue="1023"/>
                 <Label text="Vitality" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <TextField fx:id="vitality" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <NumericField fx:id="vitality" GridPane.columnIndex="1" GridPane.rowIndex="2"  maxValue="1023"/>
                 <Label text="Energy" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                <TextField fx:id="energy" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <NumericField fx:id="energy" GridPane.columnIndex="1" GridPane.rowIndex="3"  maxValue="1023"/>
                 <Label text="HP" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <TextField fx:id="hp" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-                <Label text="MP" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                <TextField fx:id="mp" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                <NumericField fx:id="hp" GridPane.columnIndex="3" GridPane.rowIndex="0"  maxValue="8191"/>
+                <Label text="MP" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <NumericField fx:id="mp" GridPane.columnIndex="3" GridPane.rowIndex="1" maxValue="8191"/>
                 <Label text="SP" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-                <TextField fx:id="sp" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                <NumericField fx:id="sp" GridPane.columnIndex="3" GridPane.rowIndex="2" maxValue="8191"/>
             </GridPane>
             <Region minHeight="10" prefWidth="10"/>
             <GridPane>
@@ -90,9 +91,9 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                 </rowConstraints>
                 <Label text="Stat points" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="statPoints" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <NumericField fx:id="statPoints" GridPane.columnIndex="1" GridPane.rowIndex="0" maxValue="1023"/>
                 <Label text="Skill points" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="skillPoints" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <NumericField fx:id="skillPoints" GridPane.columnIndex="1" GridPane.rowIndex="1" maxValue="255"/>
             </GridPane>
             <Region minHeight="10" prefWidth="10"/>
             <GridPane>
@@ -106,9 +107,9 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                 </rowConstraints>
                 <Label text="Gold" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="gold" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <NumericField fx:id="gold" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                 <Label text="Stash" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <TextField fx:id="goldInStash" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                <NumericField fx:id="goldInStash" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
             </GridPane>
             <Region minHeight="10" prefWidth="10"/>
         </VBox>
