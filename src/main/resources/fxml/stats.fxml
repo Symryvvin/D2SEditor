@@ -29,7 +29,7 @@
                 </VBox>
                 <VBox GridPane.rowIndex="2">
                     <Label text="Class"/>
-                    <ComboBox fx:id="characterClass" prefWidth="150"/>
+                    <ComboBox fx:id="characterClass" prefWidth="150" onAction="#onChangeClass"/>
                 </VBox>
                 <VBox GridPane.rowIndex="3">
                     <Label text="Level"/>

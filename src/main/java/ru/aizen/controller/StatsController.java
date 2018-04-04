@@ -184,6 +184,9 @@ public class StatsController extends AbstractController {
         changeTitleList();
     }
 
+    public void onChangeDead() {
+    }
+
     private void changeTitleList() {
         List<Title> titles;
         if (isExpansion.isSelected()) {
@@ -200,8 +203,8 @@ public class StatsController extends AbstractController {
         title.setItems(new ObservableListWrapper<>(titles));
     }
 
-    public void onChangeDead() {
+    public void onChangeClass() {
+        character.setCharacterClass(characterClass.getValue());
+        skillsController.refresh();
     }
-
-
 }
