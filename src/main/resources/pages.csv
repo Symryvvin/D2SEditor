@@ -1,0 +1,22 @@
+Class;Index;Name
+AMAZON;1;Bow and Crossbow Skills
+AMAZON;2;Passive and Magic Skills
+AMAZON;3;Javelin and Spear Skills
+SORCERESS;1;Cold Spells
+SORCERESS;2;Lighting Spells
+SORCERESS;3;Fire Spells
+NECROMANCER;1;Curses
+NECROMANCER;2;Poison and Bone Spells
+NECROMANCER;3;Summoning Spells
+PALADIN;1;Combat Skills
+PALADIN;2;Offensive Auras
+PALADIN;3;Defencive Auras
+BARBARIAN;1;Combat Skills
+BARBARIAN;2;Combat Masteries
+BARBARIAN;3;Warcries
+DRUID;1;Summoning
+DRUID;2;Shape SHifting
+DRUID;3;Eemental
+ASSASSIN;1;Traps
+ASSASSIN;2;Shadow Disciplines
+ASSASSIN;3;Martial Arts

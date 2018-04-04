@@ -1,0 +1,211 @@
+Skill;Class;Page;Row;Column
+Magic Arrow;AMAZON;1;1;2
+Fire Arrow;AMAZON;1;1;3
+Inner Sight;AMAZON;2;1;1
+Critical Strike;AMAZON;2;1;3
+Jab;AMAZON;3;1;1
+Cold Arrow;AMAZON;1;2;1
+Multiple Shot;AMAZON;1;2;2
+Dodge;AMAZON;2;2;2
+Power Strike;AMAZON;3;2;2
+Poison Javelin;AMAZON;3;2;3
+Exploding Arrow;AMAZON;1;3;3
+Slow Missiles;AMAZON;2;3;1
+Avoid;AMAZON;2;3;2
+ImPALADINe;AMAZON;3;3;1
+Lightning Bolt;AMAZON;3;3;3
+Ice Arrow;AMAZON;1;4;1
+Guided Arrow;AMAZON;1;4;2
+Penetrate;AMAZON;2;4;3
+Charged Strike;AMAZON;3;4;2
+Plague Javelin;AMAZON;3;4;3
+Strafe;AMAZON;1;5;2
+Immolation Arrow;AMAZON;1;5;3
+Dopplezon;AMAZON;2;5;1
+Evade;AMAZON;2;5;2
+Fend;AMAZON;3;5;1
+Freezing Arrow;AMAZON;1;6;1
+Valkyrie;AMAZON;2;6;1
+Pierce;AMAZON;2;6;3
+Lightning Strike;AMAZON;3;6;2
+Lightning Fury;AMAZON;3;6;3
+Fire Bolt;SORCERESS;1;1;2
+Warmth;SORCERESS;1;1;3
+Charged Bolt;SORCERESS;2;1;2
+Ice Bolt;SORCERESS;3;1;2
+Frozen Armor;SORCERESS;3;1;3
+Inferno;SORCERESS;1;2;1
+Static Field;SORCERESS;2;2;1
+Telekinesis;SORCERESS;2;2;3
+Frost Nova;SORCERESS;3;2;1
+Ice Blast;SORCERESS;3;2;2
+Blaze;SORCERESS;1;3;1
+Fire Ball;SORCERESS;1;3;2
+Nova;SORCERESS;2;3;1
+Lightning;SORCERESS;2;3;2
+Shiver Armor;SORCERESS;3;3;3
+Fire Wall;SORCERESS;1;4;1
+Enchant;SORCERESS;1;4;3
+Chain Lightning;SORCERESS;2;4;2
+Teleport;SORCERESS;2;4;3
+Glacial Spike;SORCERESS;3;4;2
+Meteor;SORCERESS;1;5;2
+Thunder Storm;SORCERESS;2;5;1
+Energy Shield;SORCERESS;2;5;3
+Blizzard;SORCERESS;3;5;1
+Chilling Armor;SORCERESS;3;5;3
+Fire Mastery;SORCERESS;1;6;2
+Hydra;SORCERESS;1;6;3
+Lightning Mastery;SORCERESS;2;6;2
+Frozen Orb;SORCERESS;3;6;1
+Cold Mastery;SORCERESS;3;6;2
+Amplify Damage;NECROMANCER;1;1;2
+Teeth;NECROMANCER;2;1;2
+Bone Armor;NECROMANCER;2;1;3
+Skeleton Mastery;NECROMANCER;3;1;1
+Raise Skeleton;NECROMANCER;3;1;3
+Dim Vision;NECROMANCER;1;2;1
+Weaken;NECROMANCER;1;2;3
+Poison Dagger;NECROMANCER;2;2;1
+Corpse Explosion;NECROMANCER;2;2;2
+Clay Golem;NECROMANCER;3;2;2
+Iron Maiden;NECROMANCER;1;3;2
+Terror;NECROMANCER;1;3;3
+Bone Wall;NECROMANCER;2;3;3
+Golem Mastery;NECROMANCER;3;3;1
+Raise Skeletal Mage;NECROMANCER;3;3;3
+Confuse;NECROMANCER;1;4;1
+Life Tap;NECROMANCER;1;4;2
+Poison Explosion;NECROMANCER;2;4;1
+Bone Spear;NECROMANCER;2;4;2
+BloodGolem;NECROMANCER;3;4;2
+Attract;NECROMANCER;1;5;1
+Decrepify;NECROMANCER;1;5;3
+Bone Prison;NECROMANCER;2;5;3
+Summon Resist;NECROMANCER;3;5;1
+IronGolem;NECROMANCER;3;5;2
+Lower Resist;NECROMANCER;1;6;2
+Poison Nova;NECROMANCER;2;6;1
+Bone Spirit;NECROMANCER;2;6;2
+FireGolem;NECROMANCER;3;6;2
+Revive;NECROMANCER;3;6;3
+Sacrifice;PALADIN;1;1;1
+Smite;PALADIN;1;1;3
+Might;PALADIN;2;1;1
+Prayer;PALADIN;3;1;1
+Resist Fire;PALADIN;3;1;3
+Holy Bolt;PALADIN;1;2;2
+Holy Fire;PALADIN;2;2;2
+Thorns;PALADIN;2;2;3
+Defiance;PALADIN;3;2;2
+Resist Cold;PALADIN;3;2;3
+Zeal;PALADIN;1;3;1
+Charge;PALADIN;1;3;3
+Blessed Aim;PALADIN;2;3;1
+Cleansing;PALADIN;3;3;1
+Resist Lightning;PALADIN;3;3;3
+Vengeance;PALADIN;1;4;1
+Blessed Hammer;PALADIN;1;4;2
+Concentration;PALADIN;2;4;1
+Holy Freeze;PALADIN;2;4;2
+Vigor;PALADIN;3;4;2
+Conversion;PALADIN;1;5;1
+Holy Shield;PALADIN;1;5;3
+Holy Shock;PALADIN;2;5;2
+Sanctuary;PALADIN;2;5;3
+Meditation;PALADIN;3;5;1
+Fist of the Heavens;PALADIN;1;6;2
+Fanaticism;PALADIN;2;6;1
+Conviction;PALADIN;2;6;3
+Redemption;PALADIN;3;6;2
+Salvation;PALADIN;3;6;3
+Bash;BARBARIAN;1;1;2
+Sword Mastery;BARBARIAN;2;1;1
+Axe Mastery;BARBARIAN;2;1;2
+Mace Mastery;BARBARIAN;2;1;3
+Howl;BARBARIAN;3;1;1
+Find Potion;BARBARIAN;3;1;3
+Leap;BARBARIAN;1;2;1
+Double Swing;BARBARIAN;1;2;3
+Pole Arm Mastery;BARBARIAN;2;2;1
+Throwing Mastery;BARBARIAN;2;2;2
+Spear Mastery;BARBARIAN;2;2;3
+Taunt;BARBARIAN;3;2;1
+Shout;BARBARIAN;3;2;2
+Stun;BARBARIAN;1;3;2
+Double Throw;BARBARIAN;1;3;3
+Increased Stamina;BARBARIAN;2;3;1
+Find Item;BARBARIAN;3;3;3
+Leap Attack;BARBARIAN;1;4;1
+Concentrate;BARBARIAN;1;4;2
+Iron Skin;BARBARIAN;2;4;3
+Battle Cry;BARBARIAN;3;4;1
+Frenzy;BARBARIAN;1;5;3
+Increased Speed;BARBARIAN;2;5;1
+Battle Orders;BARBARIAN;3;5;2
+Grim Ward;BARBARIAN;3;5;3
+Whirlwind;BARBARIAN;1;6;1
+Berserk;BARBARIAN;1;6;2
+Natural Resistance;BARBARIAN;2;6;3
+War Cry;BARBARIAN;3;6;1
+Battle Command;BARBARIAN;3;6;2
+Raven;DRUID;1;1;2
+Plague Poppy;DRUID;1;1;3
+Dire Wolf;DRUID;2;1;1
+Shape Shifting;DRUID;2;1;2
+Firestorm;DRUID;3;1;1
+Oak Sage;DRUID;1;2;1
+Summon Spirit Wolf;DRUID;1;2;2
+Mammoth Bear;DRUID;2;2;3
+Molten Boulder;DRUID;3;2;1
+Arctic Blast;DRUID;3;2;3
+Cycle of Life;DRUID;1;3;3
+Feral Rage;DRUID;2;3;1
+Maul;DRUID;2;3;3
+Eruption;DRUID;3;3;1
+Cyclone Armor;DRUID;3;3;3
+Heart of Wolverine;DRUID;1;4;1
+Summon Fenris;DRUID;1;4;2
+Rabies;DRUID;2;4;1
+Fire Claws;DRUID;2;4;2
+Twister;DRUID;3;4;2
+Vines;DRUID;1;5;3
+Hunger;DRUID;2;5;2
+Shock Wave;DRUID;2;5;3
+Volcano;DRUID;3;5;1
+Tornado;DRUID;3;5;2
+Spirit of BARBARIANbs;DRUID;1;6;1
+Summon Grizzly;DRUID;1;6;2
+Fury;DRUID;2;6;1
+Armageddon;DRUID;3;6;1
+Hurricane;DRUID;3;6;2
+Fire Trauma;ASSASSIN;1;1;2
+Claw Mastery;ASSASSIN;2;1;2
+Psychic Hammer;ASSASSIN;2;1;3
+Tiger Strike;ASSASSIN;3;1;2
+Dragon Talon;ASSASSIN;3;1;3
+Shock Field;ASSASSIN;1;2;1
+Blade Sentinel;ASSASSIN;1;2;3
+Quickness;ASSASSIN;2;2;1
+Fists of Fire;ASSASSIN;3;2;1
+Dragon Claw;ASSASSIN;3;2;3
+Charged Bolt Sentry;ASSASSIN;1;3;1
+Wake of Fire Sentry;ASSASSIN;1;3;2
+Weapon Block;ASSASSIN;2;3;2
+Cloak of Shadows;ASSASSIN;2;3;3
+Cobra Strike;ASSASSIN;3;3;2
+Blade Fury;ASSASSIN;1;4;3
+Fade;ASSASSIN;2;4;1
+Shadow Warrior;ASSASSIN;2;4;2
+Claws of Thunder;ASSASSIN;3;4;1
+Dragon Tail;ASSASSIN;3;4;3
+Lightning Sentry;ASSASSIN;1;5;1
+Inferno Sentry;ASSASSIN;1;5;2
+Mind Blast;ASSASSIN;2;5;3
+Blades of Ice;ASSASSIN;3;5;1
+Dragon Flight;ASSASSIN;3;5;3
+Death Sentry;ASSASSIN;1;6;1
+Blade Shield;ASSASSIN;1;6;3
+Venom;ASSASSIN;2;6;1
+Shadow Master;ASSASSIN;2;6;2
+Royal Strike;ASSASSIN;3;6;2
