@@ -9,6 +9,8 @@ import ru.aizen.domain.character.attribute.SkillPage;
 import ru.aizen.domain.character.block.SkillsBlock;
 import ru.aizen.domain.data.CSVLoader;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,35 +31,35 @@ public class SkillsController extends AbstractController {
     public void refresh() {
         skillsBlock = character.getSkillsBlock();
         List<Skill> values = skillsBlock.getSkills();
+
         List<Skill> data = CSVLoader.skills()
                 .stream()
                 .filter(skill -> skill.getCharacterClass() == character.getCharacterClass())
                 .collect(Collectors.toList());
+
         List<SkillPage> pages = CSVLoader.pages()
                 .stream()
                 .filter(skill -> skill.getCharacterClass() == character.getCharacterClass())
                 .collect(Collectors.toList());
-        for (int i = 0; i < 30; i++) {
-            data.get(i).setValue(values.get(i).getValue());
-            data.get(i).setOrder(values.get(i).getOrder());
-        }
-        skillsByPage = data
-                .stream()
+
+        skillsByPage = mergeSkillData(data, values).stream()
                 .collect(Collectors.groupingBy(Skill::getPage));
         for (Map.Entry<Integer, List<Skill>> entry : skillsByPage.entrySet()) {
             int pageIndex = entry.getKey();
             List<Skill> skills = entry.getValue();
-            if (pageIndex == 1) {
-                firstTree.setText(pages.get(0).getName());
-                refreshPage(skills, firstTree);
-            }
-            if (pageIndex == 2) {
-                secondTree.setText(pages.get(1).getName());
-                refreshPage(skills, secondTree);
-            }
-            if (pageIndex == 3) {
-                thirdTree.setText(pages.get(2).getName());
-                refreshPage(skills, thirdTree);
+            switch (pageIndex) {
+                case 1:
+                    firstTree.setText(pages.get(0).getName());
+                    refreshPage(skills, firstTree);
+                    break;
+                case 2:
+                    secondTree.setText(pages.get(1).getName());
+                    refreshPage(skills, secondTree);
+                    break;
+                case 3:
+                    thirdTree.setText(pages.get(2).getName());
+                    refreshPage(skills, thirdTree);
+                    break;
             }
         }
     }
@@ -70,37 +72,44 @@ public class SkillsController extends AbstractController {
             Label name = (Label) tab.getContent().lookup("#name" + orderOnPage);
             name.setText(skill.getName());
         }
+    }
 
+    private List<Skill> mergeSkillData(List<Skill> data, List<Skill> values) {
+        List<Skill> result = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            result.add(Skill.merge(data.get(i), values.get(i)));
+        }
+        return result;
     }
 
     @Override
     public void saveCharacter() {
+        List<Skill> result = new ArrayList<>();
         for (Map.Entry<Integer, List<Skill>> entry : skillsByPage.entrySet()) {
             int pageIndex = entry.getKey();
             List<Skill> skills = entry.getValue();
-            if (pageIndex == 1) {
-                for (Skill skill : skills) {
-                    NumericField value = (NumericField) firstTree.getContent().lookup("#value" + (entry.getValue().indexOf(skill) + 1));
-                    skill.setValue(Integer.parseInt(value.getText()));
-                }
-            }
-            if (pageIndex == 2) {
-                for (Skill skill : skills) {
-                    NumericField value = (NumericField) secondTree.getContent().lookup("#value" + (entry.getValue().indexOf(skill) + 1));
-                    skill.setValue(Integer.parseInt(value.getText()));
-                }
-            }
-            if (pageIndex == 3) {
-                for (Skill skill : skills) {
-                    NumericField value = (NumericField) thirdTree.getContent().lookup("#value" + (entry.getValue().indexOf(skill) + 1));
-                    skill.setValue(Integer.parseInt(value.getText()));
-                }
+            switch (pageIndex) {
+                case 1:
+                    result.addAll(getSkillValues(skills, firstTree));
+                    break;
+                case 2:
+                    result.addAll(getSkillValues(skills, secondTree));
+                    break;
+                case 3:
+                    result.addAll(getSkillValues(skills, thirdTree));
+                    break;
             }
         }
-        List<Skill> result = skillsByPage.entrySet()
-                .stream()
-                .flatMap(item -> item.getValue().stream()).sorted()
-                .collect(Collectors.toList());
+        Collections.sort(result);
         skillsBlock.setSkills(result);
+    }
+
+    private List<Skill> getSkillValues(List<Skill> skills, Tab tab) {
+        for (Skill skill : skills) {
+            int orderOnPage = skills.indexOf(skill) + 1;
+            NumericField value = (NumericField) tab.getContent().lookup("#value" + orderOnPage);
+            skill.setValue(Integer.parseInt(value.getText()));
+        }
+        return skills;
     }
 }

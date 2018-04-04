@@ -28,6 +28,12 @@ public class Skill implements Comparable<Skill> {
         this.column = column;
     }
 
+    public static Skill merge(Skill data, Skill value) {
+        data.setValue(value.getValue());
+        data.setOrder(value.getOrder());
+        return data;
+    }
+
     public String getName() {
         return name;
     }
