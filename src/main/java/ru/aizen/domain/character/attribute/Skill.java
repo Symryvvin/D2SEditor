@@ -28,10 +28,9 @@ public class Skill implements Comparable<Skill> {
         this.column = column;
     }
 
-    public static Skill merge(Skill data, Skill value) {
-        data.setValue(value.getValue());
-        data.setOrder(value.getOrder());
-        return data;
+    public void mergeValue(Skill skill) {
+        this.value = skill.value;
+        this.order = skill.order;
     }
 
     public String getName() {
@@ -99,5 +98,4 @@ public class Skill implements Comparable<Skill> {
     public int compareTo(Skill o) {
         return Integer.compare(order, o.order);
     }
-
 }

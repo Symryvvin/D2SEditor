@@ -12,7 +12,7 @@ Poison Javelin;AMAZON;3;2;3
 Exploding Arrow;AMAZON;1;3;3
 Slow Missiles;AMAZON;2;3;1
 Avoid;AMAZON;2;3;2
-ImPALADINe;AMAZON;3;3;1
+Impale;AMAZON;3;3;1
 Lightning Bolt;AMAZON;3;3;3
 Ice Arrow;AMAZON;1;4;1
 Guided Arrow;AMAZON;1;4;2
@@ -174,7 +174,7 @@ Hunger;DRUID;2;5;2
 Shock Wave;DRUID;2;5;3
 Volcano;DRUID;3;5;1
 Tornado;DRUID;3;5;2
-Spirit of BARBARIANbs;DRUID;1;6;1
+Spirit of Barbs;DRUID;1;6;1
 Summon Grizzly;DRUID;1;6;2
 Fury;DRUID;2;6;1
 Armageddon;DRUID;3;6;1
