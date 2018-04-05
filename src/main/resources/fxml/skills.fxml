@@ -9,13 +9,13 @@
         <Region minHeight="10" prefWidth="10"/>
         <TabPane fx:id="tabs" prefWidth="400" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
             <Tab>
-                <fx:include source="skillTree.fxml"/>
+                <fx:include source="skillPage.fxml"/>
             </Tab>
             <Tab>
-                <fx:include source="skillTree.fxml"/>
+                <fx:include source="skillPage.fxml"/>
             </Tab>
             <Tab>
-                <fx:include source="skillTree.fxml"/>
+                <fx:include source="skillPage.fxml"/>
             </Tab>
         </TabPane>
         <Region minHeight="10" prefWidth="10"/>

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import ru.aizen.control.SkillControl;
+import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.attribute.Skill;
 import ru.aizen.domain.character.block.SkillsBlock;
 import ru.aizen.domain.data.CSVLoader;
@@ -16,6 +17,9 @@ public class SkillsController extends AbstractController {
     @FXML private TabPane tabs;
     private List<Skill> skills;
 
+    private final String skillPath = "icons/skills/";
+    private CharacterClass characterClass;
+
     @Override
     protected void loadCharacter() {
         refresh();
@@ -26,6 +30,7 @@ public class SkillsController extends AbstractController {
      */
     public void refresh() {
         skillsBlock = character.getSkillsBlock();
+        characterClass = character.getCharacterClass();
         setTabsName();
         skills = addValues(skillsBlock.getSkills());
         skills.stream()
@@ -39,7 +44,7 @@ public class SkillsController extends AbstractController {
     private void setTabsName() {
         CSVLoader.pages()
                 .stream()
-                .filter(skill -> skill.getCharacterClass() == character.getCharacterClass())
+                .filter(skill -> skill.getCharacterClass() == characterClass)
                 .collect(Collectors.toList())
                 .forEach(skillPage -> tabs.getTabs().get(skillPage.getIndex() - 1).setText(skillPage.getName()));
     }
@@ -47,9 +52,13 @@ public class SkillsController extends AbstractController {
     private void refreshPage(List<Skill> skills, int index) {
         for (Skill skill : skills) {
             int orderOnPage = skills.indexOf(skill) + 1;
-            SkillControl skillControl = (SkillControl) tabs.getTabs().get(index).getContent().lookup("#skill" + orderOnPage);
+            SkillControl skillControl = (SkillControl) tabs.getTabs()
+                    .get(index)
+                    .getContent()
+                    .lookup("#skill" + orderOnPage);
             skillControl.setName(String.valueOf(skill.getName()));
             skillControl.setValue(String.valueOf(skill.getValue()));
+            skillControl.setImageByPath(skillPath + characterClass.getName().toLowerCase() + skill.getImagePath());
             GridPane.setColumnIndex(skillControl, skill.getColumn() - 1);
             GridPane.setRowIndex(skillControl, skill.getRow() - 1);
         }
@@ -64,7 +73,7 @@ public class SkillsController extends AbstractController {
     private List<Skill> addValues(List<Skill> values) {
         List<Skill> data = CSVLoader.skills()
                 .stream()
-                .filter(skill -> skill.getCharacterClass() == character.getCharacterClass())
+                .filter(skill -> skill.getCharacterClass() == characterClass)
                 .collect(Collectors.toList());
         for (int i = 0; i < data.size(); i++) {
             data.get(i).mergeValue(values.get(i));

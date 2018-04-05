@@ -27,7 +27,7 @@ public class SkillControlSkin extends SkinBase<SkillControl> {
         NumericField value = control.getValue();
         value.setStyle("-fx-font-size: 10px; " +
                 "-fx-pref-height: 24px; " +
-                "-fx-pref-width: 40px");
+                "-fx-pref-width: 30px");
         HBox hBox = new HBox(2.0d, image, value);
         hBox.setAlignment(Pos.BOTTOM_LEFT);
         VBox vBox = new VBox(name, hBox);

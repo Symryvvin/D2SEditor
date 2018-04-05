@@ -1,6 +1,5 @@
 package ru.aizen.domain.character.attribute;
 
-import javafx.scene.image.Image;
 import ru.aizen.domain.character.CharacterClass;
 
 public class Skill implements Comparable<Skill> {
@@ -9,7 +8,7 @@ public class Skill implements Comparable<Skill> {
 
     private String name;
     private CharacterClass characterClass;
-    private Image image;
+    private String image;
     private int page;
     private int row;
     private int column;
@@ -19,13 +18,13 @@ public class Skill implements Comparable<Skill> {
         this.order = order;
     }
 
-    public Skill(String name, CharacterClass characterClass, Image image, int page, int row, int column) {
+    public Skill(String name, CharacterClass characterClass, int page, int row, int column, String image) {
         this.name = name;
         this.characterClass = characterClass;
-        this.image = image;
         this.page = page;
         this.row = row;
         this.column = column;
+        this.image = "/" + image;
     }
 
     public void mergeValue(Skill skill) {
@@ -49,12 +48,8 @@ public class Skill implements Comparable<Skill> {
         return value;
     }
 
-    public Image getImage() {
+    public String getImagePath() {
         return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     public CharacterClass getCharacterClass() {
@@ -85,9 +80,10 @@ public class Skill implements Comparable<Skill> {
     public String toString() {
         return "Skill{" +
                 "value=" + value +
+                ", order=" + order +
                 ", name='" + name + '\'' +
                 ", characterClass=" + characterClass +
-                ", image=" + image +
+                ", image='" + image + '\'' +
                 ", page=" + page +
                 ", row=" + row +
                 ", column=" + column +

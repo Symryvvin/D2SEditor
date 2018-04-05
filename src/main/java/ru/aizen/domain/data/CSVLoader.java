@@ -37,7 +37,8 @@ public final class CSVLoader {
                         int page = Integer.parseInt(i[2]);
                         int row = Integer.parseInt(i[3]);
                         int column = Integer.parseInt(i[4]);
-                        return new Skill(name, characterClass, null, page, row, column);
+                        String image = i[5] + ".png";
+                        return new Skill(name, characterClass, page, row, column, image);
                     })
                     .collect(Collectors.toList());
             pages = Files.readAllLines(Paths.get(CSVLoader.class.getResource(PAGES_CSV).toURI()))

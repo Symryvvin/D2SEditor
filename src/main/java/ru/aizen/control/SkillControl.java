@@ -28,7 +28,7 @@ public class SkillControl extends Control {
     }
 
     public void setImageByPath(String path) {
-        new Image(path);
+        this.image.setImage(new Image(path));
     }
 
     @Override
