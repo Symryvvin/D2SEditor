@@ -1,9 +1,9 @@
 package ru.aizen.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import ru.aizen.control.NumericField;
+import javafx.scene.layout.GridPane;
+import ru.aizen.control.SkillControl;
 import ru.aizen.domain.character.attribute.Skill;
 import ru.aizen.domain.character.attribute.SkillPage;
 import ru.aizen.domain.character.block.SkillsBlock;
@@ -67,10 +67,11 @@ public class SkillsController extends AbstractController {
     private void refreshPage(List<Skill> skills, Tab tab) {
         for (Skill skill : skills) {
             int orderOnPage = skills.indexOf(skill) + 1;
-            NumericField value = (NumericField) tab.getContent().lookup("#value" + orderOnPage);
-            value.setText(String.valueOf(skill.getValue()));
-            Label name = (Label) tab.getContent().lookup("#name" + orderOnPage);
-            name.setText(skill.getName());
+            SkillControl skillControl = (SkillControl) tab.getContent().lookup("#skill" + orderOnPage);
+            skillControl.setName(String.valueOf(skill.getName()));
+            skillControl.setValue(String.valueOf(skill.getValue()));
+            GridPane.setColumnIndex(skillControl, skill.getColumn() - 1);
+            GridPane.setRowIndex(skillControl, skill.getRow() - 1);
         }
     }
 
@@ -107,8 +108,8 @@ public class SkillsController extends AbstractController {
     private List<Skill> getSkillValues(List<Skill> skills, Tab tab) {
         for (Skill skill : skills) {
             int orderOnPage = skills.indexOf(skill) + 1;
-            NumericField value = (NumericField) tab.getContent().lookup("#value" + orderOnPage);
-            skill.setValue(Integer.parseInt(value.getText()));
+            SkillControl skillControl = (SkillControl) tab.getContent().lookup("#skill" + orderOnPage);
+            skill.setValue(Integer.parseInt(skillControl.getValue().getText()));
         }
         return skills;
     }

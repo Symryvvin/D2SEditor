@@ -1,75 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import ru.aizen.control.*?>
 <AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
-    <GridPane>
+            xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: grey;">
+    <GridPane AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"
+              AnchorPane.topAnchor="10">
         <columnConstraints>
-            <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints prefWidth="100.0"/>
+            <ColumnConstraints prefWidth="100.0"/>
+            <ColumnConstraints prefWidth="100.0"/>
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
-            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
-            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
-            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
-            <RowConstraints minHeight="10.0" prefHeight="100.0"/>
+            <RowConstraints prefHeight="70.0"/>
+            <RowConstraints prefHeight="70.0"/>
+            <RowConstraints prefHeight="70.0"/>
+            <RowConstraints prefHeight="70.0"/>
+            <RowConstraints prefHeight="70.0"/>
+            <RowConstraints prefHeight="70.0"/>
         </rowConstraints>
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <Label fx:id="name1" text="name"/>
-            <ImageView fx:id="image1"/>
-            <NumericField fx:id="value1" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-            <Label fx:id="name2" text="name"/>
-            <ImageView fx:id="image2"/>
-            <NumericField fx:id="value2" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
-            <Label fx:id="name3" text="name"/>
-            <ImageView fx:id="image3"/>
-            <NumericField fx:id="value3" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="3">
-            <Label fx:id="name4" text="name"/>
-            <ImageView fx:id="image4"/>
-            <NumericField fx:id="value4" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="4">
-            <Label fx:id="name5" text="name"/>
-            <ImageView fx:id="image5"/>
-            <NumericField fx:id="value5" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
-            <Label fx:id="name6" text="name"/>
-            <ImageView fx:id="image6"/>
-            <NumericField fx:id="value6" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <Label fx:id="name7" text="name"/>
-            <ImageView fx:id="image7"/>
-            <NumericField fx:id="value7" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <Label fx:id="name8" text="name"/>
-            <ImageView fx:id="image8"/>
-            <NumericField fx:id="value8" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
-            <Label fx:id="name9" text="name"/>
-            <ImageView fx:id="image9"/>
-            <NumericField fx:id="value9" maxValue="99"/>
-        </VBox>
-        <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
-            <Label fx:id="name10" text="name"/>
-            <ImageView fx:id="image10"/>
-            <NumericField fx:id="value10" maxValue="99"/>
-        </VBox>
+        <SkillControl fx:id="skill1" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <SkillControl fx:id="skill2" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <SkillControl fx:id="skill3" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <SkillControl fx:id="skill4" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <SkillControl fx:id="skill5" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        <SkillControl fx:id="skill6" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <SkillControl fx:id="skill7" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <SkillControl fx:id="skill8" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <SkillControl fx:id="skill9" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <SkillControl fx:id="skill10" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
     </GridPane>
-
-
 </AnchorPane>
