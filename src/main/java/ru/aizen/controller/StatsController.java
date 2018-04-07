@@ -152,16 +152,16 @@ public class StatsController extends AbstractController {
         difficult = character.getTitle().getDifficult();
     }
 
-    private String getAttributeValue(String name) {
-        return getAttributeValue(name, false);
+    private String getAttributeValue(long id) {
+        return getAttributeValue(id, false);
     }
 
-    private String getAttributeValue(String name, boolean divide) {
-        if (attributesBlock.containsKey(name)) {
+    private String getAttributeValue(long id, boolean divide) {
+        if (attributesBlock.containsKey(id)) {
             if (divide)
-                return String.valueOf(attributesBlock.get(name) / 256);
+                return String.valueOf(attributesBlock.get(id) / 256);
             else
-                return String.valueOf(attributesBlock.get(name));
+                return String.valueOf(attributesBlock.get(id));
         }
         return "0";
     }

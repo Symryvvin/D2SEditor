@@ -2,55 +2,36 @@ package ru.aizen.domain.character.block;
 
 import org.apache.commons.lang3.StringUtils;
 import ru.aizen.domain.character.attribute.Attribute;
+import ru.aizen.domain.data.CSVLoader;
 import ru.aizen.domain.util.BinaryUtils;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class AttributesBlock extends DataBlock {
     private static final String STOP_CODE = "01FF";
 
-    public static final String STRENGTH = "Strength";
-    public static final String ENERGY = "Energy";
-    public static final String DEXTERITY = "Dexterity";
-    public static final String VITALITY = "Vitality";
-    public static final String STAT_POINTS = "Stat points";
-    public static final String SKILL_POINTS = "Skill points";
-    public static final String HP = "Hit point";
-    public static final String MAX_HP = "Max hit points";
-    public static final String MP = "Mana points";
-    public static final String MAX_MP = "Max mana points";
-    public static final String SP = "Stamina points";
-    public static final String MAX_SP = "Max stamina points";
-    public static final String LEVEL = "Level";
-    public static final String EXPERIENCE = "Experience";
-    public static final String GOLD = "Gold";
-    public static final String GOLD_IN_STASH = "Gold in stash";
+    public static final long STRENGTH = 0;
+    public static final long ENERGY = 1;
+    public static final long DEXTERITY = 2;
+    public static final long VITALITY = 3;
+    public static final long STAT_POINTS = 4;
+    public static final long SKILL_POINTS = 5;
+    public static final long HP = 6;
+    public static final long MAX_HP = 7;
+    public static final long MP = 8;
+    public static final long MAX_MP = 9;
+    public static final long SP = 10;
+    public static final long MAX_SP = 11;
+    public static final long LEVEL = 12;
+    public static final long EXPERIENCE = 13;
+    public static final long GOLD = 14;
+    public static final long GOLD_IN_STASH = 15;
 
 
-    private Map<String, Long> attributes;
-
-    private static Map<Long, Attribute> attributeMap;
-    private static final String ATTRIBUTES_DATA = "/attributes.csv";
-
-    static {
-        try {
-            attributeMap = Files.readAllLines(Paths.get(AttributesBlock.class.getResource(ATTRIBUTES_DATA).toURI()))
-                    .stream()
-                    .skip(1).map(i -> i.split(";"))
-                    .map(i -> new Attribute(i[0], i[1], i[2], i[3]))
-                    .collect(Collectors.toMap(Attribute::getId, a -> a));
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
+    private Map<Long, Long> attributes;
 
     public AttributesBlock(int order) {
         super(order);
@@ -83,7 +64,7 @@ public class AttributesBlock extends DataBlock {
             cursor += Attribute.ID_OFFSET;
             Attribute attribute = getBy(id);
             end = cursor + attribute.getLength();
-            put(attribute.getName(), readValue(bits, cursor, end));
+            put(attribute.getId(), readValue(bits, cursor, end));
             cursor = end;
         }
     }
@@ -101,10 +82,9 @@ public class AttributesBlock extends DataBlock {
 
     private String getBinary() {
         StringBuilder builder = new StringBuilder();
-        Map<Long, Long> idValue = getIdValueMap();
-        for (Map.Entry<Long, Long> entry : idValue.entrySet()) {
+        for (Map.Entry<Long, Long> entry : attributes.entrySet()) {
             long id = entry.getKey();
-            Attribute attribute = attributeMap.get(id);
+            Attribute attribute = getBy(id);
             long value = entry.getValue();
             builder.append(getBinaryString(id, Attribute.ID_OFFSET))
                     .append(getBinaryString(value, attribute.getLength()));
@@ -121,46 +101,27 @@ public class AttributesBlock extends DataBlock {
                 Long.toBinaryString(value)).replace(' ', '0'));
     }
 
-    private Map<Long, Long> getIdValueMap() {
-        Map<Long, Long> result = new HashMap<>();
-        for (Map.Entry<String, Long> entry : attributes.entrySet()) {
-            Long id = findIdInAttributeMapByName(entry.getKey());
-            if (id != null) {
-                result.put(id, entry.getValue());
-            }
-        }
-        return result;
-    }
-
-    private Long findIdInAttributeMapByName(String name) {
-        for (Map.Entry<Long, Attribute> entry : attributeMap.entrySet()) {
-            if (entry.getValue().getName().equals(name))
-                return entry.getValue().getId();
-        }
-        return null;
-    }
-
     private long readValue(String bits, int initial, int length) {
         return BinaryUtils.reversedBitsToInt(bits.substring(initial, length));
     }
 
-    public Map<String, Long> getAttributes() {
+    public Map<Long, Long> getAttributes() {
         return attributes;
     }
 
-    public void put(String key, Long value) {
+    public void put(Long key, Long value) {
         attributes.put(key, value);
     }
 
-    public boolean containsKey(String key) {
+    public boolean containsKey(long key) {
         return attributes.containsKey(key);
     }
 
-    public Long get(String key) {
+    public Long get(long key) {
         return attributes.get(key);
     }
 
     private Attribute getBy(long id) {
-        return attributeMap.get(id);
+        return CSVLoader.attributes().get(id);
     }
 }
