@@ -45,6 +45,7 @@ public class StatsController extends AbstractController {
 
     private AttributesBlock attributesBlock;
 
+
     public StatsController(Character character) {
         super(character);
     }
@@ -52,7 +53,6 @@ public class StatsController extends AbstractController {
     @Autowired
     public void initialize(SkillsController skillsController) {
         this.skillsController = skillsController;
-
     }
 
     public void initialize() {
@@ -213,6 +213,6 @@ public class StatsController extends AbstractController {
 
     public void onChangeClass() {
         character.setCharacterClass(characterClass.getValue());
-        skillsController.refresh();
+        skillsController.loadCharacter();
     }
 }

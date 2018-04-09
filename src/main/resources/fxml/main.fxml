@@ -53,11 +53,14 @@
     </ButtonBar>
     <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
-        <Tab text="Hero Editor" disable="true">
-            <fx:include source="editor.fxml" fx:id="editor"/>
+        <Tab text="Stats" disable="true">
+            <fx:include source="editor.fxml"/>
+        </Tab>
+        <Tab text="Skills" disable="true">
+            <fx:include source="skills.fxml"/>
         </Tab>
         <Tab text="Hex Editor" disable="true">
-            <fx:include source="hex.fxml" fx:id="hexEditor"/>
+            <fx:include source="hex.fxml"/>
         </Tab>
     </TabPane>
 </AnchorPane>

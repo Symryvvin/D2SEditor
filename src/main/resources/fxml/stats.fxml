@@ -39,10 +39,6 @@
                     <Label text="Experience"/>
                     <NumericField fx:id="experience" maxValue="3520485255"/>
                 </VBox>
-                <VBox GridPane.columnIndex="2" GridPane.rowIndex="3">
-                    <Label text="Next level"/>
-                    <Label fx:id="nextLevel" text=""/>
-                </VBox>
                 <VBox GridPane.rowSpan="3" GridPane.columnIndex="1" alignment="CENTER">
                     <CheckBox fx:id="isExpansion" text="Expansion" onMouseClicked="#onChangeExpansion"/>
                     <Region minHeight="10" prefWidth="10"/>
@@ -113,9 +109,6 @@
             </GridPane>
             <Region minHeight="10" prefWidth="10"/>
         </VBox>
-        <Region minWidth="10.0" prefWidth="10.0"/>
-        <!--Skills-->
-        <fx:include source="skills.fxml" fx:id="skills"/>
         <Region minWidth="10.0" prefWidth="10.0"/>
     </HBox>
 </AnchorPane>

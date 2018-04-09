@@ -1,23 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ru.aizen.controller.SkillsController">
-    <VBox>
-        <Region minHeight="10" prefWidth="10"/>
-        <TabPane fx:id="tabs" prefWidth="400" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-            <Tab>
-                <fx:include source="skillPage.fxml"/>
-            </Tab>
-            <Tab>
-                <fx:include source="skillPage.fxml"/>
-            </Tab>
-            <Tab>
-                <fx:include source="skillPage.fxml"/>
-            </Tab>
-        </TabPane>
-        <Region minHeight="10" prefWidth="10"/>
-    </VBox>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ru.aizen.controller.SkillsController" stylesheets="@/css/style.css">
+    <HBox AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
+        <VBox minWidth="320" prefWidth="320" maxWidth="320" alignment="CENTER">
+            <Label fx:id="firstPageName" styleClass="skillPageName" prefWidth="1000" alignment="CENTER"/>
+            <GridPane fx:id="firstPage" styleClass="skillPage" alignment="CENTER">
+                <rowConstraints>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                </rowConstraints>
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="100"/>
+                    <ColumnConstraints prefWidth="100"/>
+                    <ColumnConstraints prefWidth="100"/>
+                </columnConstraints>
+            </GridPane>
+        </VBox>
+        <Region prefWidth="10"/>
+        <VBox minWidth="320" prefWidth="320" maxWidth="320" alignment="CENTER">
+            <Label fx:id="secondPageName" styleClass="skillPageName" prefWidth="1000" alignment="CENTER"/>
+            <GridPane fx:id="secondPage" styleClass="skillPage" alignment="CENTER">
+                <rowConstraints>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                </rowConstraints>
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="100"/>
+                    <ColumnConstraints prefWidth="100"/>
+                    <ColumnConstraints prefWidth="100"/>
+                </columnConstraints>
+            </GridPane>
+        </VBox>
+        <Region prefWidth="10"/>
+        <VBox minWidth="320" prefWidth="320" maxWidth="320" alignment="CENTER">
+            <Label fx:id="thirdPageName" styleClass="skillPageName" prefWidth="1000" alignment="CENTER"/>
+            <GridPane fx:id="thirdPage" styleClass="skillPage" alignment="CENTER">
+                <rowConstraints>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                    <RowConstraints prefHeight="72"/>
+                </rowConstraints>
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="100"/>
+                    <ColumnConstraints prefWidth="100"/>
+                    <ColumnConstraints prefWidth="100"/>
+                </columnConstraints>
+            </GridPane>
+        </VBox>
+    </HBox>
 </AnchorPane>

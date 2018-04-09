@@ -4,6 +4,23 @@ Label{
     -fx-font-weight: bold;
 }
 
+.skillPageName {
+    -fx-background-color: #1d1d1d;
+    -fx-font-size: 11pt;
+    -fx-font-family: 'Segoe UI Semibold';
+    -fx-text-fill: white;
+    -fx-opacity: 0.6;
+}
+
+.skillPage {
+    -fx-background-color: #ccc;
+}
+
+VBox {
+    -fx-padding: 5px;
+}
+
+
 TextField{
     -fx-font-size: 12px;
     -fx-pref-height: 24px;

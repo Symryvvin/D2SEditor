@@ -61,11 +61,11 @@ public class Skill implements Comparable<Skill> {
     }
 
     public int getRow() {
-        return row;
+        return row - 1;
     }
 
     public int getColumn() {
-        return column;
+        return column - 1;
     }
 
     public int getOrder() {
