@@ -3,7 +3,9 @@ package ru.aizen.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
+import org.springframework.stereotype.Component;
 import ru.aizen.control.SkillControl;
+import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.attribute.Skill;
 import ru.aizen.domain.character.block.SkillsBlock;
@@ -12,6 +14,7 @@ import ru.aizen.domain.data.CSVLoader;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class SkillsController extends AbstractController {
     private SkillsBlock skillsBlock;
     @FXML private TabPane tabs;
@@ -19,6 +22,10 @@ public class SkillsController extends AbstractController {
 
     private final String skillPath = "icons/skills/";
     private CharacterClass characterClass;
+
+    public SkillsController(Character character) {
+        super(character);
+    }
 
     @Override
     protected void loadCharacter() {

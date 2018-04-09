@@ -6,28 +6,32 @@ import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.codec.DecoderException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
+@Component
 public class MainController {
-    @FXML private  Button restore;
-    @FXML private  Button save;
+    @FXML private Button restore;
+    @FXML private Button save;
     @FXML private TabPane editorTabs;
     private String folder;
     private Path path;
+
     private Character character;
+    private EditorController editorController;
+    private HexEditorController hexEditorController;
 
-    @FXML private EditorController editorController;
-    @FXML private HexEditorController hexEditorController;
-
-    public void initialize() {
+    @Autowired
+    public void initialize(Character character, EditorController editorController, HexEditorController hexEditorController) {
         folder = "C:/Users/" + System.getProperty("user.name") + "/Saved Games/Diablo II/";
-        character = new Character();
-        editorController.setCharacter(character);
-        hexEditorController.setCharacter(character);
+        this.character = character;
+        this.editorController = editorController;
+        this.hexEditorController = hexEditorController;
     }
 
     @FXML

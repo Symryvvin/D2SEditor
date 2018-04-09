@@ -6,6 +6,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.aizen.control.NumericField;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
@@ -16,8 +18,9 @@ import ru.aizen.domain.character.block.AttributesBlock;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class StatsController extends AbstractController {
-    @FXML private SkillsController skillsController;
+    private SkillsController skillsController;
 
     @FXML private CheckBox isExpansion;
     @FXML private CheckBox isHardcore;
@@ -42,14 +45,19 @@ public class StatsController extends AbstractController {
 
     private AttributesBlock attributesBlock;
 
+    public StatsController(Character character) {
+        super(character);
+    }
+
+    @Autowired
+    public void initialize(SkillsController skillsController) {
+        this.skillsController = skillsController;
+
+    }
+
     public void initialize() {
         initTitle();
         initCharacterClass();
-    }
-
-    public void setCharacter(Character character) {
-        super.setCharacter(character);
-        skillsController.setCharacter(character);
     }
 
     private void initCharacterClass() {

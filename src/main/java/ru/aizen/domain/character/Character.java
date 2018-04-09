@@ -1,6 +1,7 @@
 package ru.aizen.domain.character;
 
 import org.apache.commons.codec.DecoderException;
+import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.CharacterData;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Class keep all data of character witch can be present on application forms
  */
+@Component
 public class Character {
     private CharacterData characterData;
     private HeaderBlock headerBlock;
@@ -50,7 +52,7 @@ public class Character {
 
     /**
      * Temporary method to creating stub data block
-     * @return
+     * @return stub block
      */
     private List<DataBlock> stubs() throws DecoderException {
         int hotKeysMercenaryQuestWayPointsNPCStart = headerBlock.getSize() + metaBlock.getSize();

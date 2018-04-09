@@ -1,11 +1,15 @@
 package ru.aizen.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
 
+@Component
 public abstract class AbstractController {
-    protected Character character;
+    protected final Character character;
 
-    public void setCharacter(Character character){
+    @Autowired
+    public AbstractController(Character character) {
         this.character = character;
     }
 
