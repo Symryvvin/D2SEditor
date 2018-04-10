@@ -1,14 +1,11 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.character.attribute.Skill;
-
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SkillsBlock extends DataBlock {
-    private List<Skill> skills;
+    private Map<Integer, Byte> values;
 
     public SkillsBlock(int order) {
         super(order);
@@ -18,24 +15,19 @@ public class SkillsBlock extends DataBlock {
     public DataBlock parse(ByteBuffer buffer) {
         size = buffer.capacity();
         buffer.getShort();
-        skills = new ArrayList<>();
-        byte[] values = new byte[30];
-        buffer.get(values, 0, 30);
-        for (int i = 0; i < values.length; i++) {
-            skills.add(new Skill(values[i], i));
+        values = new HashMap<>();
+        byte[] data = new byte[30];
+        buffer.get(data, 0, 30);
+        for (int i = 0; i < data.length; i++) {
+            values.put(i + 1, data[i]);
         }
         return this;
     }
 
     @Override
     public ByteBuffer collect() {
-        List<Integer> values = skills.stream()
-                .map(Skill::getValue)
-                .collect(Collectors.toList());
         byte[] result = new byte[30];
-        for (int i = 0; i < values.size(); i++) {
-            result[i] = values.get(i).byteValue();
-        }
+        values.forEach((key, value) -> result[key - 1] = value);
         ByteBuffer buffer = ByteBuffer.allocate(2 + result.length)
                 .put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 105).put((byte) 102).flip())
                 .put(result);
@@ -43,11 +35,11 @@ public class SkillsBlock extends DataBlock {
         return buffer;
     }
 
-    public List<Skill> getSkills() {
-        return skills;
+    public Map<Integer, Byte> getSkillValues() {
+        return values;
     }
 
-    public void setSkills(List<Skill> skills) {
-        this.skills = skills;
+    public void setSkillValues(Map<Integer, Byte> values) {
+        this.values = values;
     }
 }

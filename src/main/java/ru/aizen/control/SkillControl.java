@@ -12,6 +12,7 @@ public class SkillControl extends Control {
     private ImageView image;
     private Label name;
     private NumericField value;
+    private int skillOrder;
 
     public SkillControl() {
         this.image = new ImageView();
@@ -31,20 +32,35 @@ public class SkillControl extends Control {
         this.image.setImage(new Image(path));
     }
 
+    public void setSkillOrder(int skillOrder) {
+        this.skillOrder = skillOrder;
+    }
+
+    public ImageView getImageView() {
+        return image;
+    }
+
+    public Label getLabel() {
+        return name;
+    }
+
+    public NumericField getNumericField() {
+        return value;
+    }
+
+    public Byte getValue() {
+        return value.getNumericValue().byteValue();
+    }
+
+    public int getSkillOrder() {
+        return skillOrder;
+    }
+
     @Override
     protected Skin<?> createDefaultSkin() {
         return new SkillControlSkin(this);
     }
 
-    public ImageView getImage() {
-        return image;
-    }
 
-    public Label getName() {
-        return name;
-    }
 
-    public NumericField getValue() {
-        return value;
-    }
 }

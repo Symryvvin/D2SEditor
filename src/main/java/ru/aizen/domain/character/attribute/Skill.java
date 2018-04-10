@@ -1,47 +1,25 @@
 package ru.aizen.domain.character.attribute;
 
-import ru.aizen.domain.character.CharacterClass;
-
-public class Skill implements Comparable<Skill> {
+public class Skill {
     private int value;
     private int order;
-
     private String name;
-    private CharacterClass characterClass;
     private String image;
     private int page;
     private int row;
     private int column;
 
-    public Skill(int value, int order) {
-        this.value = value;
+    public Skill(int order, String name, String image, int page, int row, int column) {
         this.order = order;
-    }
-
-    public Skill(String name, CharacterClass characterClass, int page, int row, int column, String image) {
         this.name = name;
-        this.characterClass = characterClass;
+        this.image = image;
         this.page = page;
         this.row = row;
         this.column = column;
-        this.image = "/" + image;
-    }
-
-    public void mergeValue(Skill skill) {
-        this.value = skill.value;
-        this.order = skill.order;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 
     public int getValue() {
@@ -50,10 +28,6 @@ public class Skill implements Comparable<Skill> {
 
     public String getImagePath() {
         return image;
-    }
-
-    public CharacterClass getCharacterClass() {
-        return characterClass;
     }
 
     public int getPage() {
@@ -72,8 +46,8 @@ public class Skill implements Comparable<Skill> {
         return order;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     @Override
@@ -82,16 +56,10 @@ public class Skill implements Comparable<Skill> {
                 "value=" + value +
                 ", order=" + order +
                 ", name='" + name + '\'' +
-                ", characterClass=" + characterClass +
                 ", image='" + image + '\'' +
                 ", page=" + page +
                 ", row=" + row +
                 ", column=" + column +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Skill o) {
-        return Integer.compare(order, o.order);
     }
 }
