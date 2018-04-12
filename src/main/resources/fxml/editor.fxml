@@ -1,10 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ru.aizen.controller.EditorController"
-            prefHeight="400.0" prefWidth="600.0">
-    <fx:include source="stats.fxml" fx:id="stats"/>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.aizen.controller.EditorController">
+    <VBox minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <HBox prefHeight="60.0" prefWidth="200.0" spacing="10.0">
+            <Pane prefWidth="300.0">
+                <Label layoutY="10.0" text="Title"/>
+                <Label layoutY="30.0" text="Name"/>
+                <Label layoutX="100.0" layoutY="10.0" text="Level"/>
+                <Label layoutX="100.0" layoutY="30.0" text="Expansion Character"/>
+            </Pane>
+            <HBox alignment="CENTER" prefHeight="60.0" spacing="10.0" stylesheets="@../css/pickClass.css"
+                  HBox.hgrow="ALWAYS">
+                <Button mnemonicParsing="false" onAction="#pickAssassin" prefHeight="40.0"
+                        prefWidth="40.0" styleClass="classButton" text="As"/>
+                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickAmazon"
+                        prefHeight="40.0" prefWidth="40.0" styleClass="classButton" text="Am"/>
+                <Button layoutX="40.0" layoutY="10.0" mnemonicParsing="false"
+                        onAction="#pickNecromancer" prefHeight="40.0" prefWidth="40.0"
+                        styleClass="classButton" text="Nc"/>
+                <Button layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickBarbarian"
+                        prefHeight="40.0" prefWidth="40.0" styleClass="classButton" text="Br"/>
+                <Button layoutX="100.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickPaladin"
+                        prefHeight="40.0" prefWidth="40.0" styleClass="classButton" text="Pl"/>
+                <Button layoutX="130.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickSorceress"
+                        prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/pickClass.css"
+                        text="Sc"/>
+                <Button layoutX="160.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickDruid"
+                        prefHeight="40.0" prefWidth="40.0" styleClass="classButton" text="Dr"/>
+            </HBox>
+        </HBox>
+        <HBox alignment="CENTER" fillHeight="false" spacing="10.0" VBox.vgrow="ALWAYS">
+            <VBox>
+                <Label text="Title"/>
+                <ComboBox fx:id="title" onAction="#onChangeTitle" prefWidth="150"/>
+            </VBox>
+            <VBox>
+                <Label text="Name"/>
+                <TextField fx:id="name"/>
+            </VBox>
+            <CheckBox fx:id="isExpansion" onMouseClicked="#onChangeExpansion" text="Expansion"/>
+            <CheckBox fx:id="isHardcore" onMouseClicked="#onChangeMode" text="Hardcore"/>
+            <CheckBox fx:id="isDead" disable="true" onMouseClicked="#onChangeDead" text="Dead"/>
+        </HBox>
+        <fx:include source="stats.fxml"/>
+    </VBox>
 </AnchorPane>

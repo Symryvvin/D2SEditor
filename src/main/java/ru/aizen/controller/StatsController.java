@@ -1,34 +1,13 @@
 package ru.aizen.controller;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.util.StringConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.control.NumericField;
 import ru.aizen.domain.character.Character;
-import ru.aizen.domain.character.CharacterClass;
-import ru.aizen.domain.character.Status;
-import ru.aizen.domain.character.Title;
 import ru.aizen.domain.character.block.AttributesBlock;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class StatsController extends AbstractController {
-    private SkillsController skillsController;
-
-    @FXML private CheckBox isExpansion;
-    @FXML private CheckBox isHardcore;
-    @FXML private CheckBox isDead;
-    private Title.Difficult difficult;
-    @FXML private ComboBox<Title> title;
-    @FXML private TextField name;
-    @FXML private ComboBox<CharacterClass> characterClass;
     @FXML private NumericField hp;
     @FXML private NumericField mp;
     @FXML private NumericField sp;
@@ -50,56 +29,13 @@ public class StatsController extends AbstractController {
         super(character);
     }
 
-    @Autowired
-    public void initialize(SkillsController skillsController) {
-        this.skillsController = skillsController;
-    }
-
-    public void initialize() {
-        initTitle();
-        initCharacterClass();
-    }
-
-    private void initCharacterClass() {
-        characterClass.getItems().addAll(
-                new ObservableListWrapper<>(
-                        CharacterClass.getCharacterClassList()));
-        characterClass.setConverter(new StringConverter<CharacterClass>() {
-            @Override
-            public String toString(CharacterClass object) {
-                return object.getName();
-            }
-
-            @Override
-            public CharacterClass fromString(String string) {
-                return null;
-            }
-        });
-    }
-
-    private void initTitle() {
-        title.setConverter(new StringConverter<Title>() {
-            @Override
-            public String toString(Title object) {
-                return object.getName();
-            }
-
-            @Override
-            public Title fromString(String string) {
-                return null;
-            }
-        });
-    }
-
     @Override
     protected void loadCharacter() {
         loadCharacterStats();
-        skillsController.loadCharacter();
     }
 
     @Override
     public void saveCharacter() {
-        skillsController.saveCharacter();
         attributesBlock.put(AttributesBlock.STRENGTH, Long.parseLong(strength.getText()));
         attributesBlock.put(AttributesBlock.DEXTERITY, Long.parseLong(dexterity.getText()));
         attributesBlock.put(AttributesBlock.VITALITY, Long.parseLong(vitality.getText()));
@@ -117,24 +53,9 @@ public class StatsController extends AbstractController {
         attributesBlock.put(AttributesBlock.STAT_POINTS, Long.parseLong(statPoints.getText()));
         attributesBlock.put(AttributesBlock.GOLD, Long.parseLong(gold.getText()));
         attributesBlock.put(AttributesBlock.GOLD_IN_STASH, Long.parseLong(goldInStash.getText()));
-        character.setAttributesBlock(attributesBlock);
-        character.setName(name.getText());
-        character.setTitle(title.getValue());
-        character.setCharacterClass(characterClass.getValue());
-        Status status = new Status();
-        status.setExpansion(isExpansion.isSelected());
-        status.setHardcore(isHardcore.isSelected());
-        status.setDead(isDead.isSelected());
-        character.setStatus(status);
     }
 
     private void loadCharacterStats() {
-        name.setText(character.getName());
-        title.setItems(
-                new ObservableListWrapper<>(
-                        Title.getTitleListFromStatus(character.getStatus())));
-        title.getSelectionModel().select(character.getTitle());
-        characterClass.getSelectionModel().select(character.getCharacterClass());
         attributesBlock = character.getAttributesBlock();
         strength.setText(getAttributeValue(AttributesBlock.STRENGTH));
         dexterity.setText(getAttributeValue(AttributesBlock.DEXTERITY));
@@ -153,11 +74,8 @@ public class StatsController extends AbstractController {
         //max value of gold in stash depends of level temporary for 99 lvl
         goldInStash.setMaxValue(2500000);
         goldInStash.setText(getAttributeValue(AttributesBlock.GOLD_IN_STASH));
-        isExpansion.setSelected(character.getStatus().isExpansion());
-        isHardcore.setSelected(character.getStatus().isHardcore());
-        isDead.setDisable(!isHardcore.isSelected());
-        isDead.setSelected(character.getStatus().isDead());
-        difficult = character.getTitle().getDifficult();
+        character.setAttributesBlock(attributesBlock);
+
     }
 
     private String getAttributeValue(long id) {
@@ -172,47 +90,5 @@ public class StatsController extends AbstractController {
                 return String.valueOf(attributesBlock.get(id));
         }
         return "0";
-    }
-
-    public void onChangeTitle() {
-        if (title.getSelectionModel().getSelectedItem() != null)
-            difficult = title.getSelectionModel().getSelectedItem().getDifficult();
-    }
-
-    public void onChangeExpansion() {
-        changeTitleList();
-        title.getSelectionModel().select(Title.parse(difficult, title.getItems()));
-    }
-
-    public void onChangeMode() {
-        changeTitleList();
-        title.getSelectionModel().select(Title.parse(difficult, title.getItems()));
-        isDead.setDisable(!isHardcore.isSelected());
-        isDead.setSelected(false);
-        changeTitleList();
-    }
-
-    public void onChangeDead() {
-    }
-
-    private void changeTitleList() {
-        List<Title> titles;
-        if (isExpansion.isSelected()) {
-            if (isHardcore.isSelected())
-                titles = Title.expansionHardCoreSet().collect(Collectors.toList());
-            else
-                titles = Title.expansionSet().collect(Collectors.toList());
-        } else {
-            if (isHardcore.isSelected())
-                titles = Title.vanillaHardcoreSet().collect(Collectors.toList());
-            else
-                titles = Title.vanillaSet().collect(Collectors.toList());
-        }
-        title.setItems(new ObservableListWrapper<>(titles));
-    }
-
-    public void onChangeClass() {
-        character.setCharacterClass(characterClass.getValue());
-        skillsController.loadCharacter();
     }
 }

@@ -3,51 +3,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import ru.aizen.control.*?>
-<AnchorPane stylesheets="@/css/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane stylesheets="@/css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.aizen.controller.StatsController">
-    <HBox>
-        <Region minWidth="10.0" prefWidth="10.0"/>
-        <VBox>
-            <Region minHeight="10" prefWidth="10"/>
-            <GridPane>
-                <columnConstraints>
-                    <ColumnConstraints minWidth="10.0" prefWidth="150.0"/>
-                    <ColumnConstraints minWidth="10.0" prefWidth="150.0"/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="50.0"/>
-                    <RowConstraints minHeight="10.0" prefHeight="50.0"/>
-                    <RowConstraints minHeight="10.0" prefHeight="50.0"/>
-                </rowConstraints>
-                <VBox GridPane.rowIndex="0">
-                    <Label text="Title"/>
-                    <ComboBox fx:id="title" prefWidth="150" onAction="#onChangeTitle"/>
-                </VBox>
-                <VBox GridPane.rowIndex="1">
-                    <Label text="Name"/>
-                    <TextField fx:id="name"/>
-                </VBox>
-                <VBox GridPane.rowIndex="2">
-                    <Label text="Class"/>
-                    <ComboBox fx:id="characterClass" prefWidth="150" onAction="#onChangeClass"/>
-                </VBox>
-                <VBox GridPane.rowIndex="3">
-                    <Label text="Level"/>
-                    <NumericField fx:id="level" maxValue="99"/>
-                </VBox>
-                <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <Label text="Experience"/>
-                    <NumericField fx:id="experience" maxValue="3520485255"/>
-                </VBox>
-                <VBox GridPane.rowSpan="3" GridPane.columnIndex="1" alignment="CENTER">
-                    <CheckBox fx:id="isExpansion" text="Expansion" onMouseClicked="#onChangeExpansion"/>
-                    <Region minHeight="10" prefWidth="10"/>
-                    <CheckBox fx:id="isHardcore" text="Hardcore" onMouseClicked="#onChangeMode"/>
-                    <Region minHeight="10" prefWidth="10"/>
-                    <CheckBox fx:id="isDead" text="Dead" onMouseClicked="#onChangeDead" disable="true"/>
-                </VBox>
-            </GridPane>
-            <Region minHeight="10" prefWidth="10"/>
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <VBox spacing="10.0">
+            <HBox prefHeight="30.0" spacing="10.0">
+                <Label text="Level"/>
+                <NumericField fx:id="level" maxValue="99" prefWidth="50"/>
+                <Label text="Experience"/>
+                <NumericField fx:id="experience" maxValue="3520485255" prefWidth="100"/>
+            </HBox>
             <GridPane>
                 <columnConstraints>
                     <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
@@ -62,21 +28,24 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                 </rowConstraints>
                 <Label text="Strength" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <NumericField fx:id="strength" GridPane.columnIndex="1" GridPane.rowIndex="0" maxValue="1023"/>
+                <NumericField fx:id="strength" maxValue="1023" GridPane.columnIndex="1"
+                              GridPane.rowIndex="0"/>
                 <Label text="Dexterity" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <NumericField fx:id="dexterity" GridPane.columnIndex="1" GridPane.rowIndex="1" maxValue="1023"/>
+                <NumericField fx:id="dexterity" maxValue="1023" GridPane.columnIndex="1"
+                              GridPane.rowIndex="1"/>
                 <Label text="Vitality" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <NumericField fx:id="vitality" GridPane.columnIndex="1" GridPane.rowIndex="2" maxValue="1023"/>
+                <NumericField fx:id="vitality" maxValue="1023" GridPane.columnIndex="1"
+                              GridPane.rowIndex="2"/>
                 <Label text="Energy" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                <NumericField fx:id="energy" GridPane.columnIndex="1" GridPane.rowIndex="3" maxValue="1023"/>
+                <NumericField fx:id="energy" maxValue="1023" GridPane.columnIndex="1"
+                              GridPane.rowIndex="3"/>
                 <Label text="HP" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <NumericField fx:id="hp" GridPane.columnIndex="3" GridPane.rowIndex="0" maxValue="8191"/>
+                <NumericField fx:id="hp" maxValue="8191" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
                 <Label text="MP" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                <NumericField fx:id="mp" GridPane.columnIndex="3" GridPane.rowIndex="1" maxValue="8191"/>
+                <NumericField fx:id="mp" maxValue="8191" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
                 <Label text="SP" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-                <NumericField fx:id="sp" GridPane.columnIndex="3" GridPane.rowIndex="2" maxValue="8191"/>
+                <NumericField fx:id="sp" maxValue="8191" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
             </GridPane>
-            <Region minHeight="10" prefWidth="10"/>
             <GridPane>
                 <columnConstraints>
                     <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
@@ -87,28 +56,18 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                 </rowConstraints>
                 <Label text="Stat points" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <NumericField fx:id="statPoints" GridPane.columnIndex="1" GridPane.rowIndex="0" maxValue="1023"/>
+                <NumericField fx:id="statPoints" maxValue="1023" GridPane.columnIndex="1"
+                              GridPane.rowIndex="0"/>
                 <Label text="Skill points" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <NumericField fx:id="skillPoints" GridPane.columnIndex="1" GridPane.rowIndex="1" maxValue="255"/>
+                <NumericField fx:id="skillPoints" maxValue="255" GridPane.columnIndex="1"
+                              GridPane.rowIndex="1"/>
             </GridPane>
-            <Region minHeight="10" prefWidth="10"/>
-            <GridPane>
-                <columnConstraints>
-                    <ColumnConstraints minWidth="10.0" prefWidth="40.0"/>
-                    <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
-                    <ColumnConstraints minWidth="10.0" prefWidth="40.0"/>
-                    <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                </rowConstraints>
-                <Label text="Gold" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <NumericField fx:id="gold" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <Label text="Stash" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                <NumericField fx:id="goldInStash" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-            </GridPane>
-            <Region minHeight="10" prefWidth="10"/>
+            <HBox prefHeight="30.0" spacing="10.0">
+                <Label text="Gold"/>
+                <NumericField fx:id="gold" prefWidth="70"/>
+                <Label text="Stash"/>
+                <NumericField fx:id="goldInStash" prefWidth="70"/>
+            </HBox>
         </VBox>
-        <Region minWidth="10.0" prefWidth="10.0"/>
-    </HBox>
+    </VBox>
 </AnchorPane>
