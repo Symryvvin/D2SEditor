@@ -3,6 +3,12 @@ package ru.aizen;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
@@ -13,7 +19,12 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ContextConfiguration(classes = AppConfig.class)
 public class CharacterTest {
+    @Autowired
+    private Character character;
 
     @Test
     public void testStatus() {
@@ -66,7 +77,6 @@ public class CharacterTest {
     @Test
     public void testCharacterMeta() throws URISyntaxException, IOException, DecoderException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
-        Character character = new Character();
         character.load(path);
         Assert.assertEquals("Test", character.getName());
         Assert.assertEquals(true, character.getStatus().isExpansion());
@@ -74,7 +84,7 @@ public class CharacterTest {
         Assert.assertEquals(false, character.getStatus().isDead());
         Assert.assertEquals(Title.NO_TITLE, character.getTitle());
         Assert.assertEquals(CharacterClass.DRUID, character.getCharacterClass());
-       // Assert.assertEquals(LocalDateTime.parse("2018-03-25T09:17:11"), character.getTime());
+        // Assert.assertEquals(LocalDateTime.parse("2018-03-25T09:17:11"), character.getTime());
     }
 
 

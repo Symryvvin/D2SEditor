@@ -1,8 +1,10 @@
 package ru.aizen.domain.character;
 
 import org.apache.commons.codec.DecoderException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
+import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.CharacterData;
 import ru.aizen.domain.data.DataReader;
@@ -25,7 +27,11 @@ public class Character {
     private AttributesBlock attributesBlock;
     private SkillsBlock skillsBlock;
 
-    public Character() {
+    private final CharacterDao characterDao;
+
+    @Autowired
+    public Character(CharacterDao characterDao) {
+        this.characterDao = characterDao;
     }
 
     public void load(Path path) throws IOException, DecoderException {
@@ -93,7 +99,7 @@ public class Character {
     }
 
     public CharacterClass getCharacterClass() {
-        return metaBlock.getCharacterClass();
+        return characterDao.getCharacterClassByValue(metaBlock.getCharacterClass());
     }
 
     public void setName(String name) {
@@ -109,7 +115,8 @@ public class Character {
     }
 
     public void setCharacterClass(CharacterClass characterClass) {
-        metaBlock.setCharacterClass(characterClass);
+        byte value = characterDao.getValueByCharacterClass(characterClass);
+        metaBlock.setCharacterClass(value);
     }
 
     public CharacterData getCharacterData() {

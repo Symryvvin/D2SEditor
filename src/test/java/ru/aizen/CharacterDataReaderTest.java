@@ -4,6 +4,12 @@ import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.block.HeaderBlock;
@@ -15,13 +21,17 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ContextConfiguration(classes = AppConfig.class)
 public class CharacterDataReaderTest {
+    @Autowired
+    private Character character;
     private DataReader reader;
 
     @Before
     public void getTestData() throws IOException, URISyntaxException, DecoderException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
-        Character character = new Character();
         character.load(path);
         reader = character.getCharacterData().getReader();
     }
@@ -51,7 +61,6 @@ public class CharacterDataReaderTest {
 
     @Test
     public void testDataHeader() throws URISyntaxException, DecoderException, IOException {
-        Character character = new Character();
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
         HeaderBlock header = character.getCharacterData().getReader().readHeader();

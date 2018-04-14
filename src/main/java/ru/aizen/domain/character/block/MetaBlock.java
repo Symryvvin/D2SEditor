@@ -1,6 +1,5 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
 import ru.aizen.domain.data.BlockSize;
@@ -16,7 +15,7 @@ public class MetaBlock extends DataBlock {
     private String name;
     private Status status;
     private Title title;
-    private CharacterClass characterClass;
+    private byte characterClass;
     private int level;
     private int activeHand;
     private LocalDateTime time;
@@ -35,7 +34,7 @@ public class MetaBlock extends DataBlock {
         this.status = new Status(buffer.get());
         this.title = Title.parse(buffer.get(), status);
         buffer.getShort();//skip 2 bytes
-        this.characterClass = CharacterClass.parse(buffer.get());
+        this.characterClass = buffer.get();
         buffer.getShort();//skip 2 bytes
         this.level = buffer.get();
         buffer.getInt();//skip 4 bytes
@@ -53,9 +52,9 @@ public class MetaBlock extends DataBlock {
                 .put(status.toByte())
                 .put(title.getValue())
                 .putShort((short) 0)
-                .put(characterClass.getValue())
+                .put(characterClass)
                 .put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 16).put((byte) 30).flip())
-                .put((byte)level)
+                .put((byte) level)
                 .putInt(0)
                 .order(ByteOrder.LITTLE_ENDIAN)
                 .putInt((int) time.toEpochSecond(ZoneOffset.UTC))
@@ -98,11 +97,11 @@ public class MetaBlock extends DataBlock {
         this.title = title;
     }
 
-    public CharacterClass getCharacterClass() {
+    public int getCharacterClass() {
         return characterClass;
     }
 
-    public void setCharacterClass(CharacterClass characterClass) {
+    public void setCharacterClass(byte characterClass) {
         this.characterClass = characterClass;
     }
 
