@@ -58,6 +58,7 @@ public class EditorController extends AbstractController{
 
     public void loadCharacter() {
         statsController.loadCharacter();
+        skillsController.loadCharacter();
         name.setText(character.getName());
         title.setItems(
                 new ObservableListWrapper<>(

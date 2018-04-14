@@ -4,43 +4,41 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121"
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.162"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MainController">
-    <MenuBar AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" prefHeight="25"
-             stylesheets="@/css/menuBar.css">
+    <MenuBar prefHeight="25" stylesheets="@/css/menuBar.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+             AnchorPane.topAnchor="0">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Open" onAction="#onOpenClick">
+            <MenuItem mnemonicParsing="false" onAction="#onOpenClick" text="Open">
                 <accelerator>
                     <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                 </accelerator>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" text="Save" onAction="#onSaveClick"/>
+            <MenuItem mnemonicParsing="false" onAction="#onSaveClick" text="Save"/>
             <MenuItem mnemonicParsing="false" text="Exit"/>
         </Menu>
     </MenuBar>
-    <ButtonBar AnchorPane.rightAnchor="0" AnchorPane.topAnchor="25" AnchorPane.leftAnchor="10" prefHeight="55"
-               buttonMinWidth="40">
+    <ButtonBar buttonMinWidth="40" prefHeight="55" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="0"
+               AnchorPane.topAnchor="25">
         <buttons>
-            <Button onMouseClicked="#onOpenClick" maxHeight="32" maxWidth="32" ButtonBar.buttonData="LEFT"
-                    focusTraversable="false">
+            <Button focusTraversable="false" maxHeight="32" maxWidth="32" onMouseClicked="#onOpenClick"
+                    ButtonBar.buttonData="LEFT">
                 <graphic>
                     <ImageView>
                         <Image url="@/icons/open.png"/>
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="save" onMouseClicked="#onSaveClick" disable="true" maxHeight="32" maxWidth="32"
-                    ButtonBar.buttonData="LEFT"
-                    focusTraversable="false">
+            <Button fx:id="save" disable="true" focusTraversable="false" maxHeight="32" maxWidth="32"
+                    onMouseClicked="#onSaveClick" ButtonBar.buttonData="LEFT">
                 <graphic>
                     <ImageView>
                         <Image url="@/icons/floppy.png"/>
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="restore" onMouseClicked="#onRestoreClick" disable="true" maxHeight="32" maxWidth="32"
-                    ButtonBar.buttonData="LEFT"
-                    focusTraversable="false">
+            <Button fx:id="restore" disable="true" focusTraversable="false" maxHeight="32" maxWidth="32"
+                    onMouseClicked="#onRestoreClick" ButtonBar.buttonData="LEFT">
                 <graphic>
                     <ImageView>
                         <Image url="@/icons/undo.png"/>
@@ -53,13 +51,13 @@
     </ButtonBar>
     <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
-        <Tab text="Stats" disable="true">
+        <Tab disable="true" text="Stats">
             <fx:include source="editor.fxml"/>
         </Tab>
-        <Tab text="Skills" disable="true">
+        <Tab disable="true" text="Skills">
             <fx:include source="skills.fxml"/>
         </Tab>
-        <Tab text="Hex Editor" disable="true">
+        <Tab disable="true" text="Hex Editor">
             <fx:include source="hex.fxml"/>
         </Tab>
     </TabPane>

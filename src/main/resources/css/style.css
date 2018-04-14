@@ -1,3 +1,19 @@
+.characterInfo {
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.characterInfo Label {
+    -fx-font-size: 16px;
+}
+
+.expansion {
+    -fx-text-fill: green;
+}
+
+.classPicker {
+    -fx-font-family: "Book Antiqua";
+}
+
 Label{
     -fx-font-size: 12px;
     -fx-pref-height: 24px;
@@ -16,11 +32,6 @@ Label{
     -fx-background-color: #ccc;
 }
 
-VBox {
-    -fx-padding: 5px;
-}
-
-
 TextField{
     -fx-font-size: 12px;
     -fx-pref-height: 24px;
@@ -30,10 +41,6 @@ TextField{
 ComboBox{
     -fx-font-size: 12px;
     -fx-pref-height: 24px;
-}
-
-GridPane {
-    -fx-hgap: 5;
 }
 
 ButtonBar {

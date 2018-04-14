@@ -1,66 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ru.aizen.controller.SkillsController" stylesheets="@/css/style.css">
-    <HBox AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
-        <VBox minWidth="320" prefWidth="320" maxWidth="320" alignment="CENTER">
-            <Label fx:id="firstPageName" styleClass="skillPageName" prefWidth="1000" alignment="CENTER"/>
-            <GridPane fx:id="firstPage" styleClass="skillPage" alignment="CENTER">
-                <rowConstraints>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                </rowConstraints>
-                <columnConstraints>
-                    <ColumnConstraints prefWidth="100"/>
-                    <ColumnConstraints prefWidth="100"/>
-                    <ColumnConstraints prefWidth="100"/>
-                </columnConstraints>
-            </GridPane>
-        </VBox>
-        <Region prefWidth="10"/>
-        <VBox minWidth="320" prefWidth="320" maxWidth="320" alignment="CENTER">
-            <Label fx:id="secondPageName" styleClass="skillPageName" prefWidth="1000" alignment="CENTER"/>
-            <GridPane fx:id="secondPage" styleClass="skillPage" alignment="CENTER">
-                <rowConstraints>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                </rowConstraints>
-                <columnConstraints>
-                    <ColumnConstraints prefWidth="100"/>
-                    <ColumnConstraints prefWidth="100"/>
-                    <ColumnConstraints prefWidth="100"/>
-                </columnConstraints>
-            </GridPane>
-        </VBox>
-        <Region prefWidth="10"/>
-        <VBox minWidth="320" prefWidth="320" maxWidth="320" alignment="CENTER">
-            <Label fx:id="thirdPageName" styleClass="skillPageName" prefWidth="1000" alignment="CENTER"/>
-            <GridPane fx:id="thirdPage" styleClass="skillPage" alignment="CENTER">
-                <rowConstraints>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                    <RowConstraints prefHeight="72"/>
-                </rowConstraints>
-                <columnConstraints>
-                    <ColumnConstraints prefWidth="100"/>
-                    <ColumnConstraints prefWidth="100"/>
-                    <ColumnConstraints prefWidth="100"/>
-                </columnConstraints>
-            </GridPane>
-        </VBox>
-    </HBox>
-</AnchorPane>
+<VBox spacing="10.0" stylesheets="@/css/style.css" xmlns="http://javafx.com/javafx/8.0.162"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.SkillsController">
+    <children>
+        <fx:include source="metaInfo.fxml"/>
+        <HBox fillHeight="false" spacing="10.0">
+            <VBox alignment="CENTER">
+                <Label fx:id="firstPageName" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                       styleClass="skillPageName"/>
+                <GridPane fx:id="firstPage" alignment="CENTER" hgap="2.0" styleClass="skillPage" vgap="2.0">
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                    </rowConstraints>
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                    </columnConstraints>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </padding>
+                </GridPane>
+            </VBox>
+            <VBox alignment="CENTER">
+                <Label fx:id="secondPageName" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                       styleClass="skillPageName"/>
+                <GridPane fx:id="secondPage" alignment="CENTER" hgap="2.0" styleClass="skillPage" vgap="2.0">
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                    </rowConstraints>
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                    </columnConstraints>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </padding>
+                </GridPane>
+            </VBox>
+            <VBox alignment="CENTER">
+                <Label fx:id="thirdPageName" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                       styleClass="skillPageName"/>
+                <GridPane fx:id="thirdPage" alignment="CENTER" hgap="2.0" styleClass="skillPage" vgap="2.0">
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                    </rowConstraints>
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                    </columnConstraints>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </padding>
+                </GridPane>
+            </VBox>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </HBox>
+    </children>
+</VBox>
