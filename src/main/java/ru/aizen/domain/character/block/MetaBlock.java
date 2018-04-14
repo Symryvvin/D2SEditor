@@ -1,7 +1,6 @@
 package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.character.Status;
-import ru.aizen.domain.character.Title;
 import ru.aizen.domain.data.BlockSize;
 
 import java.nio.ByteBuffer;
@@ -14,7 +13,7 @@ public class MetaBlock extends DataBlock {
 
     private String name;
     private Status status;
-    private Title title;
+    private byte title;
     private byte characterClass;
     private int level;
     private int activeHand;
@@ -32,7 +31,7 @@ public class MetaBlock extends DataBlock {
         buffer.get(name, 0, NAME_LENGTH);
         this.name = new String(name).trim();
         this.status = new Status(buffer.get());
-        this.title = Title.parse(buffer.get(), status);
+        this.title = buffer.get();
         buffer.getShort();//skip 2 bytes
         this.characterClass = buffer.get();
         buffer.getShort();//skip 2 bytes
@@ -50,7 +49,7 @@ public class MetaBlock extends DataBlock {
                 .putInt(activeHand)
                 .put(fillNameWithSpaces())
                 .put(status.toByte())
-                .put(title.getValue())
+                .put(title)
                 .putShort((short) 0)
                 .put(characterClass)
                 .put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 16).put((byte) 30).flip())
@@ -89,11 +88,11 @@ public class MetaBlock extends DataBlock {
         this.status = status;
     }
 
-    public Title getTitle() {
+    public byte getTitle() {
         return title;
     }
 
-    public void setTitle(Title title) {
+    public void setTitle(byte title) {
         this.title = title;
     }
 

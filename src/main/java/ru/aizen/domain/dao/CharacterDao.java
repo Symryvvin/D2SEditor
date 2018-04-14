@@ -1,9 +1,12 @@
 package ru.aizen.domain.dao;
 
+import com.sun.javafx.collections.ObservableListWrapper;
+import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import ru.aizen.domain.character.CharacterClass;
+import ru.aizen.domain.character.Character;
+import ru.aizen.domain.character.*;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -26,12 +29,65 @@ public class CharacterDao extends ShadowDao {
         return template.queryForObject(sql, Byte.class);
     }
 
+    public ObservableList<Title> getTitleListByCharacterClassAndStatus(Character character) {
+        Status status = character.getStatus();
+        CharacterClass characterClass = character.getCharacterClass();
+        String sql = "SELECT tbl_title.name AS name,\n" +
+                "tbl_title.difficult AS difficult\n" +
+                "FROM tbl_title\n" +
+                "LEFT JOIN tbl_class ON tbl_class.gender = tbl_title.gender\n" +
+                "WHERE tbl_title.is_expansion = " + status.isExpansion() + " \n" +
+                "AND tbl_title.is_hardcore = " + status.isHardcore() + "\n" +
+                "AND (UPPER(tbl_class.name) = '" + characterClass.name() + "' OR tbl_title.gender = '')\n" +
+                "GROUP BY tbl_title.name\n" +
+                "ORDER BY CASE tbl_title.difficult\n" +
+                "WHEN 'start' THEN 0\n" +
+                "WHEN 'normal' THEN 1\n" +
+                "WHEN 'nightmare' THEN 2\n" +
+                "WHEN 'hell' THEN 3 \n" +
+                "END";
+        return new ObservableListWrapper<>(template.query(sql, new TitleMapper()));
+    }
 
-    private class CharacterClassMapper implements RowMapper<CharacterClass> {
+    public Difficult getCurrentDifficult(Character character) {
+        int value = character.getTitle();
+        Status status = character.getStatus();
+        CharacterClass characterClass = character.getCharacterClass();
+        String sql = "SELECT DISTINCT UPPER(tbl_title.difficult) AS difficult\n" +
+                "FROM tbl_title\n" +
+                "LEFT JOIN tbl_class ON tbl_class.gender = tbl_title.gender\n" +
+                "WHERE byte_value = " + value + "\n" +
+                "AND  tbl_title.is_expansion = " + status.isExpansion() + " \n" +
+                "AND tbl_title.is_hardcore = " + status.isHardcore() + "\n" +
+                "AND (UPPER(tbl_class.name) = '" + characterClass.name() + "' OR tbl_title.gender = '')";
+        return template.queryForObject(sql, Difficult.class);
+    }
+
+    public byte getTitleValue(Status status, Difficult difficult) {
+        String sql = "SELECT tbl_title.byte_value AS byte_value\n" +
+                "FROM tbl_title\n" +
+                "WHERE tbl_title.is_expansion = " + status.isExpansion() + " \n" +
+                "AND tbl_title.is_hardcore = " + status.isHardcore() + "\n" +
+                "AND tbl_title.difficult = '" + difficult.name().toLowerCase() + "'\n" +
+                "LIMIT 1";
+        return template.queryForObject(sql, Byte.class);
+    }
+
+
+    public class CharacterClassMapper implements RowMapper<CharacterClass> {
 
         @Override
         public CharacterClass mapRow(ResultSet resultSet, int i) throws SQLException {
             return CharacterClass.valueOf(resultSet.getString("name").toUpperCase());
+        }
+    }
+
+    public class TitleMapper implements RowMapper<Title> {
+
+        @Override
+        public Title mapRow(ResultSet resultSet, int i) throws SQLException {
+            return new Title(resultSet.getString("name"),
+                    resultSet.getString("difficult"));
         }
     }
 }

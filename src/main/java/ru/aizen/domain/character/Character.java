@@ -94,7 +94,7 @@ public class Character {
         return metaBlock.getStatus();
     }
 
-    public Title getTitle() {
+    public byte getTitle() {
         return metaBlock.getTitle();
     }
 
@@ -110,7 +110,7 @@ public class Character {
         metaBlock.setStatus(status);
     }
 
-    public void setTitle(Title title) {
+    public void setTitle(byte title) {
         metaBlock.setTitle(title);
     }
 

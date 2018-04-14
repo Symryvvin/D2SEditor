@@ -8,12 +8,15 @@ import ru.aizen.domain.character.CharacterClass;
 @Component
 public class MetaInfoController extends AbstractController {
     private final SkillsController skillsController;
+    private final EditorController editorController;
 
     @Autowired
     public MetaInfoController(Character character,
-                              SkillsController skillsController) {
+                              SkillsController skillsController,
+                              EditorController editorController) {
         super(character);
         this.skillsController = skillsController;
+        this.editorController = editorController;
     }
 
     @Override
@@ -27,37 +30,36 @@ public class MetaInfoController extends AbstractController {
     }
 
     public void pickAssassin() {
-        character.setCharacterClass(CharacterClass.ASSASSIN);
-        skillsController.loadCharacter();
+        pick(CharacterClass.ASSASSIN);
     }
 
     public void pickAmazon() {
-        character.setCharacterClass(CharacterClass.AMAZON);
-        skillsController.loadCharacter();
+        pick(CharacterClass.AMAZON);
     }
 
     public void pickNecromancer() {
-        character.setCharacterClass(CharacterClass.NECROMANCER);
-        skillsController.loadCharacter();
+        pick(CharacterClass.NECROMANCER);
     }
 
     public void pickBarbarian() {
-        character.setCharacterClass(CharacterClass.BARBARIAN);
-        skillsController.loadCharacter();
+        pick(CharacterClass.BARBARIAN);
     }
 
     public void pickPaladin() {
-        character.setCharacterClass(CharacterClass.PALADIN);
-        skillsController.loadCharacter();
+        pick(CharacterClass.PALADIN);
     }
 
     public void pickSorceress() {
-        character.setCharacterClass(CharacterClass.SORCERESS);
-        skillsController.loadCharacter();
+        pick(CharacterClass.SORCERESS);
     }
 
     public void pickDruid() {
-        character.setCharacterClass(CharacterClass.DRUID);
+        pick(CharacterClass.DRUID);
+    }
+
+    private void pick(CharacterClass characterClass) {
+        character.setCharacterClass(characterClass);
+        editorController.changeTitleList();
         skillsController.loadCharacter();
     }
 }

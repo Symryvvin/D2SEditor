@@ -12,7 +12,7 @@ import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
-import ru.aizen.domain.character.Title;
+import ru.aizen.domain.dao.CharacterDao;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -25,6 +25,8 @@ import java.nio.file.Paths;
 public class CharacterTest {
     @Autowired
     private Character character;
+    @Autowired
+    private CharacterDao characterDao;
 
     @Test
     public void testStatus() {
@@ -64,17 +66,6 @@ public class CharacterTest {
     }
 
     @Test
-    public void testTitle() {
-        String hex = "0A";
-        Status status = new Status();
-        status.setDead(false);
-        status.setExpansion(true);
-        status.setHardcore(true);
-        Title title = Title.parse(hex, status);
-        Assert.assertEquals(Title.CONQUEROR, title);
-    }
-
-    @Test
     public void testCharacterMeta() throws URISyntaxException, IOException, DecoderException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
@@ -82,7 +73,7 @@ public class CharacterTest {
         Assert.assertEquals(true, character.getStatus().isExpansion());
         Assert.assertEquals(false, character.getStatus().isHardcore());
         Assert.assertEquals(false, character.getStatus().isDead());
-        Assert.assertEquals(Title.NO_TITLE, character.getTitle());
+        Assert.assertEquals(0, character.getTitle());
         Assert.assertEquals(CharacterClass.DRUID, character.getCharacterClass());
         // Assert.assertEquals(LocalDateTime.parse("2018-03-25T09:17:11"), character.getTime());
     }
