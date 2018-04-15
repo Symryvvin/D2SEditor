@@ -3,11 +3,11 @@
 }
 
 .characterInfo Label {
-    -fx-font-size: 16px;
+    -fx-font-size: 12px;
 }
 
 .expansion {
-    -fx-text-fill: green;
+    -fx-text-fill: #58b12e;
 }
 
 .classPicker {
