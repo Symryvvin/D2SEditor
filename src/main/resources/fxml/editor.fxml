@@ -3,26 +3,42 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox minWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.162"
+<VBox minWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/9.0.4"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.EditorController">
     <fx:include source="metaInfo.fxml"/>
     <HBox fillHeight="false" minHeight="60.0" spacing="10.0">
-        <VBox spacing="10.0">
-            <children>
-            <VBox>
-                <children>
-                    <Label text="Title"/>
-                    <ComboBox fx:id="title" onAction="#onChangeTitle" prefWidth="150"/>
-                </children>
+        <VBox prefWidth="150.0" spacing="10.0">
+            <VBox styleClass="borderedPane">
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Title"/>
+                <AnchorPane>
+                    <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                          AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <RadioButton fx:id="start" mnemonicParsing="false" onAction="#pickNoTitle" text="No title"/>
+                        <RadioButton fx:id="normal" mnemonicParsing="false" onAction="#pickNormalTitle" text="Normal"/>
+                        <RadioButton fx:id="nightmare" mnemonicParsing="false" onAction="#pickNightmareTitle"
+                                     text="Nightmare"/>
+                        <RadioButton fx:id="hell" mnemonicParsing="false" onAction="#pickHellTitle" text="Hell"/>
+                    </VBox>
+                </AnchorPane>
             </VBox>
-                <VBox>
-                    <Label text="Name"/>
-                    <TextField fx:id="name"/>
-                </VBox>
-                <CheckBox fx:id="isExpansion" onMouseClicked="#onChangeExpansion" text="Expansion"/>
-                <CheckBox fx:id="isHardcore" onMouseClicked="#onChangeMode" text="Hardcore"/>
-                <CheckBox fx:id="isDead" disable="true" onMouseClicked="#onChangeDead" text="Dead"/>
-            </children>
+            <VBox styleClass="borderedPane">
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Name"/>
+                <AnchorPane>
+                    <TextField fx:id="name" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                               AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
+                </AnchorPane>
+            </VBox>
+            <VBox styleClass="borderedPane">
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Status"/>
+                <AnchorPane>
+                    <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                          AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <CheckBox fx:id="isExpansion" onMouseClicked="#onChangeExpansion" text="Expansion"/>
+                        <CheckBox fx:id="isHardcore" onMouseClicked="#onChangeMode" text="Hardcore"/>
+                        <CheckBox fx:id="isDead" disable="true" onMouseClicked="#onChangeDead" text="Dead"/>
+                    </VBox>
+                </AnchorPane>
+            </VBox>
         </VBox>
         <fx:include minHeight="300.0" source="stats.fxml"/>
         <VBox.margin>

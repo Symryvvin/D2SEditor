@@ -20,6 +20,12 @@ Label{
     -fx-font-weight: bold;
 }
 
+TitledPane .title {
+    -fx-font-size: 12px;
+    -fx-pref-height: 24px;
+    -fx-font-weight: bold;
+}
+
 .skillPageName {
     -fx-background-color: #1d1d1d;
     -fx-font-size: 11pt;
@@ -30,6 +36,20 @@ Label{
 
 .skillPage {
     -fx-background-color: #ccc;
+}
+
+.borderedPane {
+    -fx-border: 1px;
+    -fx-border-color: #C0C0C0;
+    -fx-border-radius: 3px 3px 0 0;
+    -fx-border-style: solid;
+}
+
+.borderedPane Label {
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #C0C0C0;
+    -fx-border-style: solid;
+    -fx-background-color: #d5d5d5;
 }
 
 TextField{

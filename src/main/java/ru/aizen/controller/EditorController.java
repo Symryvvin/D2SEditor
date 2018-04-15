@@ -2,9 +2,8 @@ package ru.aizen.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
@@ -13,12 +12,20 @@ import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
 import ru.aizen.domain.dao.CharacterDao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 public class EditorController extends AbstractController {
+    @FXML private RadioButton start;
+    @FXML private RadioButton normal;
+    @FXML private RadioButton nightmare;
+    @FXML private RadioButton hell;
+    private List<RadioButton> titles;
     @FXML private CheckBox isExpansion;
     @FXML private CheckBox isHardcore;
     @FXML private CheckBox isDead;
-    @FXML private ComboBox<Title> title;
     @FXML private TextField name;
 
     private final StatsController statsController;
@@ -45,37 +52,61 @@ public class EditorController extends AbstractController {
 
 
     private void initTitle() {
-        title.setConverter(new StringConverter<Title>() {
-            @Override
-            public String toString(Title object) {
-                return object.getName();
-            }
+        titles = new ArrayList<>();
+        titles.addAll(Arrays.asList(start, normal, nightmare, hell));
+    }
 
-            @Override
-            public Title fromString(String string) {
-                return null;
-            }
-        });
+    private void uncheckAllTitles() {
+        titles.forEach(t -> t.setSelected(false));
     }
 
     public void changeTitleList() {
-        title.setItems(characterDao.getTitleListByCharacterClassAndStatus(character));
+        List<Title> tList = characterDao.getTitleListByCharacterClassAndStatus(character);
+        normal.setText(tList.get(1).getName());
+        nightmare.setText(tList.get(2).getName());
+        hell.setText(tList.get(3).getName());
+        setTitle();
+    }
+
+    public void pickNoTitle() {
+
+        difficult = Difficult.START;
+        setTitle();
+    }
+
+    public void pickNormalTitle() {
+
+        difficult = Difficult.NORMAL;
+        setTitle();
+    }
+
+    public void pickNightmareTitle() {
+
+        difficult = Difficult.NIGHTMARE;
+        setTitle();
+    }
+
+    public void pickHellTitle() {
+
+        difficult = Difficult.HELL;
         setTitle();
     }
 
     private void setTitle() {
+        uncheckAllTitles();
         if (difficult == null) {
             difficult = characterDao.getCurrentDifficult(character);
         }
-        for (Title title : this.title.getItems()) {
-            if (title.getDifficult() == difficult) {
-                this.title.getSelectionModel().select(title);
+        titles.forEach(t -> {
+            if (t.getId().equalsIgnoreCase(difficult.name())) {
+                t.setSelected(true);
             }
-        }
+        });
     }
 
     public void loadCharacter() {
         difficult = null;
+        changeTitleList();
         status = character.getStatus();
         statsController.loadCharacter();
         skillsController.loadCharacter();
@@ -101,14 +132,6 @@ public class EditorController extends AbstractController {
         status.setHardcore(isHardcore.isSelected());
         status.setDead(isDead.isSelected());
         character.setStatus(status);
-    }
-
-    public void onChangeTitle() {
-        Title selected = title.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            difficult = selected.getDifficult();
-            setTitle();
-        }
     }
 
     public void onChangeExpansion() {
