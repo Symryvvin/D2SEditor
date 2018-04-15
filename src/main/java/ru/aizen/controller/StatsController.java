@@ -29,6 +29,12 @@ public class StatsController extends AbstractController {
         super(character);
     }
 
+    public void initialize() {
+        level.textProperty()
+                .addListener((observable, oldValue, newValue) ->
+                        character.setLevel("Level " + newValue));
+    }
+
     @Override
     protected void loadCharacter() {
         loadCharacterStats();

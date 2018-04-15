@@ -1,5 +1,7 @@
 package ru.aizen.domain.character;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import org.apache.commons.codec.DecoderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,13 @@ public class Character {
     private MetaBlock metaBlock;
     private AttributesBlock attributesBlock;
     private SkillsBlock skillsBlock;
+
+    //Properties
+    private StringProperty title = new SimpleStringProperty();
+    private StringProperty name = new SimpleStringProperty();
+    private StringProperty level = new SimpleStringProperty();
+    private StringProperty characterClass = new SimpleStringProperty();
+    private StringProperty expansion = new SimpleStringProperty();
 
     private final CharacterDao characterDao;
 
@@ -99,7 +108,9 @@ public class Character {
     }
 
     public CharacterClass getCharacterClass() {
-        return characterDao.getCharacterClassByValue(metaBlock.getCharacterClass());
+        CharacterClass characterClass = characterDao.getCharacterClassByValue(metaBlock.getCharacterClass());
+        setCharacterClass(characterClass);
+        return characterClass;
     }
 
     public void setName(String name) {
@@ -114,9 +125,46 @@ public class Character {
         metaBlock.setTitle(title);
     }
 
-    public void setCharacterClass(CharacterClass characterClass) {
-        byte value = characterDao.getValueByCharacterClass(characterClass);
-        metaBlock.setCharacterClass(value);
+    public final void setTitleValue(String value) {
+        title.set(value);
+    }
+
+    public StringProperty titleProperty() {
+        return title;
+    }
+
+    public final void setNameValue(String value) {
+        name.set(value);
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public final void setLevel(String value) {
+        level.set(value + " ");
+    }
+
+    public StringProperty levelProperty() {
+        return level;
+    }
+
+    public final void setCharacterClass(CharacterClass value) {
+        characterClass.set(value.name());
+        byte byteValue = characterDao.getValueByCharacterClass(value);
+        metaBlock.setCharacterClass(byteValue);
+    }
+
+    public StringProperty classProperty() {
+        return characterClass;
+    }
+
+    public final void setExpansion(boolean value) {
+        expansion.set(value ? "Expansion Character" : "");
+    }
+
+    public StringProperty expansionProperty() {
+        return expansion;
     }
 
     public CharacterData getCharacterData() {
@@ -134,6 +182,5 @@ public class Character {
     public void setAttributesBlock(AttributesBlock attributesBlock) {
         this.attributesBlock = attributesBlock;
     }
-
 
 }

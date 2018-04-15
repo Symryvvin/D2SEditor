@@ -47,11 +47,10 @@ public class EditorController extends AbstractController {
     }
 
     public void initialize() {
-        initTitle();
-    }
-
-
-    private void initTitle() {
+        name.textProperty()
+                .addListener((observable, oldValue, newValue) -> character.setNameValue(newValue));
+        isExpansion.selectedProperty()
+                .addListener((observable, oldValue, newValue) -> character.setExpansion(isExpansion.isSelected()));
         titles = new ArrayList<>();
         titles.addAll(Arrays.asList(start, normal, nightmare, hell));
     }
@@ -69,25 +68,21 @@ public class EditorController extends AbstractController {
     }
 
     public void pickNoTitle() {
-
         difficult = Difficult.START;
         setTitle();
     }
 
     public void pickNormalTitle() {
-
         difficult = Difficult.NORMAL;
         setTitle();
     }
 
     public void pickNightmareTitle() {
-
         difficult = Difficult.NIGHTMARE;
         setTitle();
     }
 
     public void pickHellTitle() {
-
         difficult = Difficult.HELL;
         setTitle();
     }
@@ -102,6 +97,11 @@ public class EditorController extends AbstractController {
                 t.setSelected(true);
             }
         });
+        character.setTitleValue(titles.stream()
+                .filter(RadioButton::isSelected)
+                .findFirst()
+                .map(RadioButton::getText)
+                .orElse("unknown"));
     }
 
     public void loadCharacter() {

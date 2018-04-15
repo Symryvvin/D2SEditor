@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane minWidth="612.0" prefHeight="70.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8.0.162"
+<AnchorPane minWidth="612.0" prefHeight="90.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/9.0.4"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MetaInfoController">
-    <HBox prefHeight="70.0" prefWidth="200.0" spacing="10.0" stylesheets="@../css/style.css"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
-        <Pane prefHeight="70.0" prefWidth="260.0" styleClass="characterInfo">
-            <Label layoutX="10.0" layoutY="10.0" text="Title"/>
-            <Label layoutX="10.0" layoutY="35.0" text="Name"/>
-            <Label layoutX="100.0" layoutY="10.0" text="Level"/>
-            <Label layoutX="100.0" layoutY="35.0" styleClass="expansion" text="Expansion Character"/>
-        </Pane>
+    <HBox spacing="10.0" stylesheets="@../css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox prefWidth="200.0" styleClass="characterInfo">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <Label fx:id="title" text="Title"/>
+            <Label fx:id="name" text="Name"/>
+            <HBox>
+                <Label fx:id="level" text="Level"/>
+                <Label fx:id="characterClass" text="Class"/>
+            </HBox>
+            <Label fx:id="expansion" styleClass="expansion" text="Expansion Character"/>
+        </VBox>
         <HBox alignment="CENTER_LEFT" minHeight="70.0" prefHeight="70.0" spacing="10.0" styleClass="classPicker"
               HBox.hgrow="ALWAYS">
             <Button mnemonicParsing="false" onAction="#pickAssassin" prefHeight="40.0" prefWidth="40.0" text="As"/>
