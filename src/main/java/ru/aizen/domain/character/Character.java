@@ -3,6 +3,7 @@ package ru.aizen.domain.character;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
@@ -150,7 +151,7 @@ public class Character {
     }
 
     public final void setCharacterClass(CharacterClass value) {
-        characterClass.set(value.name());
+        characterClass.set(StringUtils.capitalize(value.name().toLowerCase()));
         byte byteValue = characterDao.getValueByCharacterClass(value);
         metaBlock.setCharacterClass(byteValue);
     }
