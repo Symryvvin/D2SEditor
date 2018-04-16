@@ -20,12 +20,6 @@ Label{
     -fx-font-weight: bold;
 }
 
-TitledPane .title {
-    -fx-font-size: 12px;
-    -fx-pref-height: 24px;
-    -fx-font-weight: bold;
-}
-
 .skillPageName {
     -fx-background-color: #1d1d1d;
     -fx-font-size: 11pt;
@@ -45,7 +39,7 @@ TitledPane .title {
     -fx-border-style: solid;
 }
 
-.borderedPane Label {
+.borderedPane .title {
     -fx-border-width: 0 0 1px 0;
     -fx-border-color: #C0C0C0;
     -fx-border-style: solid;

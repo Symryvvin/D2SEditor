@@ -9,7 +9,7 @@
     <HBox fillHeight="false" minHeight="60.0" spacing="10.0">
         <VBox prefWidth="150.0" spacing="10.0">
             <VBox styleClass="borderedPane">
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Title"/>
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Title" styleClass="title"/>
                 <AnchorPane>
                     <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -22,17 +22,18 @@
                 </AnchorPane>
             </VBox>
             <VBox styleClass="borderedPane">
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Name"/>
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Name" styleClass="title"/>
                 <AnchorPane>
                     <TextField fx:id="name" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
                                AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
                 </AnchorPane>
             </VBox>
             <VBox styleClass="borderedPane">
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Status"/>
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Status" styleClass="title"/>
                 <AnchorPane>
                     <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <CheckBox disable="true" text="Ladder"/>
                         <CheckBox fx:id="isExpansion" onMouseClicked="#onChangeExpansion" text="Expansion"/>
                         <CheckBox fx:id="isHardcore" onMouseClicked="#onChangeMode" text="Hardcore"/>
                         <CheckBox fx:id="isDead" disable="true" onMouseClicked="#onChangeDead" text="Dead"/>

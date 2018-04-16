@@ -1,6 +1,7 @@
 package ru.aizen.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import org.springframework.stereotype.Component;
 import ru.aizen.control.NumericField;
 import ru.aizen.domain.character.Character;
@@ -20,7 +21,7 @@ public class StatsController extends AbstractController {
     @FXML private NumericField vitality;
     @FXML private NumericField energy;
     @FXML private NumericField level;
-    @FXML private NumericField experience;
+    @FXML private Label experience;
 
     private AttributesBlock attributesBlock;
 

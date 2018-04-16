@@ -3,37 +3,36 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane minWidth="612.0" prefHeight="90.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/9.0.4"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MetaInfoController">
-    <HBox spacing="10.0" stylesheets="@../css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <VBox prefWidth="200.0" styleClass="characterInfo">
-            <padding>
-                <Insets left="10.0"/>
-            </padding>
-            <Label fx:id="title" text="Title"/>
-            <Label fx:id="name" text="Name"/>
-            <HBox>
-                <Label fx:id="level" text="Level"/>
-                <Label fx:id="characterClass" text="Class"/>
-            </HBox>
-            <Label fx:id="expansion" styleClass="expansion" text="Expansion Character"/>
-        </VBox>
-        <HBox alignment="CENTER_LEFT" minHeight="70.0" prefHeight="70.0" spacing="10.0" styleClass="classPicker"
-              HBox.hgrow="ALWAYS">
-            <Button mnemonicParsing="false" onAction="#pickAssassin" prefHeight="40.0" prefWidth="40.0" text="As"/>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickAmazon" prefHeight="40.0"
-                    prefWidth="40.0" text="Am"/>
-            <Button layoutX="40.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickNecromancer" prefHeight="40.0"
-                    prefWidth="40.0" text="Nc"/>
-            <Button layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickBarbarian" prefHeight="40.0"
-                    prefWidth="40.0" text="Br"/>
-            <Button layoutX="100.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickPaladin" prefHeight="40.0"
-                    prefWidth="40.0" text="Pl"/>
-            <Button layoutX="130.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickSorceress" prefHeight="40.0"
-                    prefWidth="40.0" text="Sc"/>
-            <Button layoutX="160.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickDruid" prefHeight="40.0"
-                    prefWidth="40.0" text="Dr"/>
-        </HBox>
-    </HBox>
-</AnchorPane>
+<HBox prefHeight="0.0" spacing="10.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.162"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MetaInfoController">
+   <padding>
+      <Insets bottom="10.0" top="10.0"/>
+   </padding>
+   <VBox prefWidth="200.0" styleClass="characterInfo">
+      <padding>
+         <Insets left="10.0"/>
+      </padding>
+      <Label fx:id="title" text="Title"/>
+      <Label fx:id="name" text="Name"/>
+      <HBox>
+         <Label fx:id="level" text="Level"/>
+         <Label fx:id="characterClass" text="Class"/>
+      </HBox>
+      <Label fx:id="expansion" styleClass="expansion" text="Expansion Character"/>
+   </VBox>
+   <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="classPicker" HBox.hgrow="ALWAYS">
+      <Button mnemonicParsing="false" onAction="#pickAssassin" prefHeight="40.0" prefWidth="40.0" text="As"/>
+      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickAmazon" prefHeight="40.0"
+              prefWidth="40.0" text="Am"/>
+      <Button layoutX="40.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickNecromancer" prefHeight="40.0"
+              prefWidth="40.0" text="Nc"/>
+      <Button layoutX="70.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickBarbarian" prefHeight="40.0"
+              prefWidth="40.0" text="Br"/>
+      <Button layoutX="100.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickPaladin" prefHeight="40.0"
+              prefWidth="40.0" text="Pl"/>
+      <Button layoutX="130.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickSorceress" prefHeight="40.0"
+              prefWidth="40.0" text="Sc"/>
+      <Button layoutX="160.0" layoutY="10.0" mnemonicParsing="false" onAction="#pickDruid" prefHeight="40.0"
+              prefWidth="40.0" text="Dr"/>
+   </HBox>
+</HBox>
