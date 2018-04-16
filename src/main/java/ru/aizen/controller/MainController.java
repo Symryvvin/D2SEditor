@@ -7,6 +7,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.codec.DecoderException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
 
@@ -16,22 +17,31 @@ import java.nio.file.Path;
 
 @Component
 public class MainController {
+    @Value("${save.path}")
+    private String folder;
+
     @FXML private Button restore;
     @FXML private Button save;
     @FXML private TabPane editorTabs;
-    private String folder;
+
     private Path path;
 
-    private Character character;
-    private EditorController editorController;
-    private HexEditorController hexEditorController;
+    private final Character character;
+    private final EditorController editorController;
+    private final HexEditorController hexEditorController;
 
     @Autowired
-    public void initialize(Character character, EditorController editorController, HexEditorController hexEditorController) {
-        folder = "C:/Users/" + System.getProperty("user.name") + "/Saved Games/Diablo II/";
+    public MainController(Character character,
+                          EditorController editorController,
+                          HexEditorController hexEditorController) {
         this.character = character;
         this.editorController = editorController;
         this.hexEditorController = hexEditorController;
+    }
+
+    public void initialize() {
+        if (folder.equals("default"))
+            folder = "C:/Users/" + System.getProperty("user.name") + "/Saved Games/Diablo II/";
     }
 
     @FXML
