@@ -19,13 +19,14 @@ public class SkillDao extends ShadowDao {
         String sql = "SELECT s.byte_order AS byte,\n" +
                 "  s.name AS name,\n" +
                 "  s.page AS page,\n" +
-                "  s.skill_row AS s_row,\n" +
-                "  s.skill_col AS s_col,\n" +
+                "  s.row_number AS row_number,\n" +
+                "  s.col_number AS col_number,\n" +
                 "  s.icon AS icon\n" +
-                "FROM lod.tbl_skill s\n" +
-                "  JOIN lod.tbl_class c ON s.class_id = c.id\n" +
+                "FROM tbl_skill s\n" +
+                "  JOIN tbl_class c ON s.class_id = c.id\n" +
                 "WHERE UPPER(c.name) = ?\n" +
                 "ORDER BY s.byte_order";
+        System.out.println(sql);
         return template.query(sql, new Object[]{characterClass.name()}, new SkillRowMapper());
     }
 }

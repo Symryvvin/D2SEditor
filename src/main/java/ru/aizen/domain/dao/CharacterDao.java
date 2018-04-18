@@ -20,12 +20,12 @@ public class CharacterDao extends ShadowDao {
     }
 
     public CharacterClass getCharacterClassByValue(int value) {
-        String sql = "SELECT name FROM lod.tbl_class WHERE id = " + value;
+        String sql = "SELECT name FROM tbl_class WHERE id = " + value;
         return template.queryForObject(sql, new CharacterClassMapper());
     }
 
     public byte getValueByCharacterClass(CharacterClass characterClass) {
-        String sql = "SELECT id FROM lod.tbl_class WHERE UPPER(name) = '" + characterClass.name() + "'";
+        String sql = "SELECT id FROM tbl_class WHERE UPPER(name) = '" + characterClass.name() + "'";
         return template.queryForObject(sql, Byte.class);
     }
 
@@ -36,8 +36,8 @@ public class CharacterDao extends ShadowDao {
                 "tbl_title.difficult AS difficult\n" +
                 "FROM tbl_title\n" +
                 "LEFT JOIN tbl_class ON tbl_class.gender = tbl_title.gender\n" +
-                "WHERE tbl_title.is_expansion = " + status.isExpansion() + " \n" +
-                "AND tbl_title.is_hardcore = " + status.isHardcore() + "\n" +
+                "WHERE tbl_title.is_expansion = '" + status.isExpansion() + "'\n" +
+                "AND tbl_title.is_hardcore = '" + status.isHardcore() + "'\n" +
                 "AND (UPPER(tbl_class.name) = '" + characterClass.name() + "' OR tbl_title.gender = '')\n" +
                 "GROUP BY tbl_title.name\n" +
                 "ORDER BY CASE tbl_title.difficult\n" +
@@ -56,9 +56,9 @@ public class CharacterDao extends ShadowDao {
         String sql = "SELECT DISTINCT UPPER(tbl_title.difficult) AS difficult\n" +
                 "FROM tbl_title\n" +
                 "LEFT JOIN tbl_class ON tbl_class.gender = tbl_title.gender\n" +
-                "WHERE byte_value = " + value + "\n" +
-                "AND  tbl_title.is_expansion = " + status.isExpansion() + " \n" +
-                "AND tbl_title.is_hardcore = " + status.isHardcore() + "\n" +
+                "WHERE value = " + value + "\n" +
+                "AND  tbl_title.is_expansion = '" + status.isExpansion() + "'\n" +
+                "AND tbl_title.is_hardcore = '" + status.isHardcore() + "'\n" +
                 "AND (UPPER(tbl_class.name) = '" + characterClass.name() + "' OR tbl_title.gender = '')";
         return template.queryForObject(sql, Difficult.class);
     }
