@@ -64,10 +64,10 @@ public class CharacterDao extends ShadowDao {
     }
 
     public byte getTitleValue(Status status, Difficult difficult) {
-        String sql = "SELECT tbl_title.byte_value AS byte_value\n" +
+        String sql = "SELECT tbl_title.value AS value\n" +
                 "FROM tbl_title\n" +
-                "WHERE tbl_title.is_expansion = " + status.isExpansion() + " \n" +
-                "AND tbl_title.is_hardcore = " + status.isHardcore() + "\n" +
+                "WHERE tbl_title.is_expansion = '" + status.isExpansion() + "'\n" +
+                "AND tbl_title.is_hardcore = '" + status.isHardcore() + "'\n" +
                 "AND tbl_title.difficult = '" + difficult.name().toLowerCase() + "'\n" +
                 "LIMIT 1";
         return template.queryForObject(sql, Byte.class);
