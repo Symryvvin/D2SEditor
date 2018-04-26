@@ -97,11 +97,15 @@ public class EditorController extends AbstractController {
                 t.setSelected(true);
             }
         });
-        character.setTitleValue(titles.stream()
+        String title = titles.stream()
                 .filter(RadioButton::isSelected)
                 .findFirst()
                 .map(RadioButton::getText)
-                .orElse("unknown"));
+                .orElse("unknown");
+        if (title.equals("No title"))
+            character.setTitleValue("");
+        else
+            character.setTitleValue(title);
     }
 
     public void loadCharacter() {
