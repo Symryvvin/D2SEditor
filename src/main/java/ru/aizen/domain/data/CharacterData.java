@@ -1,6 +1,7 @@
 package ru.aizen.domain.data;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.DataBlock;
 import ru.aizen.domain.util.BinHexUtils;
 
@@ -12,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CharacterData {
     private Path input;
@@ -39,19 +41,13 @@ public class CharacterData {
     }
 
     public void write(List<DataBlock> blocks) throws IOException {
-        blocks.forEach(DataBlock::collect); //need o invoke collect() method before calculating all size
-        int size = blocks.stream()
-                .map(DataBlock::getSize)
-                .reduce(0, (f, s) -> f + s);
-        ByteBuffer buffer = ByteBuffer.allocate(size);
-        for (DataBlock block : blocks) {
-            buffer.put(block.collect());
-        }
-        buffer.flip();
-        bytes = buffer.array();
+        List<UByte> result = blocks.stream()
+                .flatMap(b -> b.collect().stream())
+                .collect(Collectors.toList());
+        bytes = UByte.toArray(result);
         splitData(bytes);
         bytes = getDataToSave();
-        reader.setData(buffer);
+        reader.setData(bytes);
         writer.write(bytes);
     }
 

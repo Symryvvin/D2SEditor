@@ -1,10 +1,12 @@
 package ru.aizen.domain.character.block;
 
+import ru.aizen.domain.UByte;
 import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.GameVersion;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.List;
 
 public class HeaderBlock extends DataBlock {
 
@@ -29,15 +31,15 @@ public class HeaderBlock extends DataBlock {
     }
 
     @Override
-    public ByteBuffer collect() {
+    public List<UByte> collect() {
         ByteBuffer buffer = ByteBuffer.allocate(BlockSize.HEADER_BLOCK_SIZE)
                 .order(ByteOrder.LITTLE_ENDIAN)
                 .putInt(signature)
                 .putInt(96) //hardcoded 1.10+ version
                 .putInt(0)
-                .putInt(0);
+                .putInt(0); //clear checksum
         buffer.flip();
-        return buffer;
+        return UByte.getUnsignedBytes(buffer.array());
     }
 
     public int getSignature() {

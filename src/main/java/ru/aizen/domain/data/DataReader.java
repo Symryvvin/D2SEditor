@@ -72,7 +72,7 @@ public class DataReader {
         return data.capacity();
     }
 
-    public void setData(ByteBuffer data) {
-        this.data = data;
+    public void setData(byte[] data) {
+        this.data = ByteBuffer.wrap(data);
     }
 }

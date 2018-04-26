@@ -1,6 +1,9 @@
 package ru.aizen.domain.character.block;
 
+import ru.aizen.domain.UByte;
+
 import java.nio.ByteBuffer;
+import java.util.List;
 
 /**
  * Stub data block witch not parsed an must be save to file without changes
@@ -20,7 +23,7 @@ public class StubBlock extends DataBlock {
     }
 
     @Override
-    public ByteBuffer collect() {
-        return buffer;
+    public List<UByte> collect() {
+        return UByte.getUnsignedBytes(buffer.array());
     }
 }

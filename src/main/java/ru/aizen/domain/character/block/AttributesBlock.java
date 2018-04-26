@@ -1,6 +1,7 @@
 package ru.aizen.domain.character.block;
 
 import org.apache.commons.lang3.StringUtils;
+import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.attribute.Attribute;
 import ru.aizen.domain.data.CSVLoader;
 import ru.aizen.domain.util.BinaryUtils;
@@ -8,6 +9,7 @@ import ru.aizen.domain.util.BinaryUtils;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AttributesBlock extends DataBlock {
@@ -46,10 +48,10 @@ public class AttributesBlock extends DataBlock {
     }
 
     @Override
-    public ByteBuffer collect() {
+    public List<UByte> collect() {
         ByteBuffer buffer = ByteBuffer.wrap(pack());
         size = buffer.capacity();
-        return buffer;
+        return UByte.getUnsignedBytes(buffer.array());
     }
 
     private void unpack(byte[] data) {

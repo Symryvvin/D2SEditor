@@ -1,7 +1,10 @@
 package ru.aizen.domain.character.block;
 
+import ru.aizen.domain.UByte;
+
 import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SkillsBlock extends DataBlock {
@@ -25,14 +28,14 @@ public class SkillsBlock extends DataBlock {
     }
 
     @Override
-    public ByteBuffer collect() {
+    public List<UByte> collect() {
         byte[] result = new byte[30];
         values.forEach((key, value) -> result[key - 1] = value);
         ByteBuffer buffer = ByteBuffer.allocate(2 + result.length)
                 .put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 105).put((byte) 102).flip())
                 .put(result);
         buffer.flip();
-        return buffer;
+        return UByte.getUnsignedBytes(buffer.array());
     }
 
     public Map<Integer, Byte> getSkillValues() {
