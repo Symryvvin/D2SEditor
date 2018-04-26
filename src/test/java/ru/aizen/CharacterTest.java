@@ -13,6 +13,7 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.dao.CharacterDao;
+import ru.aizen.domain.util.CheckUtils;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -76,6 +77,12 @@ public class CharacterTest {
         Assert.assertEquals(0, character.getTitle());
         Assert.assertEquals(CharacterClass.DRUID, character.getCharacterClass());
         // Assert.assertEquals(LocalDateTime.parse("2018-03-25T09:17:11"), character.getTime());
+    }
+
+    @Test
+    public void testCheckName() throws Exception {
+        String name = "Aizen";
+        CheckUtils.checkName(name);
     }
 
 

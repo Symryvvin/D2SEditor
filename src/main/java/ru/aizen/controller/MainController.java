@@ -57,10 +57,12 @@ public class MainController {
             }
         } catch (DecoderException | IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private void openFile() throws DecoderException, IOException {
+    private void openFile() throws Exception {
         hexEditorController.clearAll();
         loadCharacter();
         hexEditorController.loadCharacter();
@@ -83,11 +85,13 @@ public class MainController {
             hexEditorController.setOutputData(character.getCharacterData().getBytes());
         } catch (IOException | DecoderException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
-    private void onRestoreClick() throws DecoderException, IOException {
+    private void onRestoreClick() throws Exception {
         character.restore();
         hexEditorController.clearAll();
         openFile();

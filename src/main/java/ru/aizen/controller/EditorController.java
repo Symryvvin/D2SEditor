@@ -11,6 +11,7 @@ import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
 import ru.aizen.domain.dao.CharacterDao;
+import ru.aizen.domain.util.CheckUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,12 +48,26 @@ public class EditorController extends AbstractController {
     }
 
     public void initialize() {
+        setRulesForName();
         name.textProperty()
                 .addListener((observable, oldValue, newValue) -> character.setNameValue(newValue));
         isExpansion.selectedProperty()
                 .addListener((observable, oldValue, newValue) -> character.setExpansion(isExpansion.isSelected()));
         titles = new ArrayList<>();
         titles.addAll(Arrays.asList(start, normal, nightmare, hell));
+    }
+
+    private void setRulesForName() {
+        name.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("^[a-zA-Z_\\-]+$")) {
+                name.setText(newValue);
+            } else {
+                name.setText(oldValue);
+            }
+            if (newValue.length() > 15)
+                name.setText(newValue.substring(0, 15));
+
+        });
     }
 
     private void uncheckAllTitles() {
@@ -108,12 +123,13 @@ public class EditorController extends AbstractController {
             character.setTitleValue(title);
     }
 
-    public void loadCharacter() {
+    public void loadCharacter() throws Exception {
         difficult = null;
         changeTitleList();
         status = character.getStatus();
         statsController.loadCharacter();
         skillsController.loadCharacter();
+        CheckUtils.checkName(character.getName());
         name.setText(character.getName());
         changeTitleList();
         isExpansion.setSelected(status.isExpansion());
@@ -123,9 +139,10 @@ public class EditorController extends AbstractController {
     }
 
     @Override
-    public void saveCharacter() {
+    public void saveCharacter() throws Exception {
         statsController.saveCharacter();
         character.setName(name.getText());
+        CheckUtils.checkName(character.getName());
         setStatus();
         character.setTitle(characterDao.getTitleValue(status, difficult));
 

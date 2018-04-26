@@ -13,7 +13,7 @@ public abstract class AbstractController {
         this.character = character;
     }
 
-    protected abstract void loadCharacter();
+    protected abstract void loadCharacter() throws Exception;
 
-    public abstract void saveCharacter();
+    public abstract void saveCharacter() throws Exception;
 }
