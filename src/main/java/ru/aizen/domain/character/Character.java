@@ -88,12 +88,12 @@ public class Character {
         return result;
     }
 
-    public void backup() throws IOException {
-        FileUtils.backup(characterData);
+    public Path backup() throws IOException {
+        return FileUtils.backup(characterData);
     }
 
-    public void restore() throws IOException {
-        FileUtils.restore(characterData);
+    public void restore(Path backup) throws IOException {
+        FileUtils.restore(backup, characterData);
     }
 
     public String getName() {

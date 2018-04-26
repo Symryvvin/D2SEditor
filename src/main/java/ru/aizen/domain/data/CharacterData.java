@@ -13,18 +13,22 @@ import java.util.stream.Collectors;
 
 public class CharacterData {
     private Path input;
-    private Path backUp;
+    private Path backupFolder;
     private byte[] bytes;
     private DataReader reader;
     private DataWriter writer;
 
     /**
-     * Constructor. In constructor set fields of path to original and backup files
+     * Constructor. In constructor set fields of path to original and backup folder
      * @param filePath path to open save file and get data
      */
-    public CharacterData(Path filePath) {
+    public CharacterData(Path filePath) throws IOException {
         this.input = filePath;
-        this.backUp = Paths.get(filePath.toString() + ".bak");
+        String folder = filePath.toString().replace(".d2s", "");
+        this.backupFolder = Paths.get(folder);
+        if (Files.notExists(backupFolder)) {
+            Files.createDirectory(Paths.get(folder));
+        }
     }
 
     /**
@@ -111,8 +115,8 @@ public class CharacterData {
         return input;
     }
 
-    public Path getBackUp() {
-        return backUp;
+    public Path getBackupFolder() {
+        return backupFolder;
     }
 
     public byte[] getBytes() {
@@ -122,4 +126,6 @@ public class CharacterData {
     public DataReader getReader() {
         return reader;
     }
+
+
 }

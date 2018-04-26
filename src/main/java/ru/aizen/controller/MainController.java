@@ -25,6 +25,8 @@ public class MainController {
     @FXML private TabPane editorTabs;
 
     private Path path;
+    private Path lastBackup;
+    private boolean isBackup = true;
 
     private final Character character;
     private final EditorController editorController;
@@ -74,7 +76,9 @@ public class MainController {
         editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         save.setDisable(false);
         restore.setDisable(false);
-        character.backup();
+        if (isBackup) {
+            lastBackup = character.backup();
+        }
     }
 
     @FXML
@@ -92,8 +96,10 @@ public class MainController {
 
     @FXML
     private void onRestoreClick() throws Exception {
-        character.restore();
+        character.restore(lastBackup);
         hexEditorController.clearAll();
+        isBackup = false;
         openFile();
+        isBackup = true;
     }
 }
