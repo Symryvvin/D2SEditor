@@ -11,7 +11,6 @@ import static ru.aizen.domain.data.BlockSize.*;
  * This class keep save file data and can give byte block of different parts saved hero data
  */
 public class DataReader {
-
     private ByteBuffer data;
 
     public DataReader(byte[] data) {
@@ -70,9 +69,5 @@ public class DataReader {
 
     public int getDataSize() {
         return data.capacity();
-    }
-
-    public void setData(byte[] data) {
-        this.data = ByteBuffer.wrap(data);
     }
 }

@@ -30,12 +30,6 @@ public class SaveFileTest {
     }
 
     @Test
-    public void testInputOutputArrays() throws IOException {
-        Character character = getTestCharacter();
-        Assert.assertArrayEquals(character.getCharacterData().getBytes(), character.getCharacterData().getDataToSave());
-    }
-
-    @Test
     public void testWriter() throws DecoderException, IOException {
         Character character = getTestCharacter();
         byte[] expected = character.getCharacterData().getBytes();

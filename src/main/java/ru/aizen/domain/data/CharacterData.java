@@ -1,95 +1,109 @@
 package ru.aizen.domain.data;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.DataBlock;
-import ru.aizen.domain.util.BinHexUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CharacterData {
     private Path input;
     private Path backUp;
-
     private byte[] bytes;
-    private byte[] preData;
-    private byte[] postData;
-
-    private short sizeInBytes;
-
     private DataReader reader;
     private DataWriter writer;
 
+    /**
+     * Constructor. In constructor set fields of path to original and backup files
+     * @param filePath path to open save file and get data
+     */
     public CharacterData(Path filePath) {
         this.input = filePath;
         this.backUp = Paths.get(filePath.toString() + ".bak");
     }
 
+    /**
+     * Read data to bytes field and creating DataReader/DataWriter
+     * @throws IOException
+     */
     public void read() throws IOException {
         this.bytes = Files.readAllBytes(input);
         this.reader = new DataReader(bytes);
         this.writer = new DataWriter(input);
-        splitData(bytes);
     }
 
     public void write(List<DataBlock> blocks) throws IOException {
         List<UByte> result = blocks.stream()
                 .flatMap(b -> b.collect().stream())
                 .collect(Collectors.toList());
-        bytes = UByte.toArray(result);
-        splitData(bytes);
-        bytes = getDataToSave();
-        reader.setData(bytes);
+        bytes = getDataToSave(result);
+        reader = new DataReader(bytes);
         writer.write(bytes);
+    }
+
+    /**
+     * Add to data actual file size value and new checksum
+     * @param bytes data represented as list of Ubytes
+     * @return data represented as array of bytes
+     */
+    private byte[] getDataToSave(List<UByte> bytes) {
+        bytes = replaceFileSize(bytes, bytes.size());
+        int checksum = checksum(bytes);
+        bytes = replaceChecksum(bytes, checksum);
+        return UByte.toArray(bytes);
+    }
+
+    /**
+     * Replace bytes in header (8, 9, 10 and 11 bytes in order) to byte array of new actual file size
+     * @param data list of Ubytes
+     * @param fileSize actual size
+     * @return changed list of UBytes
+     */
+    private List<UByte> replaceFileSize(List<UByte> data, int fileSize) {
+        byte[] size = ByteBuffer.allocate(4)
+                .putInt(Integer.reverseBytes(fileSize))
+                .array();
+        data.set(8, new UByte(size[0]));
+        data.set(9, new UByte(size[1]));
+        data.set(10, new UByte(size[2]));
+        data.set(11, new UByte(size[3]));
+        return data;
+    }
+
+    /**
+     * Replace bytes in header (12, 13, 14 and 15 bytes in order) to byte array of new checksum
+     * @param data list of Ubytes
+     * @param checksum calculated checksum
+     * @return changed list of UBytes
+     */
+    private List<UByte> replaceChecksum(List<UByte> data, int checksum) {
+        byte[] sum = ByteBuffer.allocate(4)
+                .putInt(Integer.reverseBytes(checksum))
+                .array();
+        data.set(12, new UByte(sum[0]));
+        data.set(13, new UByte(sum[1]));
+        data.set(14, new UByte(sum[2]));
+        data.set(15, new UByte(sum[3]));
+        return data;
     }
 
     public DataBlock createStubBlock(int order, int start, int size) {
         return reader.createStubBlock(order, start, size);
     }
 
-    public void setOutputData(byte[] data) {
-        splitData(data);
-    }
-
-    private void splitData(byte[] data) {
-        this.preData = Arrays.copyOfRange(data, 0, 12);
-        this.postData = Arrays.copyOfRange(data, 16, data.length);
-        this.sizeInBytes = (short) (preData.length + postData.length + 4);
-    }
-
-    public byte[] getDataToSave() throws IOException {
-        byte[] zero = new byte[4];
-        Arrays.fill(zero, NumberUtils.BYTE_ZERO);
-        replaceFileSize();
-        int checksum = checksum(BinHexUtils.getUnsignedByteList(concatAllBytes(zero)));
-        Integer reversed = Integer.reverseBytes(checksum);
-        return concatAllBytes(ByteBuffer.allocate(4).putInt(reversed).array());
-    }
-
-    private byte[] concatAllBytes(byte[] checksum) throws IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        outputStream.write(preData);
-        outputStream.write(checksum);
-        outputStream.write(postData);
-        return outputStream.toByteArray();
-    }
-
-    private void replaceFileSize() {
-        byte[] size = ByteBuffer.allocate(2).putShort(Short.reverseBytes(sizeInBytes)).array();
-        preData[8] = size[0];
-        preData[9] = size[1];
-    }
-
-    private int checksum(List<Integer> byteList) {
-        return byteList.stream()
+    /**
+     * Algorithm to get checksum of new changed data
+     * @param bytes list of UBytes (changed data)
+     * @return new actual checksum
+     */
+    private int checksum(List<UByte> bytes) {
+        return bytes.stream()
+                .map(UByte::get)
                 .reduce(0, (first, second) -> (first << 1) + second + ((first < 0) ? 1 : 0));
     }
 
