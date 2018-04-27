@@ -1,4 +1,4 @@
-package ru.aizen.controller;
+package ru.aizen.app.controller;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.fxml.FXML;

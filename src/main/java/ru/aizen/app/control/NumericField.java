@@ -1,4 +1,4 @@
-package ru.aizen.control;
+package ru.aizen.app.control;
 
 import javafx.beans.NamedArg;
 import javafx.scene.control.TextField;

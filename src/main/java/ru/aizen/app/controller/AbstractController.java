@@ -1,4 +1,4 @@
-package ru.aizen.controller;
+package ru.aizen.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

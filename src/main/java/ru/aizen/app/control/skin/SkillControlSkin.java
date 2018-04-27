@@ -1,4 +1,4 @@
-package ru.aizen.control.skin;
+package ru.aizen.app.control.skin;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -6,8 +6,8 @@ import javafx.scene.control.SkinBase;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ru.aizen.control.NumericField;
-import ru.aizen.control.SkillControl;
+import ru.aizen.app.control.NumericField;
+import ru.aizen.app.control.SkillControl;
 
 
 public class SkillControlSkin extends SkinBase<SkillControl> {

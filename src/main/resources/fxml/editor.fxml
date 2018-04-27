@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox minWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/9.0.4"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.EditorController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.EditorController">
     <fx:include source="metaInfo.fxml"/>
     <HBox fillHeight="false" minHeight="60.0" spacing="10.0">
         <VBox prefWidth="150.0" spacing="10.0">

@@ -1,11 +1,11 @@
-package ru.aizen.control;
+package ru.aizen.app.control;
 
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Skin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import ru.aizen.control.skin.SkillControlSkin;
+import ru.aizen.app.control.skin.SkillControlSkin;
 
 
 public class SkillControl extends Control {

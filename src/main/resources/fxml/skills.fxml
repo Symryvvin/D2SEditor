@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <VBox stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ru.aizen.controller.SkillsController">
+      fx:controller="ru.aizen.app.controller.SkillsController">
     <fx:include source="metaInfo.fxml"/>
     <HBox fillHeight="false" spacing="10.0">
         <VBox alignment="CENTER" styleClass="borderedPane">

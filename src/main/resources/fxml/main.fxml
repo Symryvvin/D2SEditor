@@ -4,7 +4,7 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.162"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MainController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.MainController">
     <MenuBar prefHeight="25" stylesheets="@/css/menuBar.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
              AnchorPane.topAnchor="0">
         <Menu mnemonicParsing="false" text="File">

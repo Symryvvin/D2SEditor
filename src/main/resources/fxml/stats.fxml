@@ -2,9 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import ru.aizen.control.*?>
+<?import ru.aizen.app.control.*?>
 <VBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ru.aizen.controller.StatsController">
+      fx:controller="ru.aizen.app.controller.StatsController">
     <VBox styleClass="borderedPane">
         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title" text="Progress"/>
         <AnchorPane>

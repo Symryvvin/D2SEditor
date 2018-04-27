@@ -1,4 +1,4 @@
-package ru.aizen.controller;
+package ru.aizen.app.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

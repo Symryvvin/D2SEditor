@@ -1,9 +1,9 @@
-package ru.aizen.controller;
+package ru.aizen.app.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.springframework.stereotype.Component;
-import ru.aizen.control.NumericField;
+import ru.aizen.app.control.NumericField;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
 

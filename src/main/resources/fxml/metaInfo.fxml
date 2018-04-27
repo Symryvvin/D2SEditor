@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <HBox prefHeight="0.0" spacing="10.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.162"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.controller.MetaInfoController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.MetaInfoController">
    <padding>
       <Insets bottom="10.0" top="10.0"/>
    </padding>

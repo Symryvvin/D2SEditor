@@ -1,11 +1,11 @@
-package ru.aizen.controller;
+package ru.aizen.app.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.aizen.control.SkillControl;
+import ru.aizen.app.control.SkillControl;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.attribute.Skill;
 import ru.aizen.domain.character.attribute.SkillPage;
