@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
+import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -41,7 +42,7 @@ public class SaveFileTest {
         String fileName = "/test.d2s";
         try {
             character.load(Paths.get(getClass().getResource(fileName).toURI()));
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException | URISyntaxException | ValidatorException e) {
             e.printStackTrace();
         }
         return character;

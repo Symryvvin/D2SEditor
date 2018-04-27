@@ -12,7 +12,8 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.dao.CharacterDao;
-import ru.aizen.domain.util.CheckUtils;
+import ru.aizen.domain.exception.ValidatorException;
+import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -66,7 +67,7 @@ public class CharacterTest {
     }
 
     @Test
-    public void testCharacterMeta() throws URISyntaxException, IOException {
+    public void testCharacterMeta() throws URISyntaxException, IOException, ValidatorException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
         Assert.assertEquals("Test", character.getName());
@@ -81,7 +82,7 @@ public class CharacterTest {
     @Test
     public void testCheckName() throws Exception {
         String name = "Aizen";
-        CheckUtils.checkName(name);
+        Validator.checkName(name);
     }
 
 

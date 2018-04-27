@@ -2,12 +2,15 @@ package ru.aizen.domain.data;
 
 import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.DataBlock;
+import ru.aizen.domain.exception.ValidatorException;
+import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +39,9 @@ public class CharacterData {
      * Read data to bytes field and creating DataReader/DataWriter
      * @throws IOException
      */
-    public void read() throws IOException {
+    public void read() throws IOException, ValidatorException {
         this.bytes = Files.readAllBytes(input);
+        Validator.validateFormat(Arrays.copyOfRange(bytes, 0, 4));
         this.reader = new DataReader(bytes);
         this.writer = new DataWriter(input);
     }

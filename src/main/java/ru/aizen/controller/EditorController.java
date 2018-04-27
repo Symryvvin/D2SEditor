@@ -11,7 +11,8 @@ import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
 import ru.aizen.domain.dao.CharacterDao;
-import ru.aizen.domain.util.CheckUtils;
+import ru.aizen.domain.exception.ValidatorException;
+import ru.aizen.domain.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -123,29 +124,29 @@ public class EditorController extends AbstractController {
             character.setTitleValue(title);
     }
 
-    public void loadCharacter() throws Exception {
+    public void loadCharacter() throws ValidatorException {
         difficult = null;
         changeTitleList();
         status = character.getStatus();
         statsController.loadCharacter();
         skillsController.loadCharacter();
-        CheckUtils.checkName(character.getName());
+        Validator.checkName(character.getName());
         name.setText(character.getName());
         changeTitleList();
         isExpansion.setSelected(status.isExpansion());
         isHardcore.setSelected(status.isHardcore());
         isDead.setDisable(!isHardcore.isSelected());
         isDead.setSelected(status.isDead());
+
     }
 
     @Override
-    public void saveCharacter() throws Exception {
+    public void saveCharacter() throws ValidatorException {
         statsController.saveCharacter();
         character.setName(name.getText());
-        CheckUtils.checkName(character.getName());
+        Validator.checkName(character.getName());
         setStatus();
         character.setTitle(characterDao.getTitleValue(status, difficult));
-
     }
 
     private void setStatus() {

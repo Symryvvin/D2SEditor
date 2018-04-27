@@ -10,6 +10,7 @@ import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.CharacterData;
 import ru.aizen.domain.data.DataReader;
+import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class Character {
         this.characterDao = characterDao;
     }
 
-    public void load(Path path) throws IOException {
+    public void load(Path path) throws IOException, ValidatorException {
         characterData = new CharacterData(path);
         characterData.read();
         DataReader reader = characterData.getReader();

@@ -14,6 +14,7 @@ import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.block.HeaderBlock;
 import ru.aizen.domain.data.DataReader;
 import ru.aizen.domain.data.GameVersion;
+import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -29,7 +30,7 @@ public class CharacterDataReaderTest {
     private DataReader reader;
 
     @Before
-    public void getTestData() throws IOException, URISyntaxException {
+    public void getTestData() throws IOException, URISyntaxException, ValidatorException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
         reader = character.getCharacterData().getReader();
@@ -59,7 +60,7 @@ public class CharacterDataReaderTest {
     }
 
     @Test
-    public void testDataHeader() throws URISyntaxException, IOException {
+    public void testDataHeader() throws URISyntaxException, IOException, ValidatorException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
         HeaderBlock header = character.getCharacterData().getReader().readHeader();

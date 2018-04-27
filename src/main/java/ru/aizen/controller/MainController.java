@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
+import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,21 +76,19 @@ public class MainController {
                 path = file.toPath();
                 openFile();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        } catch (IOException | ValidatorException e) {
             e.printStackTrace();
         }
     }
 
-    private void openFile() throws Exception {
+    private void openFile() throws IOException, ValidatorException {
         hexEditorController.clearAll();
         loadCharacter();
         hexEditorController.loadCharacter();
         editorController.loadCharacter();
     }
 
-    private void loadCharacter() throws IOException {
+    private void loadCharacter() throws IOException, ValidatorException {
         character.load(path);
         editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         save.setDisable(false);
@@ -108,36 +107,43 @@ public class MainController {
             editorController.saveCharacter();
             character.save();
             hexEditorController.setOutputData(character.getCharacterData().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        } catch (IOException | ValidatorException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void onRestoreClick() throws Exception {
-        character.restore();
-        hexEditorController.clearAll();
-        isBackup = false;
-        openFile();
-        isBackup = true;
+    private void onRestoreClick() {
+        try {
+            character.restore();
+            hexEditorController.clearAll();
+            isBackup = false;
+            openFile();
+            isBackup = true;
+        } catch (IOException | ValidatorException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void onBackupClick() throws IOException {
-        if (backupStage == null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/backup.fxml"));
-            Parent root = loader.load();
-            backupStage = new Stage(StageStyle.UTILITY);
-            backupStage.setTitle("Backup Manager");
-            backupStage.setAlwaysOnTop(true);
-            backupStage.setScene(new Scene(root));
-            backupController = loader.getController();
-            backupController.setData(character);
-            backupStage.show();
-        } else {
-            backupController.setData(character);
-            backupStage.show();
+    public void onBackupClick() {
+        try {
+            if (backupStage == null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/backup.fxml"));
+                Parent root = loader.load();
+                backupStage = new Stage(StageStyle.UTILITY);
+                backupStage.setTitle("Backup Manager");
+                backupStage.setAlwaysOnTop(true);
+                backupStage.setScene(new Scene(root));
+                backupController = loader.getController();
+                backupController.setData(character);
+                backupStage.show();
+            } else {
+                backupController.setData(character);
+                backupStage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

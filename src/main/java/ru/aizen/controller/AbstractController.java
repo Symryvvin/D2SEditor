@@ -3,6 +3,7 @@ package ru.aizen.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
+import ru.aizen.domain.exception.ValidatorException;
 
 @Component
 public abstract class AbstractController {
@@ -13,7 +14,7 @@ public abstract class AbstractController {
         this.character = character;
     }
 
-    protected abstract void loadCharacter() throws Exception;
+    protected abstract void loadCharacter() throws ValidatorException;
 
-    public abstract void saveCharacter() throws Exception;
+    public abstract void saveCharacter() throws ValidatorException;
 }
