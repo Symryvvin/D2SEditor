@@ -1,12 +1,16 @@
 package ru.aizen.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.apache.commons.codec.DecoderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +32,8 @@ public class MainController {
     @FXML private Button restore;
     @FXML private Button save;
     @FXML private TabPane editorTabs;
+
+    private Stage backupStage;
 
     private Path path;
     private Path lastBackup;
@@ -117,6 +123,19 @@ public class MainController {
         isBackup = true;
     }
 
-    public void onBackupClick() {
+    public void onBackupClick() throws IOException {
+        if (backupStage == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/backup.fxml"));
+            Parent root = loader.load();
+            backupStage = new Stage(StageStyle.UTILITY);
+            backupStage.setTitle("Backup Manager");
+            backupStage.setAlwaysOnTop(true);
+            backupStage.setScene(new Scene(root));
+            BackupController controller = loader.getController();
+            controller.setData(character.getName(), character.getCharacterData().getBackupFolder());
+            backupStage.show();
+        } else {
+            backupStage.show();
+        }
     }
 }
