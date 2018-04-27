@@ -24,8 +24,8 @@ public final class FileUtils {
         return Files.copy(characterData.getInput(), backup, StandardCopyOption.REPLACE_EXISTING);
     }
 
-    public static void restore(Path backup, CharacterData characterData) throws IOException {
-        Files.copy(backup, characterData.getInput(), StandardCopyOption.REPLACE_EXISTING);
+    public static void restore(CharacterData characterData) throws IOException {
+        Files.copy(characterData.getLastBackup(), characterData.getInput(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     public static void save(Path destination, byte[] data) throws IOException {

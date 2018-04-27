@@ -33,10 +33,10 @@ public class MainController {
     @FXML private Button save;
     @FXML private TabPane editorTabs;
 
+    private BackupController backupController;
     private Stage backupStage;
 
     private Path path;
-    private Path lastBackup;
     private boolean isBackup = true;
 
     private final Character character;
@@ -97,7 +97,9 @@ public class MainController {
         backup.setDisable(false);
         restore.setDisable(false);
         if (isBackup) {
-            lastBackup = character.backup();
+            character.backup();
+            if (backupController != null)
+                backupController.setData(character);
         }
     }
 
@@ -116,7 +118,7 @@ public class MainController {
 
     @FXML
     private void onRestoreClick() throws Exception {
-        character.restore(lastBackup);
+        character.restore();
         hexEditorController.clearAll();
         isBackup = false;
         openFile();
@@ -131,10 +133,11 @@ public class MainController {
             backupStage.setTitle("Backup Manager");
             backupStage.setAlwaysOnTop(true);
             backupStage.setScene(new Scene(root));
-            BackupController controller = loader.getController();
-            controller.setData(character.getName(), character.getCharacterData().getBackupFolder());
+            backupController = loader.getController();
+            backupController.setData(character);
             backupStage.show();
         } else {
+            backupController.setData(character);
             backupStage.show();
         }
     }

@@ -49,4 +49,8 @@ public class Backup {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public List<Path> getPaths() {
+        return paths;
+    }
 }

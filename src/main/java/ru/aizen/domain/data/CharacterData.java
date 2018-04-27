@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class CharacterData {
     private Path input;
     private Path backupFolder;
+    private Path lastBackup;
     private byte[] bytes;
     private DataReader reader;
     private DataWriter writer;
@@ -117,6 +118,14 @@ public class CharacterData {
 
     public Path getBackupFolder() {
         return backupFolder;
+    }
+
+    public Path getLastBackup() {
+        return lastBackup;
+    }
+
+    public void setLastBackup(Path lastBackup) {
+        this.lastBackup = lastBackup;
     }
 
     public byte[] getBytes() {
