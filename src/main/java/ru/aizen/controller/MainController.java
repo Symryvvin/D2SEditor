@@ -3,6 +3,8 @@ package ru.aizen.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.codec.DecoderException;
@@ -17,9 +19,12 @@ import java.nio.file.Path;
 
 @Component
 public class MainController {
+
     @Value("${save.path}")
     private String folder;
 
+    @FXML private Button backup;
+    @FXML private Button open;
     @FXML private Button restore;
     @FXML private Button save;
     @FXML private TabPane editorTabs;
@@ -42,8 +47,16 @@ public class MainController {
     }
 
     public void initialize() {
+        initializeButtons();
         if (folder.equals("default"))
             folder = "C:/Users/" + System.getProperty("user.name") + "/Saved Games/Diablo II/";
+    }
+
+    private void initializeButtons() {
+        open.setGraphic(new ImageView(new Image("/icons/open.png")));
+        save.setGraphic(new ImageView(new Image("/icons/save.png")));
+        restore.setGraphic(new ImageView(new Image("/icons/restore.png")));
+        backup.setGraphic(new ImageView(new Image("/icons/backup.png")));
     }
 
     @FXML
@@ -75,6 +88,7 @@ public class MainController {
         character.load(path);
         editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         save.setDisable(false);
+        backup.setDisable(false);
         restore.setDisable(false);
         if (isBackup) {
             lastBackup = character.backup();
@@ -101,5 +115,8 @@ public class MainController {
         isBackup = false;
         openFile();
         isBackup = true;
+    }
+
+    public void onBackupClick() {
     }
 }

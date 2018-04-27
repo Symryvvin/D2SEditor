@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.162"
@@ -21,31 +20,14 @@
     <ButtonBar buttonMinWidth="40" prefHeight="55" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="0"
                AnchorPane.topAnchor="25">
         <buttons>
-            <Button focusTraversable="false" maxHeight="32" maxWidth="32" onMouseClicked="#onOpenClick"
-                    ButtonBar.buttonData="LEFT">
-                <graphic>
-                    <ImageView>
-                        <Image url="@/icons/open.png"/>
-                    </ImageView>
-                </graphic>
-            </Button>
+            <Button fx:id="open" focusTraversable="false" maxHeight="32" maxWidth="32" onMouseClicked="#onOpenClick"
+                    ButtonBar.buttonData="LEFT"/>
             <Button fx:id="save" disable="true" focusTraversable="false" maxHeight="32" maxWidth="32"
-                    onMouseClicked="#onSaveClick" ButtonBar.buttonData="LEFT">
-                <graphic>
-                    <ImageView>
-                        <Image url="@/icons/floppy.png"/>
-                    </ImageView>
-                </graphic>
-            </Button>
+                    onMouseClicked="#onSaveClick" ButtonBar.buttonData="LEFT"/>
+            <Button fx:id="backup" disable="true" focusTraversable="false" maxHeight="32" maxWidth="32"
+                    onMouseClicked="#onBackupClick" ButtonBar.buttonData="LEFT"/>
             <Button fx:id="restore" disable="true" focusTraversable="false" maxHeight="32" maxWidth="32"
-                    onMouseClicked="#onRestoreClick" ButtonBar.buttonData="LEFT">
-                <graphic>
-                    <ImageView>
-                        <Image url="@/icons/undo.png"/>
-                    </ImageView>
-                </graphic>
-            </Button>
-            <!--<CheckBox mnemonicParsing="false" text="Lock" selected="true" ButtonBar.buttonData="LEFT"/>-->
+                    onMouseClicked="#onRestoreClick" ButtonBar.buttonData="LEFT"/>
             <Region HBox.hgrow="ALWAYS"/>
         </buttons>
     </ButtonBar>
