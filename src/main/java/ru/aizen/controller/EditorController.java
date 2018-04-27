@@ -59,7 +59,7 @@ public class EditorController extends AbstractController {
 
     private void setRulesForName() {
         name.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("^[a-zA-Z_\\-]+$")) {
+            if (newValue.matches("^[a-zA-Z_\\-]+$") || newValue.equals("")) {
                 name.setText(newValue);
             } else {
                 name.setText(oldValue);
