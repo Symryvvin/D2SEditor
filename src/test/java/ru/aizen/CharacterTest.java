@@ -1,6 +1,5 @@
 package ru.aizen;
 
-import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +66,7 @@ public class CharacterTest {
     }
 
     @Test
-    public void testCharacterMeta() throws URISyntaxException, IOException, DecoderException {
+    public void testCharacterMeta() throws URISyntaxException, IOException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
         Assert.assertEquals("Test", character.getName());

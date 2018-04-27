@@ -1,6 +1,5 @@
 package ru.aizen.domain.data;
 
-import org.apache.commons.codec.DecoderException;
 import ru.aizen.domain.character.block.*;
 
 import java.nio.ByteBuffer;
@@ -45,7 +44,7 @@ public class DataReader {
      * and [69 66] (start of skills block) bytes
      * @return block of attributes
      */
-    public AttributesBlock readAttributes() throws DecoderException {
+    public AttributesBlock readAttributes() {
         int start = BlockSize.getAttributesBlockStart(data.array());
         int end = BlockSize.getSkillsBlockStart(data.array());
         return (AttributesBlock) new AttributesBlock(4).parse(getBlockBuffer(start, end - start));
@@ -55,7 +54,7 @@ public class DataReader {
      * Attribute block start from [69 66] and size is 30
      * @return block of skills
      */
-    public SkillsBlock readSkills() throws DecoderException {
+    public SkillsBlock readSkills() {
         int start = BlockSize.getSkillsBlockStart(data.array());
         return (SkillsBlock) new SkillsBlock(5).parse(getBlockBuffer(start, BlockSize.SKILLS_BLOCK_SIZE));
     }

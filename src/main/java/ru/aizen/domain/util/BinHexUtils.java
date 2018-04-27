@@ -1,6 +1,5 @@
 package ru.aizen.domain.util;
 
-import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 import java.util.ArrayList;
@@ -23,9 +22,30 @@ public final class BinHexUtils {
                         first + second + "\t");
     }
 
-    public static byte[] getDecodeHexString(String hex) throws DecoderException {
+    public static byte[] getDecodeHexString(String hex) {
         hex = hex.replace("\t", "");
-        return Hex.decodeHex(hex);
+        return decodeHex(hex);
+    }
+
+    public static byte[] decodeHex(String hex) {
+        char[] data = hex.toCharArray();
+        int len = data.length;
+        byte[] out = new byte[len >> 1];
+        int i = 0;
+
+        for (int j = 0; j < len; ++i) {
+            int f = toDigit(data[j]) << 4;
+            ++j;
+            f |= toDigit(data[j]);
+            ++j;
+            out[i] = (byte) (f & 255);
+        }
+
+        return out;
+    }
+
+    private static int toDigit(char ch) {
+        return Character.digit(ch, 16);
     }
 
     public static List<Integer> getUnsignedByteList(byte[] bytes) {

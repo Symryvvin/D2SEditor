@@ -1,7 +1,5 @@
 package ru.aizen.domain.data;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import ru.aizen.domain.util.BinHexUtils;
 
 import java.util.Collections;
@@ -20,11 +18,11 @@ public final class BlockSize {
         throw new AssertionError();
     }
 
-    public static int getAttributesBlockStart(byte[] data) throws DecoderException {
+    public static int getAttributesBlockStart(byte[] data) {
         return getPositionInDataByHexCode(ATTRIBUTES_BLOCK_START, data);
     }
 
-    public static int getSkillsBlockStart(byte[] data) throws DecoderException {
+    public static int getSkillsBlockStart(byte[] data) {
         return getPositionInDataByHexCode(SKILLS_BLOCK_START, data);
     }
 
@@ -33,8 +31,8 @@ public final class BlockSize {
      * @param hex hex code
      * @return position value
      */
-    private static int getPositionInDataByHexCode(String hex, byte[] data) throws DecoderException {
-        byte[] subArray = Hex.decodeHex(hex);
+    private static int getPositionInDataByHexCode(String hex, byte[] data) {
+        byte[] subArray = BinHexUtils.decodeHex(hex);
         List<Integer> arrayList = BinHexUtils.getUnsignedByteList(data);
         List<Integer> subArrayList = BinHexUtils.getUnsignedByteList(subArray);
         return Collections.indexOfSubList(arrayList, subArrayList);

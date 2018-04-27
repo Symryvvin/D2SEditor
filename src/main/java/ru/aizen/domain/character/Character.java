@@ -2,7 +2,6 @@ package ru.aizen.domain.character;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,7 +43,7 @@ public class Character {
         this.characterDao = characterDao;
     }
 
-    public void load(Path path) throws IOException, DecoderException {
+    public void load(Path path) throws IOException {
         characterData = new CharacterData(path);
         characterData.read();
         DataReader reader = characterData.getReader();
@@ -54,7 +53,7 @@ public class Character {
         skillsBlock = reader.readSkills();
     }
 
-    public void save() throws DecoderException, IOException {
+    public void save() throws IOException {
         metaBlock.setLevel(attributesBlock.getAttributes().get(AttributesBlock.LEVEL).intValue());
         List<DataBlock> blocks = new ArrayList<>();
         blocks.add(headerBlock);
@@ -70,7 +69,7 @@ public class Character {
      * Temporary method to creating stub data block
      * @return stub block
      */
-    private List<DataBlock> stubs() throws DecoderException {
+    private List<DataBlock> stubs() {
         int hotKeysMercenaryQuestWayPointsNPCStart = headerBlock.getSize() + metaBlock.getSize();
         int hotKeysMercenaryQuestWayPointsNPCSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) -
                 hotKeysMercenaryQuestWayPointsNPCStart;

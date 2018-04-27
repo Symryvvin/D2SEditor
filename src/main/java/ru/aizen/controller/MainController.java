@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.apache.commons.codec.DecoderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -76,7 +75,7 @@ public class MainController {
                 path = file.toPath();
                 openFile();
             }
-        } catch (DecoderException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,7 +89,7 @@ public class MainController {
         editorController.loadCharacter();
     }
 
-    private void loadCharacter() throws DecoderException, IOException {
+    private void loadCharacter() throws IOException {
         character.load(path);
         editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         save.setDisable(false);
@@ -109,7 +108,7 @@ public class MainController {
             editorController.saveCharacter();
             character.save();
             hexEditorController.setOutputData(character.getCharacterData().getBytes());
-        } catch (IOException | DecoderException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();

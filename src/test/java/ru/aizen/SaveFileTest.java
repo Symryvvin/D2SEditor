@@ -1,6 +1,5 @@
 package ru.aizen;
 
-import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +29,7 @@ public class SaveFileTest {
     }
 
     @Test
-    public void testWriter() throws DecoderException, IOException {
+    public void testWriter() throws IOException {
         Character character = getTestCharacter();
         byte[] expected = character.getCharacterData().getBytes();
         character.save();
@@ -42,7 +41,7 @@ public class SaveFileTest {
         String fileName = "/test.d2s";
         try {
             character.load(Paths.get(getClass().getResource(fileName).toURI()));
-        } catch (IOException | DecoderException | URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
         return character;

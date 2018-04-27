@@ -1,6 +1,5 @@
 package ru.aizen;
 
-import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,14 +29,14 @@ public class CharacterDataReaderTest {
     private DataReader reader;
 
     @Before
-    public void getTestData() throws IOException, URISyntaxException, DecoderException {
+    public void getTestData() throws IOException, URISyntaxException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
         reader = character.getCharacterData().getReader();
     }
 
     @Test
-    public void testExtractAttributes() throws DecoderException {
+    public void testExtractAttributes() {
         AttributesBlock expected = new AttributesBlock(0);
         expected.put(AttributesBlock.STRENGTH, 15L);
         expected.put(AttributesBlock.ENERGY, 20L);
@@ -60,7 +59,7 @@ public class CharacterDataReaderTest {
     }
 
     @Test
-    public void testDataHeader() throws URISyntaxException, DecoderException, IOException {
+    public void testDataHeader() throws URISyntaxException, IOException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
         HeaderBlock header = character.getCharacterData().getReader().readHeader();
