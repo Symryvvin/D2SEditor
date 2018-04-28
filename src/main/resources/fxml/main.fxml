@@ -2,23 +2,34 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@/css/style.css" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.MainController">
     <MenuBar prefHeight="25" stylesheets="@/css/menuBar.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
              AnchorPane.topAnchor="0">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#onOpenClick" text="Open">
-                <accelerator>
-                    <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#onSaveClick" text="Save"/>
-            <MenuItem mnemonicParsing="false" text="Exit"/>
+            <MenuItem fx:id="openMenu" mnemonicParsing="false" onAction="#onOpenClick" text="Open"/>
+            <MenuItem fx:id="saveMenu" disable="true" mnemonicParsing="false" onAction="#onSaveClick" text="Save"/>
+            <MenuItem fx:id="revertMenu" disable="true" mnemonicParsing="false" onAction="#onRevertClick"
+                      text="Revert"/>
+            <SeparatorMenuItem mnemonicParsing="false"/>
+            <MenuItem fx:id="exitMenu" mnemonicParsing="false" onAction="#onExitClick" text="Exit"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Tabs">
+            <MenuItem fx:id="statsTabMenu" mnemonicParsing="false" onAction="#OnSelectStats" text="Stats"/>
+            <MenuItem fx:id="skillsTabMenu" mnemonicParsing="false" onAction="#OnSelectSkills" text="Skills"/>
+            <MenuItem fx:id="waypointsTabMenu" mnemonicParsing="false" onAction="#OnSelectWaypoints" text="Waypoints"/>
+            <MenuItem fx:id="questsTabMenu" mnemonicParsing="false" onAction="#OnSelectQuests" text="Quests"/>
+            <MenuItem fx:id="inventoryTabMenu" mnemonicParsing="false" onAction="#OnSelectInventory" text="Inventory"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Tools">
+            <MenuItem fx:id="optionsMenu" mnemonicParsing="false" onAction="#onOptionsClick" text="Options"/>
+            <MenuItem fx:id="hexEditorMenu" mnemonicParsing="false" onAction="#onHexEditorClick" text="Hex Editor"/>
+            <MenuItem fx:id="backupManagerMenu" mnemonicParsing="false" onAction="#onBackupClick"
+                      text="Backup Manager"/>
         </Menu>
     </MenuBar>
-    <HBox spacing="5" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="25" prefHeight="55">
+    <HBox prefHeight="55" spacing="5" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="25">
         <Button fx:id="open" focusTraversable="false" maxHeight="1.7976931348623157E308" onMouseClicked="#onOpenClick"
                 ButtonBar.buttonData="LEFT"/>
         <Button fx:id="save" disable="true" focusTraversable="false" maxHeight="1.7976931348623157E308"
@@ -34,15 +45,21 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
         </padding>
     </HBox>
-    <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0"
+    <TabPane fx:id="editorTabs" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0"
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
-        <Tab disable="true" text="Stats">
+        <Tab disable="true" text="Stats" closable="false">
             <fx:include source="editor.fxml"/>
         </Tab>
-        <Tab disable="true" text="Skills">
+        <Tab disable="true" text="Skills" closable="false">
             <fx:include source="skills.fxml"/>
         </Tab>
-        <Tab disable="true" text="Hex Editor">
+        <Tab disable="true" text="Waypoints" closable="false">
+        </Tab>
+        <Tab disable="true" text="Quests" closable="false">
+        </Tab>
+        <Tab disable="true" text="Inventory" closable="false">
+        </Tab>
+        <Tab fx:id="hexEditor" disable="true" text="Hex Editor">
             <fx:include source="hex.fxml"/>
         </Tab>
     </TabPane>
