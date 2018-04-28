@@ -14,6 +14,7 @@ import javafx.stage.StageStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.aizen.app.stage.Alerts;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.exception.ValidatorException;
 
@@ -77,7 +78,7 @@ public class MainController {
                 openFile();
             }
         } catch (IOException | ValidatorException e) {
-            e.printStackTrace();
+            Alerts.showError(e).show();
         }
     }
 
@@ -108,7 +109,7 @@ public class MainController {
             character.save();
             hexEditorController.setOutputData(character.getCharacterData().getBytes());
         } catch (IOException | ValidatorException e) {
-            e.printStackTrace();
+            Alerts.showError(e).show();
         }
     }
 
@@ -120,8 +121,11 @@ public class MainController {
             isBackup = false;
             openFile();
             isBackup = true;
-        } catch (IOException | ValidatorException e) {
-            e.printStackTrace();
+        } catch (ValidatorException e) {
+            Alerts.showError(e).show();
+        } catch (IOException e) {
+            Alerts.showMessage("Backup file " + character.getCharacterData().getLastBackup() + " not exist")
+                    .show();
         }
 
     }
@@ -143,7 +147,7 @@ public class MainController {
                 backupStage.show();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Alerts.showError(e).show();
         }
     }
 }
