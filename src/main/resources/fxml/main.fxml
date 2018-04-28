@@ -3,8 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.162"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.MainController">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.MainController"
+            stylesheets="@/css/style.css">
     <MenuBar prefHeight="25" stylesheets="@/css/menuBar.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
              AnchorPane.topAnchor="0">
         <Menu mnemonicParsing="false" text="File">
@@ -31,7 +32,7 @@
             <Region HBox.hgrow="ALWAYS"/>
         </buttons>
     </ButtonBar>
-    <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+    <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0"
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
         <Tab disable="true" text="Stats">
             <fx:include source="editor.fxml"/>
@@ -43,4 +44,8 @@
             <fx:include source="hex.fxml"/>
         </Tab>
     </TabPane>
+    <Pane prefHeight="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          styleClass="statusBar">
+        <Label fx:id="file"/>
+    </Pane>
 </AnchorPane>

@@ -60,3 +60,10 @@ ComboBox{
 ButtonBar {
     -fx-hgap: 5;
 }
+
+.statusBar {
+    -fx-border-width: 1px 0 0 0;
+    -fx-border-color: #C0C0C0;
+    -fx-border-style: solid;
+    -fx-background-color: #f1f1f1;
+}

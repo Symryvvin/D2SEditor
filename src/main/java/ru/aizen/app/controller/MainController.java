@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,10 +25,10 @@ import java.nio.file.Path;
 
 @Component
 public class MainController {
-
     @Value("${save.path}")
     private String folder;
 
+    @FXML private Label file;
     @FXML private Button backup;
     @FXML private Button open;
     @FXML private Button restore;
@@ -87,6 +88,7 @@ public class MainController {
         loadCharacter();
         hexEditorController.loadCharacter();
         editorController.loadCharacter();
+        file.setText(character.getCharacterData().getInput().toString());
     }
 
     private void loadCharacter() throws IOException, ValidatorException {
