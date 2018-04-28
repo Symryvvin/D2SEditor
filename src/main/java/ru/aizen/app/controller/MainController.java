@@ -140,6 +140,7 @@ public class MainController {
         revert.setDisable(false);
         saveMenu.setDisable(false);
         revertMenu.setDisable(false);
+        backupManagerMenu.setDisable(false);
         if (isBackup) {
             character.backup();
             if (backupController != null)

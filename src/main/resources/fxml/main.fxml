@@ -26,7 +26,7 @@
             <MenuItem fx:id="optionsMenu" mnemonicParsing="false" onAction="#onOptionsClick" text="Options"/>
             <MenuItem fx:id="hexEditorMenu" mnemonicParsing="false" onAction="#onHexEditorClick" text="Hex Editor"/>
             <MenuItem fx:id="backupManagerMenu" mnemonicParsing="false" onAction="#onBackupClick"
-                      text="Backup Manager"/>
+                      text="Backup Manager" disable="true"/>
         </Menu>
     </MenuBar>
     <HBox prefHeight="55" spacing="5" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="25">
