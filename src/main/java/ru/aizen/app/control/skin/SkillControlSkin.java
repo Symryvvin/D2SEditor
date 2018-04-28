@@ -18,16 +18,14 @@ public class SkillControlSkin extends SkinBase<SkillControl> {
      */
     public SkillControlSkin(SkillControl control) {
         super(control);
+        control.getStylesheets().add("/css/skillControl.css");
         ImageView image = control.getImageView();
         image.setFitWidth(48.0d);
         image.setFitHeight(48.0d);
         Label name = control.getLabel();
-        name.setStyle("-fx-font-size: 10px; " +
-                "-fx-pref-height: 24px");
+        name.getStyleClass().add("name");
         NumericField value = control.getNumericField();
-        value.setStyle("-fx-font-size: 10px; " +
-                "-fx-pref-height: 24px; " +
-                "-fx-pref-width: 30px");
+        value.getStyleClass().add("value");
         HBox hBox = new HBox(2.0d, image, value);
         hBox.setAlignment(Pos.BOTTOM_LEFT);
         VBox vBox = new VBox(name, hBox);

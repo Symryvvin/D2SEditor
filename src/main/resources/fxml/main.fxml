@@ -48,6 +48,6 @@
     </TabPane>
     <Pane prefHeight="20.0" styleClass="statusBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
           AnchorPane.rightAnchor="0.0">
-        <Label fx:id="file"/>
+        <Label fx:id="file" layoutX="5" prefHeight="20"/>
     </Pane>
 </AnchorPane>

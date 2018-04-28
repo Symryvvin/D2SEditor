@@ -1,0 +1,11 @@
+.name {
+    -fx-font-size: 10px;
+    -fx-pref-height: 24px;
+    -fx-font-weight: bold;
+}
+
+.value {
+    -fx-font-size: 10px;
+    -fx-pref-height: 24px;
+    -fx-pref-width: 30px;
+}
