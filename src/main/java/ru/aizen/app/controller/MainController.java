@@ -95,16 +95,16 @@ public class MainController {
         save.setDisable(false);
         backup.setDisable(false);
         restore.setDisable(false);
-        if (isBackup) {
-            character.backup();
-            if (backupController != null)
-                backupController.setData(character);
-        }
     }
 
     @FXML
     private void onSaveClick() {
         try {
+            if (isBackup) {
+                character.backup();
+                if (backupController != null)
+                    backupController.setData(character);
+            }
             editorController.saveCharacter();
             character.save();
             hexEditorController.setOutputData(character.getCharacterData().getBytes());

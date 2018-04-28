@@ -30,6 +30,7 @@ public class BackupController {
             Path item = list.getSelectionModel().getSelectedItem();
             backup.delete(item);
             initializeList();
+            list.getSelectionModel().selectFirst();
         }
     }
 
