@@ -14,12 +14,6 @@
     -fx-font-family: "Book Antiqua";
 }
 
-Label{
-    -fx-font-size: 12px;
-    -fx-pref-height: 24px;
-    -fx-font-weight: bold;
-}
-
 .skillPageName {
     -fx-background-color: #1d1d1d;
     -fx-font-size: 11pt;
@@ -44,6 +38,9 @@ Label{
     -fx-border-color: #C0C0C0;
     -fx-border-style: solid;
     -fx-background-color: #d5d5d5;
+    -fx-font-size: 12px;
+    -fx-pref-height: 24px;
+    -fx-font-weight: bold;
 }
 
 TextField{

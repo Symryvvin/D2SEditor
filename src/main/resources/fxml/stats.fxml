@@ -10,10 +10,10 @@
         <AnchorPane>
             <HBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
                   AnchorPane.topAnchor="5.0">
-                <Label text="Level"/>
-                <NumericField fx:id="level" maxValue="99" prefWidth="50.0"/>
-                <Label text="Experience:"/>
-                <Label fx:id="experience" text="3520485255"/>
+                <Label text="Level" prefHeight="25"/>
+                <NumericField fx:id="level" maxValue="99" prefWidth="50.0" prefHeight="25"/>
+                <Label text="Experience:" prefHeight="25"/>
+                <Label fx:id="experience" text="3520485255" prefHeight="25"/>
             </HBox>
         </AnchorPane>
     </VBox>
@@ -87,11 +87,11 @@
         <VBox styleClass="borderedPane">
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title" text="Gold"/>
             <AnchorPane>
-                <GridPane hgap="2.0" vgap="2.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                <GridPane hgap="2.0" vgap="4.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <columnConstraints>
                         <ColumnConstraints minWidth="10.0" prefWidth="70.0"/>
-                        <ColumnConstraints minWidth="10.0" prefWidth="80.0"/>
+                        <ColumnConstraints minWidth="10.0" prefWidth="90.0"/>
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0"/>

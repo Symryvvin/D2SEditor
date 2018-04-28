@@ -29,9 +29,10 @@ public class MainController {
     private String folder;
 
     @FXML private Label file;
+    @FXML private Button options;
     @FXML private Button backup;
     @FXML private Button open;
-    @FXML private Button restore;
+    @FXML private Button revert;
     @FXML private Button save;
     @FXML private TabPane editorTabs;
 
@@ -61,10 +62,11 @@ public class MainController {
     }
 
     private void initializeButtons() {
-        open.setGraphic(new ImageView(new Image("/icons/open.png")));
-        save.setGraphic(new ImageView(new Image("/icons/save.png")));
-        restore.setGraphic(new ImageView(new Image("/icons/restore.png")));
-        backup.setGraphic(new ImageView(new Image("/icons/backup.png")));
+        open.setGraphic(new ImageView(new Image("/icons/app/open.png")));
+        save.setGraphic(new ImageView(new Image("/icons/app/save.png")));
+        revert.setGraphic(new ImageView(new Image("/icons/app/revert.png")));
+        backup.setGraphic(new ImageView(new Image("/icons/app/backup.png")));
+        options.setGraphic(new ImageView(new Image("/icons/app/options.png")));
     }
 
     @FXML
@@ -96,17 +98,17 @@ public class MainController {
         editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         save.setDisable(false);
         backup.setDisable(false);
-        restore.setDisable(false);
+        revert.setDisable(false);
+        if (isBackup) {
+            character.backup();
+            if (backupController != null)
+                backupController.setData(character);
+        }
     }
 
     @FXML
     private void onSaveClick() {
         try {
-            if (isBackup) {
-                character.backup();
-                if (backupController != null)
-                    backupController.setData(character);
-            }
             editorController.saveCharacter();
             character.save();
             hexEditorController.setOutputData(character.getCharacterData().getBytes());
@@ -116,7 +118,7 @@ public class MainController {
     }
 
     @FXML
-    private void onRestoreClick() {
+    private void onRevertClick() {
         try {
             character.restore();
             hexEditorController.clearAll();
@@ -132,7 +134,8 @@ public class MainController {
 
     }
 
-    public void onBackupClick() {
+    @FXML
+    private void onBackupClick() {
         try {
             if (backupStage == null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/backup.fxml"));
@@ -151,5 +154,9 @@ public class MainController {
         } catch (IOException e) {
             Alerts.showError(e).show();
         }
+    }
+
+    @FXML
+    private void onOptionsClick() {
     }
 }

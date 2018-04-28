@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.MainController"
-            stylesheets="@/css/style.css">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@/css/style.css" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.MainController">
     <MenuBar prefHeight="25" stylesheets="@/css/menuBar.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
              AnchorPane.topAnchor="0">
         <Menu mnemonicParsing="false" text="File">
@@ -18,20 +18,22 @@
             <MenuItem mnemonicParsing="false" text="Exit"/>
         </Menu>
     </MenuBar>
-    <ButtonBar buttonMinWidth="40" prefHeight="55" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="0"
-               AnchorPane.topAnchor="25">
-        <buttons>
-            <Button fx:id="open" focusTraversable="false" maxHeight="32" maxWidth="32" onMouseClicked="#onOpenClick"
-                    ButtonBar.buttonData="LEFT"/>
-            <Button fx:id="save" disable="true" focusTraversable="false" maxHeight="32" maxWidth="32"
-                    onMouseClicked="#onSaveClick" ButtonBar.buttonData="LEFT"/>
-            <Button fx:id="backup" disable="true" focusTraversable="false" maxHeight="32" maxWidth="32"
-                    onMouseClicked="#onBackupClick" ButtonBar.buttonData="LEFT"/>
-            <Button fx:id="restore" disable="true" focusTraversable="false" maxHeight="32" maxWidth="32"
-                    onMouseClicked="#onRestoreClick" ButtonBar.buttonData="LEFT"/>
-            <Region HBox.hgrow="ALWAYS"/>
-        </buttons>
-    </ButtonBar>
+    <HBox spacing="5" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="25" prefHeight="55">
+        <Button fx:id="open" focusTraversable="false" maxHeight="1.7976931348623157E308" onMouseClicked="#onOpenClick"
+                ButtonBar.buttonData="LEFT"/>
+        <Button fx:id="save" disable="true" focusTraversable="false" maxHeight="1.7976931348623157E308"
+                onMouseClicked="#onSaveClick" ButtonBar.buttonData="LEFT"/>
+        <Button fx:id="backup" disable="true" focusTraversable="false" maxHeight="1.7976931348623157E308"
+                onMouseClicked="#onBackupClick" ButtonBar.buttonData="LEFT"/>
+        <Button fx:id="revert" disable="true" focusTraversable="false" maxHeight="1.7976931348623157E308"
+                onMouseClicked="#onRevertClick" ButtonBar.buttonData="LEFT"/>
+        <Button fx:id="options" focusTraversable="false" maxHeight="1.7976931348623157E308"
+                onMouseClicked="#onOptionsClick" ButtonBar.buttonData="LEFT"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        </padding>
+    </HBox>
     <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0"
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
         <Tab disable="true" text="Stats">
@@ -44,8 +46,8 @@
             <fx:include source="hex.fxml"/>
         </Tab>
     </TabPane>
-    <Pane prefHeight="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          styleClass="statusBar">
+    <Pane prefHeight="20.0" styleClass="statusBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
         <Label fx:id="file"/>
     </Pane>
 </AnchorPane>
