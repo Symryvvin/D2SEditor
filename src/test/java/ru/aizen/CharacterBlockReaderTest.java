@@ -14,7 +14,6 @@ import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.block.HeaderBlock;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.BlockReader;
-import ru.aizen.domain.data.GameVersion;
 import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
@@ -69,7 +68,7 @@ public class CharacterBlockReaderTest {
         character.load(path);
         HeaderBlock header = reader.readHeader();
         Assert.assertEquals(-1437226411, header.getSignature());
-        Assert.assertEquals(GameVersion.VERSION_1_10, header.getVersion());
+        Assert.assertEquals(0x60, header.getVersion());
         Assert.assertEquals(998, header.getFileSize());
         Assert.assertEquals(-667916153, header.getChecksum());
     }

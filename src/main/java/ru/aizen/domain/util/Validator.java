@@ -1,5 +1,6 @@
 package ru.aizen.domain.util;
 
+import ru.aizen.domain.character.block.HeaderBlock;
 import ru.aizen.domain.exception.ValidatorException;
 
 import java.util.Arrays;
@@ -31,5 +32,10 @@ public final class Validator {
         if (!Arrays.equals(validBytes, bytes)) {
             throw new ValidatorException("Invalid game save file");
         }
+    }
+
+    public static void validateVersion(int version) throws ValidatorException {
+        if (version != HeaderBlock.VERSION)
+            throw new ValidatorException("Version of save file must be 1.10+");
     }
 }

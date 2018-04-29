@@ -10,6 +10,7 @@ import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.data.BlockWriter;
 import ru.aizen.domain.exception.ValidatorException;
+import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -47,6 +48,7 @@ public class Character {
     public void load(Path path) throws IOException, ValidatorException {
         blockReader.read(path);
         headerBlock = blockReader.readHeader();
+        Validator.validateVersion(headerBlock.getVersion());
         metaBlock = blockReader.readMeta();
         attributesBlock = blockReader.readAttributes();
         skillsBlock = blockReader.readSkills();
