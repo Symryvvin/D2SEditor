@@ -85,7 +85,7 @@ public class BlockReader {
      * @param subArray sub array
      * @return position value
      */
-    private int getSubArrayPosition(byte[] subArray) {
+    public int getSubArrayPosition(byte[] subArray) {
         List<UByte> arrayList = UByte.getUnsignedBytes(bytes);
         List<UByte> subArrayList = UByte.getUnsignedBytes(subArray);
         return Collections.indexOfSubList(arrayList, subArrayList);

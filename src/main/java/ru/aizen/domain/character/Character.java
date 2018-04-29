@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.BlockReader;
-import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.CharacterData;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.FileUtils;
@@ -72,12 +71,12 @@ public class Character {
      */
     private List<DataBlock> stubs() {
         int hotKeysMercenaryQuestWayPointsNPCStart = HeaderBlock.HEADER_BLOCK_SIZE + MetaBlock.META_BLOCK_SIZE;
-        int hotKeysMercenaryQuestWayPointsNPCSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) -
+        int hotKeysMercenaryQuestWayPointsNPCSize = characterData.getReader().getSubArrayPosition(AttributesBlock.identifier) -
                 hotKeysMercenaryQuestWayPointsNPCStart;
         DataBlock hotKeysMercenaryQuestWayPointsNPC = characterData.createStubBlock(3,
                 hotKeysMercenaryQuestWayPointsNPCStart,
                 hotKeysMercenaryQuestWayPointsNPCSize);
-        int itemsStart = BlockSize.getSkillsBlockStart(characterData.getBytes()) + SkillsBlock.SKILLS_BLOCK_SIZE;
+        int itemsStart = characterData.getReader().getSubArrayPosition(SkillsBlock.identifier) + SkillsBlock.SKILLS_BLOCK_SIZE;
         int itemsSize = characterData.getBytes().length - itemsStart;
         DataBlock skillsItems = characterData.createStubBlock(6,
                 itemsStart,
