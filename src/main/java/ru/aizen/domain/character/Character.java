@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.CharacterDao;
+import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.CharacterData;
-import ru.aizen.domain.data.DataReader;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.FileUtils;
 
@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Component
 public class Character {
-    private CharacterData characterData;
+    private final CharacterData characterData;
     private HeaderBlock headerBlock;
     private MetaBlock metaBlock;
     private AttributesBlock attributesBlock;
@@ -40,14 +40,14 @@ public class Character {
     private final CharacterDao characterDao;
 
     @Autowired
-    public Character(CharacterDao characterDao) {
+    public Character(CharacterDao characterDao, CharacterData characterData) {
         this.characterDao = characterDao;
+        this.characterData = characterData;
     }
 
     public void load(Path path) throws IOException, ValidatorException {
-        characterData = new CharacterData(path);
-        characterData.read();
-        DataReader reader = characterData.getReader();
+        characterData.read(path);
+        BlockReader reader = characterData.getReader();
         headerBlock = reader.readHeader();
         metaBlock = reader.readMeta();
         attributesBlock = reader.readAttributes();

@@ -1,8 +1,11 @@
 package ru.aizen.domain.data;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.DataBlock;
 import ru.aizen.domain.exception.ValidatorException;
+import ru.aizen.domain.util.FileUtils;
 import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
@@ -14,19 +17,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class CharacterData {
     private Path input;
     private Path backupFolder;
     private Path lastBackup;
     private byte[] bytes;
-    private DataReader reader;
-    private DataWriter writer;
+
+    private final BlockReader reader;
+
+    @Autowired
+    public CharacterData(BlockReader reader) {
+        this.reader = reader;
+    }
 
     /**
-     * Constructor. In constructor set fields of path to original and backup folder
+     * Initializer. Set fields of path to original and backup folder
      * @param filePath path to open save file and get data
      */
-    public CharacterData(Path filePath) throws IOException {
+    private void initialize(Path filePath) throws IOException {
         this.input = filePath;
         String folder = filePath.toString().replace(".d2s", "");
         this.backupFolder = Paths.get(folder);
@@ -36,14 +45,14 @@ public class CharacterData {
     }
 
     /**
-     * Read data to bytes field and creating DataReader/DataWriter
+     * Read data to bytes field and creating BlockReader
      * @throws IOException
      */
-    public void read() throws IOException, ValidatorException {
-        this.bytes = Files.readAllBytes(input);
+    public void read(Path filePath) throws IOException, ValidatorException {
+        initialize(filePath);
+        bytes = Files.readAllBytes(input);
         Validator.validateFormat(Arrays.copyOfRange(bytes, 0, 4));
-        this.reader = new DataReader(bytes);
-        this.writer = new DataWriter(input);
+        reader.setBytes(bytes);
     }
 
     public void write(List<DataBlock> blocks) throws IOException {
@@ -51,8 +60,8 @@ public class CharacterData {
                 .flatMap(b -> b.collect().stream())
                 .collect(Collectors.toList());
         bytes = getDataToSave(result);
-        reader = new DataReader(bytes);
-        writer.write(bytes);
+        reader.setBytes(bytes);
+        FileUtils.save(input, bytes);
     }
 
     /**
@@ -136,7 +145,7 @@ public class CharacterData {
         return bytes;
     }
 
-    public DataReader getReader() {
+    public BlockReader getReader() {
         return reader;
     }
 

@@ -32,12 +32,14 @@ public class AttributesBlock extends DataBlock {
     public static final long GOLD = 14;
     public static final long GOLD_IN_STASH = 15;
 
-
     private Map<Long, Long> attributes;
 
-    public AttributesBlock(int order) {
+    private final AttributeDao attributeDao;
+
+    public AttributesBlock(int order, AttributeDao attributeDao) {
         super(order);
-        attributes = new HashMap<>();
+        this.attributeDao = attributeDao;
+        this.attributes = new HashMap<>();
     }
 
     @Override
@@ -124,6 +126,6 @@ public class AttributesBlock extends DataBlock {
     }
 
     private Attribute getBy(long id) {
-        return AttributeDao.getAttributeById((int) id);
+        return attributeDao.getAttributeById((int) id);
     }
 }

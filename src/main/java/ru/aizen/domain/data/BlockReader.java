@@ -1,6 +1,10 @@
 package ru.aizen.domain.data;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
+import ru.aizen.domain.dao.AttributeDao;
+import ru.aizen.domain.dao.SkillDao;
 
 import java.nio.ByteBuffer;
 
@@ -9,11 +13,21 @@ import static ru.aizen.domain.data.BlockSize.*;
 /**
  * This class keep save file data and can give byte block of different parts saved hero data
  */
-public class DataReader {
+@Component
+public class BlockReader {
     private ByteBuffer data;
 
-    public DataReader(byte[] data) {
-        this.data = ByteBuffer.wrap(data);
+    private final AttributeDao attributeDao;
+    private final SkillDao skillDao;
+
+    @Autowired
+    public BlockReader(AttributeDao attributeDao, SkillDao skillDao) {
+        this.attributeDao = attributeDao;
+        this.skillDao = skillDao;
+    }
+
+    public void setBytes(byte[] bytes) {
+        data = ByteBuffer.wrap(bytes);
     }
 
     /**
@@ -47,7 +61,7 @@ public class DataReader {
     public AttributesBlock readAttributes() {
         int start = BlockSize.getAttributesBlockStart(data.array());
         int end = BlockSize.getSkillsBlockStart(data.array());
-        return (AttributesBlock) new AttributesBlock(4).parse(getBlockBuffer(start, end - start));
+        return (AttributesBlock) new AttributesBlock(4, attributeDao).parse(getBlockBuffer(start, end - start));
     }
 
     /**
@@ -56,7 +70,7 @@ public class DataReader {
      */
     public SkillsBlock readSkills() {
         int start = BlockSize.getSkillsBlockStart(data.array());
-        return (SkillsBlock) new SkillsBlock(5).parse(getBlockBuffer(start, BlockSize.SKILLS_BLOCK_SIZE));
+        return (SkillsBlock) new SkillsBlock(5, skillDao).parse(getBlockBuffer(start, BlockSize.SKILLS_BLOCK_SIZE));
     }
 
     private ByteBuffer getBlockBuffer(int offset, int size) {

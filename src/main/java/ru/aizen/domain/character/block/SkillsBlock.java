@@ -1,6 +1,7 @@
 package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.UByte;
+import ru.aizen.domain.dao.SkillDao;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -9,9 +10,11 @@ import java.util.Map;
 
 public class SkillsBlock extends DataBlock {
     private Map<Integer, Byte> values;
+    private final SkillDao skillDao;
 
-    public SkillsBlock(int order) {
+    public SkillsBlock(int order, SkillDao skillDao) {
         super(order);
+        this.skillDao = skillDao;
     }
 
     @Override

@@ -12,7 +12,8 @@ import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.block.HeaderBlock;
-import ru.aizen.domain.data.DataReader;
+import ru.aizen.domain.dao.AttributeDao;
+import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.data.GameVersion;
 import ru.aizen.domain.exception.ValidatorException;
 
@@ -24,10 +25,13 @@ import java.nio.file.Paths;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = AppConfig.class)
-public class CharacterDataReaderTest {
+public class CharacterBlockReaderTest {
     @Autowired
     private Character character;
-    private DataReader reader;
+    @Autowired
+    private BlockReader reader;
+    @Autowired
+    private AttributeDao attributeDao;
 
     @Before
     public void getTestData() throws IOException, URISyntaxException, ValidatorException {
@@ -38,7 +42,7 @@ public class CharacterDataReaderTest {
 
     @Test
     public void testExtractAttributes() {
-        AttributesBlock expected = new AttributesBlock(0);
+        AttributesBlock expected = new AttributesBlock(0, attributeDao);
         expected.put(AttributesBlock.STRENGTH, 15L);
         expected.put(AttributesBlock.ENERGY, 20L);
         expected.put(AttributesBlock.DEXTERITY, 20L);
