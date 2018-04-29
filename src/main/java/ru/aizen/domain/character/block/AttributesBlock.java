@@ -3,7 +3,7 @@ package ru.aizen.domain.character.block;
 import org.apache.commons.lang3.StringUtils;
 import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.attribute.Attribute;
-import ru.aizen.domain.data.CSVLoader;
+import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.util.BinaryUtils;
 
 import java.nio.ByteBuffer;
@@ -124,6 +124,6 @@ public class AttributesBlock extends DataBlock {
     }
 
     private Attribute getBy(long id) {
-        return CSVLoader.attributes().get(id);
+        return AttributeDao.getAttributeById((int) id);
     }
 }

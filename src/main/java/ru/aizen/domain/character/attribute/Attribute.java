@@ -6,13 +6,11 @@ public class Attribute {
     private long id;
     private String name;
     private int length;
-    private int divide;
 
-    public Attribute(String id, String name, String length, String divide) {
-        this.id = Integer.parseInt(id);
+    public Attribute(int id, String name, int length) {
+        this.id = id;
         this.name = name;
-        this.length = Integer.parseInt(length);
-        this.divide = Integer.parseInt(divide);
+        this.length = length;
     }
 
     public long getId() {
@@ -25,9 +23,5 @@ public class Attribute {
 
     public int getLength() {
         return length;
-    }
-
-    public int getDivide() {
-        return divide;
     }
 }
