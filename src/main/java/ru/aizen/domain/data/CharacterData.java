@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.DataBlock;
 import ru.aizen.domain.exception.ValidatorException;
-import ru.aizen.domain.util.FileUtils;
 import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
@@ -45,7 +44,7 @@ public class CharacterData {
                 .collect(Collectors.toList());
         bytes = getDataToSave(result);
         reader.setBytes(bytes);
-        FileUtils.save(saveFile, bytes);
+        Files.write(saveFile, bytes);
     }
 
     /**
