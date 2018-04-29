@@ -2,15 +2,11 @@ package ru.aizen.app.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -25,6 +21,7 @@ import java.nio.file.Path;
 
 @Component
 public class MainController {
+
     @Value("${save.path}")
     private String folder;
 
@@ -53,8 +50,8 @@ public class MainController {
     @FXML private TabPane editorTabs;
     // Closeable tabs
     @FXML private Tab hexEditor;
+    @FXML private Tab backupManager;
 
-    private BackupController backupController;
     private Stage backupStage;
 
     private Path path;
@@ -63,14 +60,17 @@ public class MainController {
     private final Character character;
     private final EditorController editorController;
     private final HexEditorController hexEditorController;
+    private final BackupController backupController;
 
     @Autowired
     public MainController(Character character,
                           EditorController editorController,
-                          HexEditorController hexEditorController) {
+                          HexEditorController hexEditorController,
+                          BackupController backupController) {
         this.character = character;
         this.editorController = editorController;
         this.hexEditorController = hexEditorController;
+        this.backupController = backupController;
     }
 
     public void initialize() {
@@ -129,10 +129,13 @@ public class MainController {
         loadCharacter();
         hexEditorController.loadCharacter();
         editorController.loadCharacter();
-        file.setText(character.getCharacterData().getInput().toString());
+        file.setText(path.toString());
     }
 
     private void loadCharacter() throws IOException, ValidatorException {
+        if (isBackup) {
+            backupController.createBackup(path);
+        }
         character.load(path);
         editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         save.setDisable(false);
@@ -141,11 +144,11 @@ public class MainController {
         saveMenu.setDisable(false);
         revertMenu.setDisable(false);
         backupManagerMenu.setDisable(false);
-        if (isBackup) {
+/*        if (isBackup) {
             character.backup();
             if (backupController != null)
                 backupController.setData(character);
-        }
+        }*/
     }
 
     @FXML
@@ -162,7 +165,8 @@ public class MainController {
     @FXML
     private void onRevertClick() {
         try {
-            character.restore();
+            backupController.revert();
+            //  character.restore();
             hexEditorController.clearAll();
             isBackup = false;
             openFile();
@@ -170,16 +174,16 @@ public class MainController {
         } catch (ValidatorException e) {
             Alerts.showError(e).show();
         } catch (IOException e) {
-            Alerts.showMessage("Backup file " + character.getCharacterData().getLastBackup() + " not exist")
-                    .show();
+            Alerts.showMessage("Backup file not exist").show();
         }
 
     }
 
     @FXML
     private void onBackupClick() {
+        addAndSelect(backupManager);
         //TODO add as closeable tab?
-        try {
+/*        try {
             if (backupStage == null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/backup.fxml"));
                 Parent root = loader.load();
@@ -196,7 +200,7 @@ public class MainController {
             }
         } catch (IOException e) {
             Alerts.showError(e).show();
-        }
+        }*/
     }
 
     @FXML

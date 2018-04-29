@@ -12,16 +12,13 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class CharacterData {
-    private Path input;
-    private Path backupFolder;
-    private Path lastBackup;
+    private Path saveFile;
     private byte[] bytes;
 
     private final BlockReader reader;
@@ -32,25 +29,12 @@ public class CharacterData {
     }
 
     /**
-     * Initializer. Set fields of path to original and backup folder
-     * @param filePath path to open save file and get data
-     */
-    private void initialize(Path filePath) throws IOException {
-        this.input = filePath;
-        String folder = filePath.toString().replace(".d2s", "");
-        this.backupFolder = Paths.get(folder);
-        if (Files.notExists(backupFolder)) {
-            Files.createDirectory(Paths.get(folder));
-        }
-    }
-
-    /**
      * Read data to bytes field and creating BlockReader
      * @throws IOException
      */
-    public void read(Path filePath) throws IOException, ValidatorException {
-        initialize(filePath);
-        bytes = Files.readAllBytes(input);
+    public void read(Path saveFile) throws IOException, ValidatorException {
+        this.saveFile = saveFile;
+        bytes = Files.readAllBytes(saveFile);
         Validator.validateFormat(Arrays.copyOfRange(bytes, 0, 4));
         reader.setBytes(bytes);
     }
@@ -61,7 +45,7 @@ public class CharacterData {
                 .collect(Collectors.toList());
         bytes = getDataToSave(result);
         reader.setBytes(bytes);
-        FileUtils.save(input, bytes);
+        FileUtils.save(saveFile, bytes);
     }
 
     /**
@@ -123,22 +107,6 @@ public class CharacterData {
         return bytes.stream()
                 .map(UByte::get)
                 .reduce(0, (first, second) -> (first << 1) + second + ((first < 0) ? 1 : 0));
-    }
-
-    public Path getInput() {
-        return input;
-    }
-
-    public Path getBackupFolder() {
-        return backupFolder;
-    }
-
-    public Path getLastBackup() {
-        return lastBackup;
-    }
-
-    public void setLastBackup(Path lastBackup) {
-        this.lastBackup = lastBackup;
     }
 
     public byte[] getBytes() {

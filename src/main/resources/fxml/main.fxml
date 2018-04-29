@@ -62,6 +62,9 @@
         <Tab fx:id="hexEditor" disable="true" text="Hex Editor">
             <fx:include source="hex.fxml"/>
         </Tab>
+        <Tab fx:id="backupManager" disable="true" text="Backup Manager">
+            <fx:include source="backup.fxml"/>
+        </Tab>
     </TabPane>
     <Pane prefHeight="20.0" styleClass="statusBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
           AnchorPane.rightAnchor="0.0">

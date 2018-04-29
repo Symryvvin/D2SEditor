@@ -10,7 +10,6 @@ import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.data.CharacterData;
 import ru.aizen.domain.exception.ValidatorException;
-import ru.aizen.domain.util.FileUtils;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -85,14 +84,6 @@ public class Character {
         result.add(hotKeysMercenaryQuestWayPointsNPC);
         result.add(skillsItems);
         return result;
-    }
-
-    public void backup() throws IOException {
-        characterData.setLastBackup(FileUtils.backup(characterData));
-    }
-
-    public void restore() throws IOException {
-        FileUtils.restore(characterData);
     }
 
     public String getName() {
