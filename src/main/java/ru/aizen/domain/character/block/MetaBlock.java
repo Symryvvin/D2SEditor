@@ -2,7 +2,6 @@ package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.Status;
-import ru.aizen.domain.data.BlockSize;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -11,6 +10,9 @@ import java.time.ZoneOffset;
 import java.util.List;
 
 public class MetaBlock extends DataBlock {
+    public static final int META_BLOCK_OFFSET = 16;
+    public static final int META_BLOCK_SIZE = 40;
+
     private static final int NAME_LENGTH = 16;
 
     private String name;
@@ -27,7 +29,6 @@ public class MetaBlock extends DataBlock {
 
     @Override
     public DataBlock parse(ByteBuffer buffer) {
-        size = buffer.capacity();
         this.activeHand = buffer.getInt();
         byte[] name = new byte[NAME_LENGTH];
         buffer.get(name, 0, NAME_LENGTH);
@@ -47,7 +48,7 @@ public class MetaBlock extends DataBlock {
 
     @Override
     public List<UByte> collect() {
-        ByteBuffer buffer = ByteBuffer.allocate(BlockSize.META_BLOCK_SIZE)
+        ByteBuffer buffer = ByteBuffer.allocate(META_BLOCK_SIZE)
                 .putInt(activeHand)
                 .put(fillNameWithSpaces())
                 .put(status.toByte())

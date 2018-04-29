@@ -1,7 +1,6 @@
 package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.UByte;
-import ru.aizen.domain.data.BlockSize;
 import ru.aizen.domain.data.GameVersion;
 
 import java.nio.ByteBuffer;
@@ -9,6 +8,8 @@ import java.nio.ByteOrder;
 import java.util.List;
 
 public class HeaderBlock extends DataBlock {
+    public static final int HEADER_BLOCK_OFFSET = 0;
+    public static final int HEADER_BLOCK_SIZE = 16;
 
     private int signature;
     private GameVersion version;
@@ -21,7 +22,6 @@ public class HeaderBlock extends DataBlock {
 
     @Override
     public DataBlock parse(ByteBuffer buffer) {
-        size = buffer.capacity();
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.signature = buffer.getInt();
         this.version = GameVersion.parse(buffer.getInt());
@@ -32,7 +32,7 @@ public class HeaderBlock extends DataBlock {
 
     @Override
     public List<UByte> collect() {
-        ByteBuffer buffer = ByteBuffer.allocate(BlockSize.HEADER_BLOCK_SIZE)
+        ByteBuffer buffer = ByteBuffer.allocate(HEADER_BLOCK_SIZE)
                 .order(ByteOrder.LITTLE_ENDIAN)
                 .putInt(signature)
                 .putInt(96) //hardcoded 1.10+ version
@@ -44,10 +44,6 @@ public class HeaderBlock extends DataBlock {
 
     public int getSignature() {
         return signature;
-    }
-
-    public void setSignature(int signature) {
-        this.signature = signature;
     }
 
     public GameVersion getVersion() {
@@ -62,16 +58,8 @@ public class HeaderBlock extends DataBlock {
         return fileSize;
     }
 
-    public void setFileSize(int fileSize) {
-        this.fileSize = fileSize;
-    }
-
     public int getChecksum() {
         return checksum;
-    }
-
-    public void setChecksum(int checksum) {
-        this.checksum = checksum;
     }
 
     @Override

@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 public class SkillsBlock extends DataBlock {
+    public static final int SKILLS_BLOCK_SIZE = 32;
+    /** Identifier of start skill block */
+    public static final byte[] identifier = new byte[]{0x69, 0x66};
+
     private Map<Integer, Byte> values;
     private final SkillDao skillDao;
 
@@ -18,9 +22,8 @@ public class SkillsBlock extends DataBlock {
     }
 
     @Override
-    public DataBlock parse(ByteBuffer buffer) {
-        size = buffer.capacity();
-        buffer.getShort();
+    public SkillsBlock parse(ByteBuffer buffer) {
+        buffer.getShort(); // skip identifier 0x6966
         values = new HashMap<>();
         byte[] data = new byte[30];
         buffer.get(data, 0, 30);
@@ -35,7 +38,7 @@ public class SkillsBlock extends DataBlock {
         byte[] result = new byte[30];
         values.forEach((key, value) -> result[key - 1] = value);
         ByteBuffer buffer = ByteBuffer.allocate(2 + result.length)
-                .put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 105).put((byte) 102).flip())
+                .put(identifier)
                 .put(result);
         buffer.flip();
         return UByte.getUnsignedBytes(buffer.array());

@@ -71,13 +71,13 @@ public class Character {
      * @return stub block
      */
     private List<DataBlock> stubs() {
-        int hotKeysMercenaryQuestWayPointsNPCStart = headerBlock.getSize() + metaBlock.getSize();
+        int hotKeysMercenaryQuestWayPointsNPCStart = HeaderBlock.HEADER_BLOCK_SIZE + MetaBlock.META_BLOCK_SIZE;
         int hotKeysMercenaryQuestWayPointsNPCSize = BlockSize.getAttributesBlockStart(characterData.getBytes()) -
                 hotKeysMercenaryQuestWayPointsNPCStart;
         DataBlock hotKeysMercenaryQuestWayPointsNPC = characterData.createStubBlock(3,
                 hotKeysMercenaryQuestWayPointsNPCStart,
                 hotKeysMercenaryQuestWayPointsNPCSize);
-        int itemsStart = BlockSize.getSkillsBlockStart(characterData.getBytes()) + skillsBlock.getSize();
+        int itemsStart = BlockSize.getSkillsBlockStart(characterData.getBytes()) + SkillsBlock.SKILLS_BLOCK_SIZE;
         int itemsSize = characterData.getBytes().length - itemsStart;
         DataBlock skillsItems = characterData.createStubBlock(6,
                 itemsStart,

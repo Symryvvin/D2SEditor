@@ -7,13 +7,14 @@ import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.util.BinaryUtils;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AttributesBlock extends DataBlock {
     private static final String STOP_CODE = "01FF";
+    /** Identifier of start attributes block */
+    public static final byte[] identifier = new byte[]{0x67, 0x66};
 
     public static final long STRENGTH = 0;
     public static final long ENERGY = 1;
@@ -33,7 +34,7 @@ public class AttributesBlock extends DataBlock {
     public static final long GOLD_IN_STASH = 15;
 
     private Map<Long, Long> attributes;
-
+    private int blockSize;
     private final AttributeDao attributeDao;
 
     public AttributesBlock(int order, AttributeDao attributeDao) {
@@ -43,21 +44,22 @@ public class AttributesBlock extends DataBlock {
     }
 
     @Override
-    public DataBlock parse(ByteBuffer buffer) {
-        size = buffer.capacity();
-        unpack(buffer.array());
+    public AttributesBlock parse(ByteBuffer buffer) {
+        blockSize = buffer.capacity();
+        buffer.getShort(); // skip identifier 0x6766
+        byte[] bytes = new byte[blockSize - 2];
+        buffer.get(bytes);
+        unpack(bytes);
         return this;
     }
 
     @Override
     public List<UByte> collect() {
-        ByteBuffer buffer = ByteBuffer.wrap(pack());
-        size = buffer.capacity();
-        return UByte.getUnsignedBytes(buffer.array());
+        return UByte.getUnsignedBytes(pack());
     }
 
     private void unpack(byte[] data) {
-        String bits = BinaryUtils.getBitString(crapStartCode(data), true);
+        String bits = BinaryUtils.getBitString(data, true);
         int stopId = Integer.parseInt(STOP_CODE, 16);
         int cursor = 0;
         int end;
@@ -73,14 +75,10 @@ public class AttributesBlock extends DataBlock {
         }
     }
 
-    private byte[] crapStartCode(byte[] data) {
-        return Arrays.copyOfRange(data, 2, data.length);
-    }
-
     private byte[] pack() {
         byte[] result = BinaryUtils.fromBinaryString(getBinary(), true);
         ByteBuffer buffer = ByteBuffer.allocate(2 + result.length);
-        buffer.put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 103).put((byte) 102).flip()).put(result).flip();
+        buffer.put(identifier).put(result).flip();
         return buffer.array();
     }
 
@@ -127,5 +125,9 @@ public class AttributesBlock extends DataBlock {
 
     private Attribute getBy(long id) {
         return attributeDao.getAttributeById((int) id);
+    }
+
+    public int getBlockSize() {
+        return blockSize;
     }
 }

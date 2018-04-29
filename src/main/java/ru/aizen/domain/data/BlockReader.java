@@ -2,20 +2,22 @@ package ru.aizen.domain.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.dao.SkillDao;
 
 import java.nio.ByteBuffer;
-
-import static ru.aizen.domain.data.BlockSize.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This class keep save file data and can give byte block of different parts saved hero data
  */
 @Component
 public class BlockReader {
-    private ByteBuffer data;
+    private byte[] bytes;
 
     private final AttributeDao attributeDao;
     private final SkillDao skillDao;
@@ -27,7 +29,7 @@ public class BlockReader {
     }
 
     public void setBytes(byte[] bytes) {
-        data = ByteBuffer.wrap(bytes);
+        this.bytes = bytes;
     }
 
     /**
@@ -42,7 +44,8 @@ public class BlockReader {
      * @return header object
      */
     public HeaderBlock readHeader() {
-        return (HeaderBlock) new HeaderBlock(1).parse(getBlockBuffer(HEADER_BLOCK_OFFSET, HEADER_BLOCK_SIZE));
+        return (HeaderBlock) new HeaderBlock(1).parse(getBlockBuffer(HeaderBlock.HEADER_BLOCK_OFFSET,
+                HeaderBlock.HEADER_BLOCK_SIZE));
     }
 
     /**
@@ -50,7 +53,7 @@ public class BlockReader {
      * @return meta object
      */
     public MetaBlock readMeta() {
-        return (MetaBlock) new MetaBlock(2).parse(getBlockBuffer(META_BLOCK_OFFSET, META_BLOCK_SIZE));
+        return (MetaBlock) new MetaBlock(2).parse(getBlockBuffer(MetaBlock.META_BLOCK_OFFSET, MetaBlock.META_BLOCK_SIZE));
     }
 
     /**
@@ -59,9 +62,9 @@ public class BlockReader {
      * @return block of attributes
      */
     public AttributesBlock readAttributes() {
-        int start = BlockSize.getAttributesBlockStart(data.array());
-        int end = BlockSize.getSkillsBlockStart(data.array());
-        return (AttributesBlock) new AttributesBlock(4, attributeDao).parse(getBlockBuffer(start, end - start));
+        int offset = getSubArrayPosition(AttributesBlock.identifier);
+        int size = getSubArrayPosition(SkillsBlock.identifier) - offset;
+        return new AttributesBlock(4, attributeDao).parse(getBlockBuffer(offset, size));
     }
 
     /**
@@ -69,18 +72,22 @@ public class BlockReader {
      * @return block of skills
      */
     public SkillsBlock readSkills() {
-        int start = BlockSize.getSkillsBlockStart(data.array());
-        return (SkillsBlock) new SkillsBlock(5, skillDao).parse(getBlockBuffer(start, BlockSize.SKILLS_BLOCK_SIZE));
+        int offset = getSubArrayPosition(SkillsBlock.identifier);
+        return new SkillsBlock(5, skillDao).parse(getBlockBuffer(offset, SkillsBlock.SKILLS_BLOCK_SIZE));
     }
 
     private ByteBuffer getBlockBuffer(int offset, int size) {
-        byte[] bytes = new byte[size];
-        data.position(offset);
-        data.get(bytes, 0, size);
-        return ByteBuffer.wrap(bytes);
+        return ByteBuffer.wrap(Arrays.copyOfRange(bytes, offset, size + offset));
     }
 
-    public int getDataSize() {
-        return data.capacity();
+    /**
+     * Calculate position of byte sub array in data byte array
+     * @param subArray sub array
+     * @return position value
+     */
+    private int getSubArrayPosition(byte[] subArray) {
+        List<UByte> arrayList = UByte.getUnsignedBytes(bytes);
+        List<UByte> subArrayList = UByte.getUnsignedBytes(subArray);
+        return Collections.indexOfSubList(arrayList, subArrayList);
     }
 }

@@ -18,7 +18,6 @@ public class StubBlock extends DataBlock {
     @Override
     public DataBlock parse(ByteBuffer buffer) {
         this.buffer = buffer;
-        size = buffer.capacity();
         return this;
     }
 
