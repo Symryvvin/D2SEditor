@@ -8,10 +8,8 @@ import org.springframework.stereotype.Component;
 import ru.aizen.app.control.SkillControl;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.attribute.Skill;
-import ru.aizen.domain.character.attribute.SkillPage;
 import ru.aizen.domain.character.block.SkillsBlock;
 import ru.aizen.domain.dao.SkillDao;
-import ru.aizen.domain.data.CSVLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +46,10 @@ public class SkillsController extends AbstractController {
         firstPage.getChildren().clear();
         secondPage.getChildren().clear();
         thirdPage.getChildren().clear();
-        List<SkillPage> pages = CSVLoader.pages()
-                .stream()
-                .filter(skillPage -> skillPage.getCharacterClass() == character.getCharacterClass())
-                .collect(Collectors.toList());
         List<Skill> skills = addValues(skillsBlock.getSkillValues());
-        firstPageName.setText(pages.get(0).getName());
-        secondPageName.setText(pages.get(1).getName());
-        thirdPageName.setText(pages.get(2).getName());
+        firstPageName.setText(skillDao.getSkillPage(character.getCharacterClass(), 1));
+        secondPageName.setText(skillDao.getSkillPage(character.getCharacterClass(), 2));
+        thirdPageName.setText(skillDao.getSkillPage(character.getCharacterClass(), 3));
         for (Skill skill : skills) {
             SkillControl control = new SkillControl();
             control.setName(skill.getName());

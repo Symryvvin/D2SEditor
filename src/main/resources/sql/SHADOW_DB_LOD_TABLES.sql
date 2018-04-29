@@ -32,3 +32,9 @@ CREATE TABLE tbl_skill_page (
   page_order INT         NOT NULL,
   CONSTRAINT tbl_skill_page_tbl_class_id_fk FOREIGN KEY (class_id) REFERENCES tbl_class (id)
 );
+
+CREATE TABLE tbl_attribute (
+  id     INT PRIMARY KEY NOT NULL,
+  name   VARCHAR(20)     NOT NULL,
+  length INT             NOT NULL
+);
