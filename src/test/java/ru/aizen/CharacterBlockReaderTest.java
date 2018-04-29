@@ -37,7 +37,7 @@ public class CharacterBlockReaderTest {
     public void getTestData() throws IOException, URISyntaxException, ValidatorException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
-        reader = character.getCharacterData().getReader();
+        reader = character.getBlockReader();
     }
 
     @Test
@@ -67,7 +67,7 @@ public class CharacterBlockReaderTest {
     public void testDataHeader() throws URISyntaxException, IOException, ValidatorException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
-        HeaderBlock header = character.getCharacterData().getReader().readHeader();
+        HeaderBlock header = reader.readHeader();
         Assert.assertEquals(-1437226411, header.getSignature());
         Assert.assertEquals(GameVersion.VERSION_1_10, header.getVersion());
         Assert.assertEquals(998, header.getFileSize());

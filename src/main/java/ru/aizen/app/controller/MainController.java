@@ -52,8 +52,6 @@ public class MainController {
     @FXML private Tab hexEditor;
     @FXML private Tab backupManager;
 
-    private Stage backupStage;
-
     private Path path;
     private boolean isBackup = true;
 
@@ -144,19 +142,14 @@ public class MainController {
         saveMenu.setDisable(false);
         revertMenu.setDisable(false);
         backupManagerMenu.setDisable(false);
-/*        if (isBackup) {
-            character.backup();
-            if (backupController != null)
-                backupController.setData(character);
-        }*/
     }
 
     @FXML
     private void onSaveClick() {
         try {
             editorController.saveCharacter();
-            character.save();
-            hexEditorController.setOutputData(character.getCharacterData().getBytes());
+            character.save(path);
+            hexEditorController.setOutputData(character.getBlockReader().getBytes());
         } catch (IOException | ValidatorException e) {
             Alerts.showError(e).show();
         }
@@ -166,7 +159,6 @@ public class MainController {
     private void onRevertClick() {
         try {
             backupController.revert();
-            //  character.restore();
             hexEditorController.clearAll();
             isBackup = false;
             openFile();
@@ -182,25 +174,6 @@ public class MainController {
     @FXML
     private void onBackupClick() {
         addAndSelect(backupManager);
-        //TODO add as closeable tab?
-/*        try {
-            if (backupStage == null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/backup.fxml"));
-                Parent root = loader.load();
-                backupStage = new Stage(StageStyle.UTILITY);
-                backupStage.setTitle("Backup Manager");
-                backupStage.setAlwaysOnTop(true);
-                backupStage.setScene(new Scene(root));
-                backupController = loader.getController();
-                backupController.setData(character);
-                backupStage.show();
-            } else {
-                backupController.setData(character);
-                backupStage.show();
-            }
-        } catch (IOException e) {
-            Alerts.showError(e).show();
-        }*/
     }
 
     @FXML

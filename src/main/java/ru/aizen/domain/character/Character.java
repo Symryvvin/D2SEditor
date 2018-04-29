@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.BlockReader;
-import ru.aizen.domain.data.CharacterData;
+import ru.aizen.domain.data.BlockWriter;
 import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
@@ -22,7 +22,6 @@ import java.util.List;
  */
 @Component
 public class Character {
-    private final CharacterData characterData;
     private HeaderBlock headerBlock;
     private MetaBlock metaBlock;
     private AttributesBlock attributesBlock;
@@ -36,23 +35,24 @@ public class Character {
     private StringProperty expansion = new SimpleStringProperty();
 
     private final CharacterDao characterDao;
+    private final BlockReader blockReader;
 
     @Autowired
-    public Character(CharacterDao characterDao, CharacterData characterData) {
+    public Character(CharacterDao characterDao,
+                     BlockReader blockReader) {
         this.characterDao = characterDao;
-        this.characterData = characterData;
+        this.blockReader = blockReader;
     }
 
     public void load(Path path) throws IOException, ValidatorException {
-        characterData.read(path);
-        BlockReader reader = characterData.getReader();
-        headerBlock = reader.readHeader();
-        metaBlock = reader.readMeta();
-        attributesBlock = reader.readAttributes();
-        skillsBlock = reader.readSkills();
+        blockReader.read(path);
+        headerBlock = blockReader.readHeader();
+        metaBlock = blockReader.readMeta();
+        attributesBlock = blockReader.readAttributes();
+        skillsBlock = blockReader.readSkills();
     }
 
-    public void save() throws IOException {
+    public void save(Path path) throws IOException, ValidatorException {
         metaBlock.setLevel(attributesBlock.getAttributes().get(AttributesBlock.LEVEL).intValue());
         List<DataBlock> blocks = new ArrayList<>();
         blocks.add(headerBlock);
@@ -61,7 +61,8 @@ public class Character {
         blocks.add(skillsBlock);
         blocks.addAll(stubs());
         Collections.sort(blocks);
-        characterData.write(blocks);
+        new BlockWriter().write(blocks, path);
+        blockReader.read(path);
     }
 
     /**
@@ -70,14 +71,14 @@ public class Character {
      */
     private List<DataBlock> stubs() {
         int hotKeysMercenaryQuestWayPointsNPCStart = HeaderBlock.HEADER_BLOCK_SIZE + MetaBlock.META_BLOCK_SIZE;
-        int hotKeysMercenaryQuestWayPointsNPCSize = characterData.getReader().getSubArrayPosition(AttributesBlock.identifier) -
+        int hotKeysMercenaryQuestWayPointsNPCSize = blockReader.getSubArrayPosition(AttributesBlock.identifier) -
                 hotKeysMercenaryQuestWayPointsNPCStart;
-        DataBlock hotKeysMercenaryQuestWayPointsNPC = characterData.createStubBlock(3,
+        DataBlock hotKeysMercenaryQuestWayPointsNPC = blockReader.createStubBlock(3,
                 hotKeysMercenaryQuestWayPointsNPCStart,
                 hotKeysMercenaryQuestWayPointsNPCSize);
-        int itemsStart = characterData.getReader().getSubArrayPosition(SkillsBlock.identifier) + SkillsBlock.SKILLS_BLOCK_SIZE;
-        int itemsSize = characterData.getBytes().length - itemsStart;
-        DataBlock skillsItems = characterData.createStubBlock(6,
+        int itemsStart = blockReader.getSubArrayPosition(SkillsBlock.identifier) + SkillsBlock.SKILLS_BLOCK_SIZE;
+        int itemsSize = blockReader.getBytes().length - itemsStart;
+        DataBlock skillsItems = blockReader.createStubBlock(6,
                 itemsStart,
                 itemsSize);
         List<DataBlock> result = new ArrayList<>();
@@ -158,10 +159,6 @@ public class Character {
         return expansion;
     }
 
-    public CharacterData getCharacterData() {
-        return characterData;
-    }
-
     public AttributesBlock getAttributesBlock() {
         return attributesBlock;
     }
@@ -174,4 +171,7 @@ public class Character {
         this.attributesBlock = attributesBlock;
     }
 
+    public BlockReader getBlockReader() {
+        return blockReader;
+    }
 }

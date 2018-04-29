@@ -16,7 +16,7 @@ public class HexEditorController extends AbstractController{
     }
 
     private void loadHexData(){
-        hexCodeInput.setText(BinHexUtils.getFormattedHexString(character.getCharacterData().getBytes()));
+        hexCodeInput.setText(BinHexUtils.getFormattedHexString(character.getBlockReader().getBytes()));
     }
 
     public void setOutputData(byte[] output) {

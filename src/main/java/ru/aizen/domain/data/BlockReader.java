@@ -6,8 +6,13 @@ import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.dao.SkillDao;
+import ru.aizen.domain.exception.ValidatorException;
+import ru.aizen.domain.util.Validator;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -28,8 +33,13 @@ public class BlockReader {
         this.skillDao = skillDao;
     }
 
-    public void setBytes(byte[] bytes) {
-        this.bytes = bytes;
+    /**
+     * Read data to bytes field
+     * @throws IOException
+     */
+    public void read(Path path) throws IOException, ValidatorException {
+        bytes = Files.readAllBytes(path);
+        Validator.validateFormat(Arrays.copyOfRange(bytes, 0, 4));
     }
 
     /**
@@ -89,5 +99,9 @@ public class BlockReader {
         List<UByte> arrayList = UByte.getUnsignedBytes(bytes);
         List<UByte> subArrayList = UByte.getUnsignedBytes(subArray);
         return Collections.indexOfSubList(arrayList, subArrayList);
+    }
+
+    public byte[] getBytes() {
+        return bytes;
     }
 }

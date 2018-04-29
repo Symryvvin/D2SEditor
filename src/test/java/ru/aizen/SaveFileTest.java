@@ -13,12 +13,14 @@ import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = AppConfig.class)
 public class SaveFileTest {
+    private Path path;
 
     @Autowired
     private Character character;
@@ -26,22 +28,23 @@ public class SaveFileTest {
     @Test
     public void testCheckSum() {
         Character character = getTestCharacter();
-        Assert.assertEquals(-667916153, character.getCharacterData().getReader().readHeader().getChecksum());
+        Assert.assertEquals(-667916153, character.getBlockReader().readHeader().getChecksum());
     }
 
     @Test
-    public void testWriter() throws IOException {
+    public void testWriter() throws IOException, ValidatorException {
         Character character = getTestCharacter();
-        byte[] expected = character.getCharacterData().getBytes();
-        character.save();
-        Assert.assertArrayEquals(expected, character.getCharacterData().getBytes());
+        byte[] expected = character.getBlockReader().getBytes();
+        character.save(path);
+        Assert.assertArrayEquals(expected, character.getBlockReader().getBytes());
 
     }
 
     private Character getTestCharacter() {
         String fileName = "/test.d2s";
         try {
-            character.load(Paths.get(getClass().getResource(fileName).toURI()));
+            path = Paths.get(getClass().getResource(fileName).toURI());
+            character.load(path);
         } catch (IOException | URISyntaxException | ValidatorException e) {
             e.printStackTrace();
         }

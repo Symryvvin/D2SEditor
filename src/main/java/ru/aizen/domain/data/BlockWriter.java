@@ -1,50 +1,22 @@
 package ru.aizen.domain.data;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.DataBlock;
-import ru.aizen.domain.exception.ValidatorException;
-import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
-public class CharacterData {
-    private Path saveFile;
-    private byte[] bytes;
+public class BlockWriter {
 
-    private final BlockReader reader;
-
-    @Autowired
-    public CharacterData(BlockReader reader) {
-        this.reader = reader;
-    }
-
-    /**
-     * Read data to bytes field and creating BlockReader
-     * @throws IOException
-     */
-    public void read(Path saveFile) throws IOException, ValidatorException {
-        this.saveFile = saveFile;
-        bytes = Files.readAllBytes(saveFile);
-        Validator.validateFormat(Arrays.copyOfRange(bytes, 0, 4));
-        reader.setBytes(bytes);
-    }
-
-    public void write(List<DataBlock> blocks) throws IOException {
+    public void write(List<DataBlock> blocks, Path path) throws IOException {
         List<UByte> result = blocks.stream()
                 .flatMap(b -> b.collect().stream())
                 .collect(Collectors.toList());
-        bytes = getDataToSave(result);
-        reader.setBytes(bytes);
-        Files.write(saveFile, bytes);
+        Files.write(path, getDataToSave(result));
     }
 
     /**
@@ -93,10 +65,6 @@ public class CharacterData {
         return data;
     }
 
-    public DataBlock createStubBlock(int order, int start, int size) {
-        return reader.createStubBlock(order, start, size);
-    }
-
     /**
      * Algorithm to get checksum of new changed data
      * @param bytes list of UBytes (changed data)
@@ -107,14 +75,4 @@ public class CharacterData {
                 .map(UByte::get)
                 .reduce(0, (first, second) -> (first << 1) + second + ((first < 0) ? 1 : 0));
     }
-
-    public byte[] getBytes() {
-        return bytes;
-    }
-
-    public BlockReader getReader() {
-        return reader;
-    }
-
-
 }
