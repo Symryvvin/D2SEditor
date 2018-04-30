@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AttributesBlock extends DataBlock {
+    public static final String ATTRIBUTES = "ATTRIBUTES";
     private static final String STOP_CODE = "01FF";
     /** Identifier of start attributes block */
     public static final byte[] identifier = new byte[]{0x67, 0x66};

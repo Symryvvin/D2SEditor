@@ -26,7 +26,7 @@ public class SaveFileTest {
     private Character character;
 
     @Test
-    public void testCheckSum() {
+    public void testCheckSum() throws ValidatorException {
         Character character = getTestCharacter();
         Assert.assertEquals(-667916153, character.getBlockReader().readHeader().getChecksum());
     }

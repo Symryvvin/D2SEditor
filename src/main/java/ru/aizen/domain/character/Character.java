@@ -11,19 +11,14 @@ import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class keep all data of character witch can be present on application forms
  */
 @Component
 public class Character {
-    private HeaderBlock headerBlock;
-    private MetaBlock metaBlock;
-    private AttributesBlock attributesBlock;
-    private SkillsBlock skillsBlock;
+    private Map<String, DataBlock> blocks;
 
     //Properties
     private StringProperty title = new SimpleStringProperty();
@@ -37,27 +32,22 @@ public class Character {
     @Autowired
     public Character(BlockReader blockReader) {
         this.blockReader = blockReader;
+        this.blocks = new HashMap<>();
     }
 
     public void load(Path path) throws IOException, ValidatorException {
         blockReader.read(path);
-        headerBlock = blockReader.readHeader();
-        headerBlock.validate();
-        metaBlock = blockReader.readMeta();
-        attributesBlock = blockReader.readAttributes();
-        skillsBlock = blockReader.readSkills();
+        blocks.put(HeaderBlock.HEADER, blockReader.readHeader());
+        blocks.put(MetaBlock.META, blockReader.readMeta());
+        blocks.put(AttributesBlock.ATTRIBUTES, blockReader.readAttributes());
+        blocks.put(SkillsBlock.SKILLS, blockReader.readSkills());
+        blocks.putAll(stubs());
     }
 
     public void save(Path path) throws IOException, ValidatorException {
-        metaBlock.setLevel(attributesBlock.getAttributes().get(AttributesBlock.LEVEL).intValue());
-        List<DataBlock> blocks = new ArrayList<>();
-        blocks.add(headerBlock);
-        blocks.add(metaBlock);
-        blocks.add(attributesBlock);
-        blocks.add(skillsBlock);
-        blocks.addAll(stubs());
-        Collections.sort(blocks);
-        new BlockWriter().write(blocks, path);
+        List<DataBlock> toSave = new ArrayList<>(blocks.values());
+        Collections.sort(toSave);
+        new BlockWriter().write(toSave, path);
         load(path);
     }
 
@@ -65,7 +55,7 @@ public class Character {
      * Temporary method to creating stub data block
      * @return stub block
      */
-    private List<DataBlock> stubs() {
+    private Map<String, DataBlock> stubs() {
         int hotKeysMercenaryQuestWayPointsNPCStart = HeaderBlock.HEADER_BLOCK_SIZE + MetaBlock.META_BLOCK_SIZE;
         int hotKeysMercenaryQuestWayPointsNPCSize = blockReader.getSubArrayPosition(AttributesBlock.identifier) -
                 hotKeysMercenaryQuestWayPointsNPCStart;
@@ -77,9 +67,9 @@ public class Character {
         DataBlock skillsItems = blockReader.createStubBlock(6,
                 itemsStart,
                 itemsSize);
-        List<DataBlock> result = new ArrayList<>();
-        result.add(hotKeysMercenaryQuestWayPointsNPC);
-        result.add(skillsItems);
+        Map<String, DataBlock> result = new HashMap<>();
+        result.put("STUB", hotKeysMercenaryQuestWayPointsNPC);
+        result.put("ITEMS", skillsItems);
         return result;
     }
 
@@ -123,36 +113,24 @@ public class Character {
         return expansion;
     }
 
-    public HeaderBlock getHeaderBlock() {
-        return headerBlock;
-    }
-
-    public void setHeaderBlock(HeaderBlock headerBlock) {
-        this.headerBlock = headerBlock;
-    }
-
     public MetaBlock getMetaBlock() {
-        return metaBlock;
+        return (MetaBlock) blocks.get(MetaBlock.META);
     }
 
     public void setMetaBlock(MetaBlock metaBlock) {
-        this.metaBlock = metaBlock;
+        this.blocks.put(MetaBlock.META, metaBlock);
     }
 
     public AttributesBlock getAttributesBlock() {
-        return attributesBlock;
+        return (AttributesBlock) blocks.get(AttributesBlock.ATTRIBUTES);
     }
 
     public void setAttributesBlock(AttributesBlock attributesBlock) {
-        this.attributesBlock = attributesBlock;
+        this.blocks.put(AttributesBlock.ATTRIBUTES, attributesBlock);
     }
 
     public SkillsBlock getSkillsBlock() {
-        return skillsBlock;
-    }
-
-    public void setSkillsBlock(SkillsBlock skillsBlock) {
-        this.skillsBlock = skillsBlock;
+        return (SkillsBlock) blocks.get(SkillsBlock.SKILLS);
     }
 
     public BlockReader getBlockReader() {

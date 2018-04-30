@@ -14,6 +14,7 @@ import java.time.ZoneOffset;
 import java.util.List;
 
 public class MetaBlock extends DataBlock {
+    public static final String META = "META";
     public static final int META_BLOCK_OFFSET = 16;
     public static final int META_BLOCK_SIZE = 40;
 
@@ -124,6 +125,5 @@ public class MetaBlock extends DataBlock {
                 ", timestamp=" + time +
                 '}';
     }
-
 
 }

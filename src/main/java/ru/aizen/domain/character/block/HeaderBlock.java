@@ -10,6 +10,7 @@ import java.nio.ByteOrder;
 import java.util.List;
 
 public class HeaderBlock extends DataBlock {
+    public static final String HEADER = "HEADER";
     public static final int HEADER_BLOCK_OFFSET = 0;
     public static final int HEADER_BLOCK_SIZE = 16;
 

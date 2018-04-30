@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SkillsBlock extends DataBlock {
+    public static final String SKILLS = "SKILLS";
     public static final int SKILLS_BLOCK_SIZE = 32;
     /** Identifier of start skill block */
     public static final byte[] identifier = new byte[]{0x69, 0x66};

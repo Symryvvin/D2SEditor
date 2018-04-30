@@ -6,6 +6,7 @@ import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.dao.SkillDao;
+import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
@@ -54,10 +55,12 @@ public class BlockReader {
      * Read header of file from 0 to 16 bytes
      * @return header object
      */
-    public HeaderBlock readHeader() {
-        return new HeaderBlock(1).parse(getByteReader(
+    public HeaderBlock readHeader() throws ValidatorException {
+        HeaderBlock header = new HeaderBlock(1).parse(getByteReader(
                 HeaderBlock.HEADER_BLOCK_OFFSET,
                 HeaderBlock.HEADER_BLOCK_SIZE));
+        header.validate();
+        return header;
     }
 
     /**
