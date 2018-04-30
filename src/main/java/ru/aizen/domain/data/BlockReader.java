@@ -6,8 +6,6 @@ import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.dao.SkillDao;
-import ru.aizen.domain.exception.ValidatorException;
-import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
@@ -41,9 +39,8 @@ public class BlockReader {
      * Read data to bytes field
      * @throws IOException
      */
-    public void read(Path path) throws IOException, ValidatorException {
+    public void read(Path path) throws IOException {
         bytes = Files.readAllBytes(path);
-        Validator.validateFormat(Arrays.copyOfRange(bytes, 0, 4));
     }
 
     /**

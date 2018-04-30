@@ -2,6 +2,8 @@ package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
+import ru.aizen.domain.exception.ValidatorException;
+import ru.aizen.domain.util.Validator;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -11,9 +13,10 @@ public class HeaderBlock extends DataBlock {
     public static final int HEADER_BLOCK_OFFSET = 0;
     public static final int HEADER_BLOCK_SIZE = 16;
 
-    public static final int VERSION = 0x60;
+    public static final Integer VERSION = 0x60;
+    public static final String SIGNATURE = "55AA55AA";
 
-    private int signature;
+    private byte[] signature;
     private int version;
     private int fileSize;
     private int checksum;
@@ -24,18 +27,23 @@ public class HeaderBlock extends DataBlock {
 
     @Override
     public HeaderBlock parse(ByteReader reader) {
-        this.signature = reader.readInt();
+        this.signature = reader.readBytes(4);
         this.version = reader.readInt();
         this.fileSize = reader.readInt();
         this.checksum = reader.readInt();
         return this;
     }
 
+    public void validate() throws ValidatorException {
+        Validator.validateFormat(signature);
+        Validator.validateVersion(version);
+    }
+
     @Override
     public List<UByte> collect() {
         ByteBuffer buffer = ByteBuffer.allocate(HEADER_BLOCK_SIZE)
                 .order(ByteOrder.LITTLE_ENDIAN)
-                .putInt(signature)
+                .put(signature)
                 .putInt(96) //hardcoded 1.10+ version
                 .putInt(0)
                 .putInt(0); //clear checksum
@@ -43,7 +51,7 @@ public class HeaderBlock extends DataBlock {
         return UByte.getUnsignedBytes(buffer.array());
     }
 
-    public int getSignature() {
+    public byte[] getSignature() {
         return signature;
     }
 

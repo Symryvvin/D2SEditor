@@ -131,10 +131,10 @@ public class MainController {
     }
 
     private void loadCharacter() throws IOException, ValidatorException {
+        character.load(path);
         if (isBackup) {
             backupController.createBackup(path);
         }
-        character.load(path);
         editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         save.setDisable(false);
         backup.setDisable(false);

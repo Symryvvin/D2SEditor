@@ -8,7 +8,6 @@ import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.data.BlockWriter;
 import ru.aizen.domain.exception.ValidatorException;
-import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -43,7 +42,7 @@ public class Character {
     public void load(Path path) throws IOException, ValidatorException {
         blockReader.read(path);
         headerBlock = blockReader.readHeader();
-        Validator.validateVersion(headerBlock.getVersion());
+        headerBlock.validate();
         metaBlock = blockReader.readMeta();
         attributesBlock = blockReader.readAttributes();
         skillsBlock = blockReader.readSkills();
@@ -59,7 +58,7 @@ public class Character {
         blocks.addAll(stubs());
         Collections.sort(blocks);
         new BlockWriter().write(blocks, path);
-        blockReader.read(path);
+        load(path);
     }
 
     /**

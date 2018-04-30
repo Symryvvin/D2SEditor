@@ -26,10 +26,8 @@ public final class Validator {
                     "Name can`t end with '-' or '_' characters.");
     }
 
-    public static void validateFormat(byte[] bytes) throws ValidatorException {
-        String valid = "55AA55AA";
-        byte[] validBytes = BinHexUtils.decodeHex(valid);
-        if (!Arrays.equals(validBytes, bytes)) {
+    public static void validateFormat(byte[] signature) throws ValidatorException {
+        if (!Arrays.equals(signature, BinHexUtils.decodeHex(HeaderBlock.SIGNATURE))) {
             throw new ValidatorException("Invalid game save file");
         }
     }
