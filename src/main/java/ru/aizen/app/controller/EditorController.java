@@ -10,6 +10,7 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
+import ru.aizen.domain.character.block.MetaBlock;
 import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.Validator;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//TODO Move handle data to MetaInfoController
 @Component
 public class EditorController extends AbstractController {
     @FXML private RadioButton start;
@@ -37,6 +39,8 @@ public class EditorController extends AbstractController {
     private Difficult difficult;
     private Status status;
     private List<Title> titleList;
+
+    private MetaBlock metaBlock;
 
     @Autowired
     public EditorController(Character character,
@@ -126,13 +130,14 @@ public class EditorController extends AbstractController {
     }
 
     public void loadCharacter() throws ValidatorException {
+        this.metaBlock = character.getMetaBlock();
         difficult = null;
         changeTitleList();
-        status = character.getStatus();
+        status = metaBlock.getStatus();
         statsController.loadCharacter();
         skillsController.loadCharacter();
-        Validator.checkName(character.getName());
-        name.setText(character.getName());
+        Validator.checkName(metaBlock.getName());
+        name.setText(metaBlock.getName());
         changeTitleList();
         isExpansion.setSelected(status.isExpansion());
         isHardcore.setSelected(status.isHardcore());
@@ -144,10 +149,11 @@ public class EditorController extends AbstractController {
     @Override
     public void saveCharacter() throws ValidatorException {
         statsController.saveCharacter();
-        character.setName(name.getText());
-        Validator.checkName(character.getName());
+        metaBlock.setName(name.getText());
+        Validator.checkName(metaBlock.getName());
         setStatus();
-        character.setTitle(getSelectedTitle());
+        metaBlock.setTitle(getSelectedTitle());
+        character.setMetaBlock(metaBlock);
     }
 
     private Title getSelectedTitle() {
@@ -161,7 +167,7 @@ public class EditorController extends AbstractController {
         status.setExpansion(isExpansion.isSelected());
         status.setHardcore(isHardcore.isSelected());
         status.setDead(isDead.isSelected());
-        character.setStatus(status);
+        metaBlock.setStatus(status);
     }
 
     public void onChangeExpansion() {

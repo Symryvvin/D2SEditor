@@ -30,8 +30,8 @@ public class CharacterDao extends ShadowDao {
     }
 
     public ObservableList<Title> getTitleListByCharacterClassAndStatus(Character character) {
-        Status status = character.getStatus();
-        CharacterClass characterClass = character.getCharacterClass();
+        Status status = character.getMetaBlock().getStatus();
+        CharacterClass characterClass = character.getMetaBlock().getCharacterClass();
         String sql = "SELECT tbl_title.name AS name,\n" +
                 "tbl_title.difficult AS difficult,\n" +
                 "tbl_title.value AS value\n" +
@@ -64,9 +64,9 @@ public class CharacterDao extends ShadowDao {
     }
 
     public Difficult getCurrentDifficult(Character character) {
-        int value = character.getTitle().getValue();
-        Status status = character.getStatus();
-        CharacterClass characterClass = character.getCharacterClass();
+        int value = character.getMetaBlock().getTitle().getValue();
+        Status status = character.getMetaBlock().getStatus();
+        CharacterClass characterClass = character.getMetaBlock().getCharacterClass();
         String sql = "SELECT DISTINCT UPPER(tbl_title.difficult) AS difficult\n" +
                 "FROM tbl_title\n" +
                 "LEFT JOIN tbl_class ON tbl_class.gender = tbl_title.gender\n" +

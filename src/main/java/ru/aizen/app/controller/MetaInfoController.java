@@ -2,6 +2,7 @@ package ru.aizen.app.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
@@ -38,7 +39,7 @@ public class MetaInfoController extends AbstractController {
 
     @Override
     protected void loadCharacter() {
-
+        //TODO could`t set characterClass on start up now. Because this method is not invoke
     }
 
     @Override
@@ -75,8 +76,10 @@ public class MetaInfoController extends AbstractController {
     }
 
     private void pick(CharacterClass characterClass) {
-        character.setCharacterClass(characterClass);
+        character.getMetaBlock().setCharacterClass(characterClass);
+        character.setCharacterClass(StringUtils.capitalize(characterClass.name().toLowerCase()));
         editorController.changeTitleList();
+        //TODO not use load character use "updateSkills" method
         skillsController.loadCharacter();
     }
 }

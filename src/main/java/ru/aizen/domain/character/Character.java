@@ -2,11 +2,9 @@ package ru.aizen.domain.character;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
-import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.data.BlockWriter;
 import ru.aizen.domain.exception.ValidatorException;
@@ -35,13 +33,10 @@ public class Character {
     private StringProperty characterClass = new SimpleStringProperty();
     private StringProperty expansion = new SimpleStringProperty();
 
-    private final CharacterDao characterDao;
     private final BlockReader blockReader;
 
     @Autowired
-    public Character(CharacterDao characterDao,
-                     BlockReader blockReader) {
-        this.characterDao = characterDao;
+    public Character(BlockReader blockReader) {
         this.blockReader = blockReader;
     }
 
@@ -89,36 +84,6 @@ public class Character {
         return result;
     }
 
-    public String getName() {
-        return metaBlock.getName();
-    }
-
-    public Status getStatus() {
-        return metaBlock.getStatus();
-    }
-
-    public Title getTitle() {
-        return metaBlock.getTitle();
-    }
-
-    public CharacterClass getCharacterClass() {
-        CharacterClass characterClass = metaBlock.getCharacterClass();
-        setCharacterClass(characterClass);
-        return characterClass;
-    }
-
-    public void setName(String name) {
-        metaBlock.setName(name);
-    }
-
-    public void setStatus(Status status) {
-        metaBlock.setStatus(status);
-    }
-
-    public void setTitle(Title title) {
-        metaBlock.setTitle(title);
-    }
-
     public final void setTitleValue(String value) {
         title.set(value);
     }
@@ -143,9 +108,8 @@ public class Character {
         return level;
     }
 
-    public final void setCharacterClass(CharacterClass characterClass) {
-        this.characterClass.set(StringUtils.capitalize(characterClass.name().toLowerCase()));
-        metaBlock.setCharacterClass(characterClass);
+    public final void setCharacterClass(String value) {
+        characterClass.set(value);
     }
 
     public StringProperty classProperty() {
@@ -160,16 +124,36 @@ public class Character {
         return expansion;
     }
 
+    public HeaderBlock getHeaderBlock() {
+        return headerBlock;
+    }
+
+    public void setHeaderBlock(HeaderBlock headerBlock) {
+        this.headerBlock = headerBlock;
+    }
+
+    public MetaBlock getMetaBlock() {
+        return metaBlock;
+    }
+
+    public void setMetaBlock(MetaBlock metaBlock) {
+        this.metaBlock = metaBlock;
+    }
+
     public AttributesBlock getAttributesBlock() {
         return attributesBlock;
+    }
+
+    public void setAttributesBlock(AttributesBlock attributesBlock) {
+        this.attributesBlock = attributesBlock;
     }
 
     public SkillsBlock getSkillsBlock() {
         return skillsBlock;
     }
 
-    public void setAttributesBlock(AttributesBlock attributesBlock) {
-        this.attributesBlock = attributesBlock;
+    public void setSkillsBlock(SkillsBlock skillsBlock) {
+        this.skillsBlock = skillsBlock;
     }
 
     public BlockReader getBlockReader() {

@@ -11,6 +11,7 @@ import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
+import ru.aizen.domain.character.block.MetaBlock;
 import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.Validator;
@@ -70,12 +71,13 @@ public class CharacterTest {
     public void testCharacterMeta() throws URISyntaxException, IOException, ValidatorException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
-        Assert.assertEquals("Test", character.getName());
-        Assert.assertEquals(true, character.getStatus().isExpansion());
-        Assert.assertEquals(false, character.getStatus().isHardcore());
-        Assert.assertEquals(false, character.getStatus().isDead());
-        Assert.assertEquals(0, character.getTitle());
-        Assert.assertEquals(CharacterClass.DRUID, character.getCharacterClass());
+        MetaBlock metaBlock = character.getMetaBlock();
+        Assert.assertEquals("Test", metaBlock.getName());
+        Assert.assertEquals(true, metaBlock.getStatus().isExpansion());
+        Assert.assertEquals(false, metaBlock.getStatus().isHardcore());
+        Assert.assertEquals(false, metaBlock.getStatus().isDead());
+        Assert.assertEquals(0, metaBlock.getTitle().getValue());
+        Assert.assertEquals(CharacterClass.DRUID, metaBlock.getCharacterClass());
         // Assert.assertEquals(LocalDateTime.parse("2018-03-25T09:17:11"), character.getTime());
     }
 
