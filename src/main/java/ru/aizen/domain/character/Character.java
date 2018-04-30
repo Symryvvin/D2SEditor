@@ -97,12 +97,12 @@ public class Character {
         return metaBlock.getStatus();
     }
 
-    public byte getTitle() {
+    public Title getTitle() {
         return metaBlock.getTitle();
     }
 
     public CharacterClass getCharacterClass() {
-        CharacterClass characterClass = characterDao.getCharacterClassByValue(metaBlock.getCharacterClass());
+        CharacterClass characterClass = metaBlock.getCharacterClass();
         setCharacterClass(characterClass);
         return characterClass;
     }
@@ -115,7 +115,7 @@ public class Character {
         metaBlock.setStatus(status);
     }
 
-    public void setTitle(byte title) {
+    public void setTitle(Title title) {
         metaBlock.setTitle(title);
     }
 
@@ -143,10 +143,9 @@ public class Character {
         return level;
     }
 
-    public final void setCharacterClass(CharacterClass value) {
-        characterClass.set(StringUtils.capitalize(value.name().toLowerCase()));
-        byte byteValue = characterDao.getValueByCharacterClass(value);
-        metaBlock.setCharacterClass(byteValue);
+    public final void setCharacterClass(CharacterClass characterClass) {
+        this.characterClass.set(StringUtils.capitalize(characterClass.name().toLowerCase()));
+        metaBlock.setCharacterClass(characterClass);
     }
 
     public StringProperty classProperty() {

@@ -36,6 +36,7 @@ public class EditorController extends AbstractController {
 
     private Difficult difficult;
     private Status status;
+    private List<Title> titleList;
 
     @Autowired
     public EditorController(Character character,
@@ -76,10 +77,10 @@ public class EditorController extends AbstractController {
     }
 
     public void changeTitleList() {
-        List<Title> tList = characterDao.getTitleListByCharacterClassAndStatus(character);
-        normal.setText(tList.get(1).getName());
-        nightmare.setText(tList.get(2).getName());
-        hell.setText(tList.get(3).getName());
+        titleList = characterDao.getTitleListByCharacterClassAndStatus(character);
+        normal.setText(titleList.get(1).getName());
+        nightmare.setText(titleList.get(2).getName());
+        hell.setText(titleList.get(3).getName());
         setTitle();
     }
 
@@ -146,7 +147,14 @@ public class EditorController extends AbstractController {
         character.setName(name.getText());
         Validator.checkName(character.getName());
         setStatus();
-        character.setTitle(characterDao.getTitleValue(status, difficult));
+        character.setTitle(getSelectedTitle());
+    }
+
+    private Title getSelectedTitle() {
+        return titleList.stream()
+                .filter(t -> t.getDifficult() == difficult)
+                .findFirst()
+                .orElse(titleList.get(0));
     }
 
     private void setStatus() {

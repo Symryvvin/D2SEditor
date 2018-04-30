@@ -1,6 +1,9 @@
 package ru.aizen.domain.character.block;
 
+import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
+import ru.aizen.domain.character.Title;
+import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 
@@ -18,14 +21,17 @@ public class MetaBlock extends DataBlock {
 
     private String name;
     private Status status;
-    private byte title;
-    private byte characterClass;
+    private Title title;
+    private CharacterClass characterClass;
     private int level;
     private int activeHand;
     private LocalDateTime time;
 
-    public MetaBlock(int order) {
+    private CharacterDao characterDao;
+
+    public MetaBlock(int order, CharacterDao characterDao) {
         super(order);
+        this.characterDao = characterDao;
     }
 
     @Override
@@ -33,9 +39,10 @@ public class MetaBlock extends DataBlock {
         this.activeHand = reader.readInt();
         this.name = reader.readString(NAME_LENGTH).trim();
         this.status = new Status(reader.readByte());
-        this.title = reader.readByte();
+        byte tempTitleValue = reader.readByte();
         reader.skip(2);
-        this.characterClass = reader.readByte();
+        this.characterClass = characterDao.getCharacterClassByValue(reader.readByte());
+        this.title = characterDao.getTitleByValue(characterClass, status, tempTitleValue);
         reader.skip(2);
         this.level = reader.readByte();
         reader.skip(4);
@@ -50,15 +57,15 @@ public class MetaBlock extends DataBlock {
                 .putInt(activeHand)
                 .put(fillNameWithSpaces())
                 .put(status.toByte())
-                .put(title)
+                .put(characterDao.getTitleValue(status, title.getDifficult()))
                 .putShort((short) 0)
-                .put(characterClass)
-                .put((ByteBuffer) ByteBuffer.allocate(2).put((byte) 16).put((byte) 30).flip())
+                .put(characterDao.getValueByCharacterClass(characterClass))
+                .put(new byte[]{0x10, 0x1E})
                 .put((byte) level)
-                .putInt(0)
+                .putInt(0x00000000)
                 .order(ByteOrder.LITTLE_ENDIAN)
                 .putInt((int) time.toEpochSecond(ZoneOffset.UTC))
-                .putInt(-1);
+                .putInt(0xFFFFFFFF);
         buffer.flip();
         return UByte.getUnsignedBytes(buffer.array());
     }
@@ -67,10 +74,6 @@ public class MetaBlock extends DataBlock {
         ByteBuffer nameBuffer = ByteBuffer.allocate(16)
                 .put(name.getBytes());
         return nameBuffer.array();
-    }
-
-    public void clearTime() {
-        time = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
     }
 
     public String getName() {
@@ -89,40 +92,24 @@ public class MetaBlock extends DataBlock {
         this.status = status;
     }
 
-    public byte getTitle() {
+    public Title getTitle() {
         return title;
     }
 
-    public void setTitle(byte title) {
+    public void setTitle(Title title) {
         this.title = title;
     }
 
-    public int getCharacterClass() {
+    public CharacterClass getCharacterClass() {
         return characterClass;
     }
 
-    public void setCharacterClass(byte characterClass) {
+    public void setCharacterClass(CharacterClass characterClass) {
         this.characterClass = characterClass;
     }
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public int getActiveHand() {
-        return activeHand;
-    }
-
-    public void setActiveHand(int activeHand) {
-        this.activeHand = activeHand;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime timestamp) {
-        this.time = timestamp;
     }
 
     @Override

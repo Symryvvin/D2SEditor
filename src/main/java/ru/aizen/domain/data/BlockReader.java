@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
+import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.dao.SkillDao;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.Validator;
@@ -23,11 +24,15 @@ import java.util.List;
 public class BlockReader {
     private byte[] bytes;
 
+    private final CharacterDao characterDao;
     private final AttributeDao attributeDao;
     private final SkillDao skillDao;
 
     @Autowired
-    public BlockReader(AttributeDao attributeDao, SkillDao skillDao) {
+    public BlockReader(CharacterDao characterDao,
+                       AttributeDao attributeDao,
+                       SkillDao skillDao) {
+        this.characterDao = characterDao;
         this.attributeDao = attributeDao;
         this.skillDao = skillDao;
     }
@@ -63,7 +68,7 @@ public class BlockReader {
      * @return meta object
      */
     public MetaBlock readMeta() {
-        return new MetaBlock(2).parse(getByteReader(
+        return new MetaBlock(2, characterDao).parse(getByteReader(
                 MetaBlock.META_BLOCK_OFFSET,
                 MetaBlock.META_BLOCK_SIZE));
     }
