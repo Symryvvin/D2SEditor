@@ -154,7 +154,6 @@ public class EditorController extends AbstractController {
         Validator.checkName(metaBlock.getName());
         setStatus();
         metaBlock.setTitle(getSelectedTitle());
-        character.setMetaBlock(metaBlock);
     }
 
     private Title getSelectedTitle() {

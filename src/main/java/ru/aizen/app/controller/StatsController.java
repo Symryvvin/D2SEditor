@@ -60,6 +60,7 @@ public class StatsController extends AbstractController {
         attributesBlock.put(AttributesBlock.STAT_POINTS, Long.parseLong(statPoints.getText()));
         attributesBlock.put(AttributesBlock.GOLD, Long.parseLong(gold.getText()));
         attributesBlock.put(AttributesBlock.GOLD_IN_STASH, Long.parseLong(goldInStash.getText()));
+        character.getMetaBlock().setLevel(Integer.parseInt(level.getText()));
     }
 
     private void loadCharacterStats() {
@@ -81,8 +82,6 @@ public class StatsController extends AbstractController {
         //max value of gold in stash depends of level temporary for 99 lvl
         goldInStash.setMaxValue(2500000);
         goldInStash.setText(getAttributeValue(AttributesBlock.GOLD_IN_STASH));
-        character.setAttributesBlock(attributesBlock);
-
     }
 
     private String getAttributeValue(long id) {

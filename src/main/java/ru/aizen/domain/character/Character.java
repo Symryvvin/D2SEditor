@@ -7,11 +7,15 @@ import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.data.BlockWriter;
+import ru.aizen.domain.data.UByte;
 import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Class keep all data of character witch can be present on application forms
@@ -21,6 +25,7 @@ public class Character {
     private Map<String, DataBlock> blocks;
 
     //Properties
+    //TODO move to specific class for binding
     private StringProperty title = new SimpleStringProperty();
     private StringProperty name = new SimpleStringProperty();
     private StringProperty level = new SimpleStringProperty();
@@ -45,9 +50,12 @@ public class Character {
     }
 
     public void save(Path path) throws IOException, ValidatorException {
-        List<DataBlock> toSave = new ArrayList<>(blocks.values());
-        Collections.sort(toSave);
-        new BlockWriter().write(toSave, path);
+        List<UByte> bytes = blocks.values()
+                .stream()
+                .sorted()
+                .flatMap(b -> b.collect().stream())
+                .collect(Collectors.toList());
+        new BlockWriter().write(bytes, path);
         load(path);
     }
 
@@ -117,16 +125,8 @@ public class Character {
         return (MetaBlock) blocks.get(MetaBlock.META);
     }
 
-    public void setMetaBlock(MetaBlock metaBlock) {
-        this.blocks.put(MetaBlock.META, metaBlock);
-    }
-
     public AttributesBlock getAttributesBlock() {
         return (AttributesBlock) blocks.get(AttributesBlock.ATTRIBUTES);
-    }
-
-    public void setAttributesBlock(AttributesBlock attributesBlock) {
-        this.blocks.put(AttributesBlock.ATTRIBUTES, attributesBlock);
     }
 
     public SkillsBlock getSkillsBlock() {

@@ -1,21 +1,15 @@
 package ru.aizen.domain.data;
 
-import ru.aizen.domain.character.block.DataBlock;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlockWriter {
 
-    public void write(List<DataBlock> blocks, Path path) throws IOException {
-        List<UByte> result = blocks.stream()
-                .flatMap(b -> b.collect().stream())
-                .collect(Collectors.toList());
-        Files.write(path, getDataToSave(result));
+    public void write(List<UByte> bytes, Path path) throws IOException {
+        Files.write(path, getDataToSave(bytes));
     }
 
     /**
