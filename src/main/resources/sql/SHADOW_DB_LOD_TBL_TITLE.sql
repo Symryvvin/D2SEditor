@@ -40,8 +40,8 @@ INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore
 INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('Duchess', 10, 'F', 'nightmare', 'false', 'true');
 INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('Duke', 11, 'M', 'nightmare', 'false', 'true');
 INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('Duchess', 11, 'F', 'nightmare', 'false', 'true');
-INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('King', 0, 'M', 'hell', 'false', 'true');
-INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('Queen', 0, 'F', 'hell', 'false', 'true');
+INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('King', 12, 'M', 'hell', 'false', 'true');
+INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('Queen', 12, 'F', 'hell', 'false', 'true');
 INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('', 0, '', 'start', 'true', 'false');
 INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('', 1, '', 'start', 'true', 'false');
 INSERT INTO tbl_title (name, value, gender, difficult, is_expansion, is_hardcore) VALUES ('', 2, '', 'start', 'true', 'false');
