@@ -1,7 +1,8 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.Status;
+import ru.aizen.domain.data.ByteReader;
+import ru.aizen.domain.data.UByte;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -28,21 +29,18 @@ public class MetaBlock extends DataBlock {
     }
 
     @Override
-    public DataBlock parse(ByteBuffer buffer) {
-        this.activeHand = buffer.getInt();
-        byte[] name = new byte[NAME_LENGTH];
-        buffer.get(name, 0, NAME_LENGTH);
-        this.name = new String(name).trim();
-        this.status = new Status(buffer.get());
-        this.title = buffer.get();
-        buffer.getShort();//skip 2 bytes
-        this.characterClass = buffer.get();
-        buffer.getShort();//skip 2 bytes
-        this.level = buffer.get();
-        buffer.getInt();//skip 4 bytes
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
-        time = LocalDateTime.ofEpochSecond(buffer.getInt(), 0, ZoneOffset.UTC);
-        buffer.getInt();//skip 4 bytes
+    public MetaBlock parse(ByteReader reader) {
+        this.activeHand = reader.readInt();
+        this.name = reader.readString(NAME_LENGTH).trim();
+        this.status = new Status(reader.readByte());
+        this.title = reader.readByte();
+        reader.skip(2);
+        this.characterClass = reader.readByte();
+        reader.skip(2);
+        this.level = reader.readByte();
+        reader.skip(4);
+        this.time = LocalDateTime.ofEpochSecond(reader.readInt(), 0, ZoneOffset.UTC);
+        reader.skip(4);
         return this;
     }
 

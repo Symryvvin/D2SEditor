@@ -1,6 +1,5 @@
 package ru.aizen.domain.data;
 
-import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.DataBlock;
 
 import java.io.IOException;

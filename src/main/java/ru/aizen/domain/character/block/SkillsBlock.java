@@ -1,7 +1,8 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.UByte;
 import ru.aizen.domain.dao.SkillDao;
+import ru.aizen.domain.data.ByteReader;
+import ru.aizen.domain.data.UByte;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -22,11 +23,10 @@ public class SkillsBlock extends DataBlock {
     }
 
     @Override
-    public SkillsBlock parse(ByteBuffer buffer) {
-        buffer.getShort(); // skip identifier 0x6966
+    public SkillsBlock parse(ByteReader reader) {
+        reader.skip(2); // skip identifier 0x6966
         values = new HashMap<>();
-        byte[] data = new byte[30];
-        buffer.get(data, 0, 30);
+        byte[] data = reader.readBytes(30);
         for (int i = 0; i < data.length; i++) {
             values.put(i + 1, data[i]);
         }

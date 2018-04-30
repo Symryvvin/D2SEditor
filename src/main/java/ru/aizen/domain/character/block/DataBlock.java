@@ -1,8 +1,8 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.UByte;
+import ru.aizen.domain.data.ByteReader;
+import ru.aizen.domain.data.UByte;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 public abstract class DataBlock implements Comparable<DataBlock> {
@@ -12,7 +12,7 @@ public abstract class DataBlock implements Comparable<DataBlock> {
         this.order = order;
     }
 
-    public abstract DataBlock parse(ByteBuffer buffer);
+    public abstract DataBlock parse(ByteReader reader);
 
     public abstract List<UByte> collect();
 

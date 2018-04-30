@@ -1,6 +1,7 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.UByte;
+import ru.aizen.domain.data.ByteReader;
+import ru.aizen.domain.data.UByte;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -22,12 +23,11 @@ public class HeaderBlock extends DataBlock {
     }
 
     @Override
-    public DataBlock parse(ByteBuffer buffer) {
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
-        this.signature = buffer.getInt();
-        this.version = buffer.getInt();
-        this.fileSize = buffer.getInt();
-        this.checksum = buffer.getInt();
+    public HeaderBlock parse(ByteReader reader) {
+        this.signature = reader.readInt();
+        this.version = reader.readInt();
+        this.fileSize = reader.readInt();
+        this.checksum = reader.readInt();
         return this;
     }
 

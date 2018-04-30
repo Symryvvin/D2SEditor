@@ -1,9 +1,10 @@
 package ru.aizen.domain.character.block;
 
 import org.apache.commons.lang3.StringUtils;
-import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.attribute.Attribute;
 import ru.aizen.domain.dao.AttributeDao;
+import ru.aizen.domain.data.ByteReader;
+import ru.aizen.domain.data.UByte;
 import ru.aizen.domain.util.BinaryUtils;
 
 import java.nio.ByteBuffer;
@@ -44,12 +45,10 @@ public class AttributesBlock extends DataBlock {
     }
 
     @Override
-    public AttributesBlock parse(ByteBuffer buffer) {
-        blockSize = buffer.capacity();
-        buffer.getShort(); // skip identifier 0x6766
-        byte[] bytes = new byte[blockSize - 2];
-        buffer.get(bytes);
-        unpack(bytes);
+    public AttributesBlock parse(ByteReader reader) {
+        blockSize = reader.getBytes().length;
+        reader.skip(2); // skip identifier 0x6766
+        unpack(reader.readBytes(blockSize - 2));
         return this;
     }
 

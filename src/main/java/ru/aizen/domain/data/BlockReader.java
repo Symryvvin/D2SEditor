@@ -2,7 +2,6 @@ package ru.aizen.domain.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.aizen.domain.UByte;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.dao.SkillDao;
@@ -10,7 +9,7 @@ import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.Validator;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -46,7 +45,7 @@ public class BlockReader {
      * Create stub data block from A bytes with B size
      */
     public StubBlock createStubBlock(int order, int start, int size) {
-        return (StubBlock) new StubBlock(order).parse(getBlockBuffer(start, size));
+        return new StubBlock(order).parse(getByteReader(start, size));
     }
 
     /**
@@ -54,7 +53,8 @@ public class BlockReader {
      * @return header object
      */
     public HeaderBlock readHeader() {
-        return (HeaderBlock) new HeaderBlock(1).parse(getBlockBuffer(HeaderBlock.HEADER_BLOCK_OFFSET,
+        return new HeaderBlock(1).parse(getByteReader(
+                HeaderBlock.HEADER_BLOCK_OFFSET,
                 HeaderBlock.HEADER_BLOCK_SIZE));
     }
 
@@ -63,7 +63,9 @@ public class BlockReader {
      * @return meta object
      */
     public MetaBlock readMeta() {
-        return (MetaBlock) new MetaBlock(2).parse(getBlockBuffer(MetaBlock.META_BLOCK_OFFSET, MetaBlock.META_BLOCK_SIZE));
+        return new MetaBlock(2).parse(getByteReader(
+                MetaBlock.META_BLOCK_OFFSET,
+                MetaBlock.META_BLOCK_SIZE));
     }
 
     /**
@@ -74,7 +76,7 @@ public class BlockReader {
     public AttributesBlock readAttributes() {
         int offset = getSubArrayPosition(AttributesBlock.identifier);
         int size = getSubArrayPosition(SkillsBlock.identifier) - offset;
-        return new AttributesBlock(4, attributeDao).parse(getBlockBuffer(offset, size));
+        return new AttributesBlock(4, attributeDao).parse(getByteReader(offset, size));
     }
 
     /**
@@ -83,11 +85,11 @@ public class BlockReader {
      */
     public SkillsBlock readSkills() {
         int offset = getSubArrayPosition(SkillsBlock.identifier);
-        return new SkillsBlock(5, skillDao).parse(getBlockBuffer(offset, SkillsBlock.SKILLS_BLOCK_SIZE));
+        return new SkillsBlock(5, skillDao).parse(getByteReader(offset, SkillsBlock.SKILLS_BLOCK_SIZE));
     }
 
-    private ByteBuffer getBlockBuffer(int offset, int size) {
-        return ByteBuffer.wrap(Arrays.copyOfRange(bytes, offset, size + offset));
+    private ByteReader getByteReader(int offset, int size) {
+        return new ByteReader(Arrays.copyOfRange(bytes, offset, size + offset), ByteOrder.LITTLE_ENDIAN);
     }
 
     /**

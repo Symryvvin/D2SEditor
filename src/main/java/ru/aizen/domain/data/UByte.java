@@ -1,4 +1,4 @@
-package ru.aizen.domain;
+package ru.aizen.domain.data;
 
 import java.util.ArrayList;
 import java.util.List;
