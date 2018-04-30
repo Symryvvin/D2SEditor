@@ -149,6 +149,7 @@ public class EditorController extends AbstractController {
     @Override
     public void saveCharacter() throws ValidatorException {
         statsController.saveCharacter();
+        skillsController.saveCharacter();
         metaBlock.setName(name.getText());
         Validator.checkName(metaBlock.getName());
         setStatus();
