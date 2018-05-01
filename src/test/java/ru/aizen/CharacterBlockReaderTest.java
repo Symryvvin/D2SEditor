@@ -41,7 +41,7 @@ public class CharacterBlockReaderTest {
 
     @Test
     public void testExtractAttributes() {
-        AttributesBlock expected = new AttributesBlock(0, attributeDao);
+        AttributesBlock expected = new AttributesBlock(attributeDao);
         expected.put(AttributesBlock.STRENGTH, 15L);
         expected.put(AttributesBlock.ENERGY, 20L);
         expected.put(AttributesBlock.DEXTERITY, 20L);

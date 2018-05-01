@@ -10,20 +10,19 @@ import java.nio.ByteOrder;
 import java.util.List;
 
 public class HeaderBlock extends DataBlock {
-    public static final String HEADER = "HEADER";
     public static final int HEADER_BLOCK_OFFSET = 0;
     public static final int HEADER_BLOCK_SIZE = 16;
-
     public static final Integer VERSION = 0x60;
     public static final String SIGNATURE = "55AA55AA";
+    public static final int ORDER = 1;
 
     private byte[] signature;
     private int version;
     private int fileSize;
     private int checksum;
 
-    public HeaderBlock(int order) {
-        super(order);
+    public HeaderBlock() {
+        super(ORDER);
     }
 
     @Override

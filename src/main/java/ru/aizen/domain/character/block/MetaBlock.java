@@ -14,10 +14,9 @@ import java.time.ZoneOffset;
 import java.util.List;
 
 public class MetaBlock extends DataBlock {
-    public static final String META = "META";
     public static final int META_BLOCK_OFFSET = 16;
     public static final int META_BLOCK_SIZE = 40;
-
+    public static final int ORDER = 2;
     private static final int NAME_LENGTH = 16;
 
     private String name;
@@ -30,8 +29,8 @@ public class MetaBlock extends DataBlock {
 
     private CharacterDao characterDao;
 
-    public MetaBlock(int order, CharacterDao characterDao) {
-        super(order);
+    public MetaBlock(CharacterDao characterDao) {
+        super(ORDER);
         this.characterDao = characterDao;
     }
 

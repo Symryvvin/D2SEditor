@@ -5,18 +5,19 @@ import ru.aizen.domain.data.UByte;
 
 import java.util.List;
 
-/**
- * Stub data block witch not parsed an must be save to file without changes
- */
-public class StubBlock extends DataBlock {
+public class MercenaryBlock extends DataBlock {
+    public static final int OFFSET = 177;
+    public static final int SIZE = 14;
+    public static final int ORDER = 5;
+
     private byte[] bytes;
 
-    public StubBlock(int order) {
-        super(order);
+    public MercenaryBlock() {
+        super(ORDER);
     }
 
     @Override
-    public StubBlock parse(ByteReader reader) {
+    public MercenaryBlock parse(ByteReader reader) {
         this.bytes = reader.getBytes();
         return this;
     }
@@ -26,3 +27,4 @@ public class StubBlock extends DataBlock {
         return UByte.getUnsignedBytes(bytes);
     }
 }
+

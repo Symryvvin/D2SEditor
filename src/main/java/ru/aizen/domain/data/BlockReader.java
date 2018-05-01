@@ -47,8 +47,8 @@ public class BlockReader {
     /**
      * Create stub data block from A bytes with B size
      */
-    public StubBlock createStubBlock(int order, int start, int size) {
-        return new StubBlock(order).parse(getByteReader(start, size));
+    public UnknownBlock unknownBlock(int order, int start, int size) {
+        return new UnknownBlock(order).parse(getByteReader(start, size));
     }
 
     /**
@@ -56,9 +56,8 @@ public class BlockReader {
      * @return header object
      */
     public HeaderBlock readHeader() throws ValidatorException {
-        HeaderBlock header = new HeaderBlock(1).parse(getByteReader(
-                HeaderBlock.HEADER_BLOCK_OFFSET,
-                HeaderBlock.HEADER_BLOCK_SIZE));
+        HeaderBlock header = new HeaderBlock()
+                .parse(getByteReader(HeaderBlock.HEADER_BLOCK_OFFSET, HeaderBlock.HEADER_BLOCK_SIZE));
         header.validate();
         return header;
     }
@@ -68,9 +67,38 @@ public class BlockReader {
      * @return meta object
      */
     public MetaBlock readMeta() {
-        return new MetaBlock(2, characterDao).parse(getByteReader(
-                MetaBlock.META_BLOCK_OFFSET,
-                MetaBlock.META_BLOCK_SIZE));
+        return new MetaBlock(characterDao)
+                .parse(getByteReader(MetaBlock.META_BLOCK_OFFSET, MetaBlock.META_BLOCK_SIZE));
+    }
+
+    public HotKeysBlock readHotKeys() {
+        return new HotKeysBlock()
+                .parse(getByteReader(HotKeysBlock.OFFSET, HotKeysBlock.SIZE));
+    }
+
+    public MapBlock readMap() {
+        return new MapBlock()
+                .parse(getByteReader(MapBlock.OFFSET, MapBlock.SIZE));
+    }
+
+    public MercenaryBlock readMercenary() {
+        return new MercenaryBlock()
+                .parse(getByteReader(MercenaryBlock.OFFSET, MercenaryBlock.SIZE));
+    }
+
+    public QuestsBlock readQuests() {
+        return new QuestsBlock()
+                .parse(getByteReader(QuestsBlock.OFFSET, QuestsBlock.SIZE));
+    }
+
+    public WaypointsBlock readWaypoints() {
+        return new WaypointsBlock()
+                .parse(getByteReader(WaypointsBlock.OFFSET, WaypointsBlock.SIZE));
+    }
+
+    public NPCBlock readNPC() {
+        return new NPCBlock()
+                .parse(getByteReader(NPCBlock.OFFSET, NPCBlock.SIZE));
     }
 
     /**
@@ -81,7 +109,8 @@ public class BlockReader {
     public AttributesBlock readAttributes() {
         int offset = getSubArrayPosition(AttributesBlock.identifier);
         int size = getSubArrayPosition(SkillsBlock.identifier) - offset;
-        return new AttributesBlock(4, attributeDao).parse(getByteReader(offset, size));
+        return new AttributesBlock(attributeDao)
+                .parse(getByteReader(offset, size));
     }
 
     /**
@@ -90,7 +119,14 @@ public class BlockReader {
      */
     public SkillsBlock readSkills() {
         int offset = getSubArrayPosition(SkillsBlock.identifier);
-        return new SkillsBlock(5, skillDao).parse(getByteReader(offset, SkillsBlock.SKILLS_BLOCK_SIZE));
+        return new SkillsBlock(skillDao)
+                .parse(getByteReader(offset, SkillsBlock.SKILLS_BLOCK_SIZE));
+    }
+
+    public InventoryBlock readInventory() {
+        int offset = getSubArrayPosition(InventoryBlock.identifier);
+        return new InventoryBlock(attributeDao)
+                .parse(getByteReader(offset, bytes.length - offset));
     }
 
     private ByteReader getByteReader(int offset, int size) {
@@ -111,4 +147,6 @@ public class BlockReader {
     public byte[] getBytes() {
         return bytes;
     }
+
+
 }

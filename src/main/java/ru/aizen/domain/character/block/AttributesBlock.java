@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class AttributesBlock extends DataBlock {
-    public static final String ATTRIBUTES = "ATTRIBUTES";
-    private static final String STOP_CODE = "01FF";
     /** Identifier of start attributes block */
     public static final byte[] identifier = new byte[]{0x67, 0x66};
+    public static final int ORDER = 11;
+    private static final String STOP_CODE = "01FF";
 
     public static final long STRENGTH = 0;
     public static final long ENERGY = 1;
@@ -39,8 +39,8 @@ public class AttributesBlock extends DataBlock {
     private int blockSize;
     private final AttributeDao attributeDao;
 
-    public AttributesBlock(int order, AttributeDao attributeDao) {
-        super(order);
+    public AttributesBlock(AttributeDao attributeDao) {
+        super(ORDER);
         this.attributeDao = attributeDao;
         this.attributes = new HashMap<>();
     }

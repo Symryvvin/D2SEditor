@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Component
 public class Character {
-    private Map<String, DataBlock> blocks;
+    private Map<Integer, DataBlock> blocks;
 
     //Properties
     //TODO move to specific class for binding
@@ -42,11 +42,19 @@ public class Character {
 
     public void load(Path path) throws IOException, ValidatorException {
         blockReader.read(path);
-        blocks.put(HeaderBlock.HEADER, blockReader.readHeader());
-        blocks.put(MetaBlock.META, blockReader.readMeta());
-        blocks.put(AttributesBlock.ATTRIBUTES, blockReader.readAttributes());
-        blocks.put(SkillsBlock.SKILLS, blockReader.readSkills());
-        blocks.putAll(stubs());
+        blocks.put(HeaderBlock.ORDER, blockReader.readHeader());
+        blocks.put(MetaBlock.ORDER, blockReader.readMeta());
+        blocks.put(HotKeysBlock.ORDER, blockReader.readHotKeys());
+        blocks.put(MapBlock.ORDER, blockReader.readMap());
+        blocks.put(MercenaryBlock.ORDER, blockReader.readMercenary());
+        blocks.put(6, blockReader.unknownBlock(6, 191, 144));
+        blocks.put(QuestsBlock.ORDER, blockReader.readQuests());
+        blocks.put(8, blockReader.unknownBlock(8, 442, 191));
+        blocks.put(WaypointsBlock.ORDER, blockReader.readWaypoints());
+        blocks.put(NPCBlock.ORDER, blockReader.readNPC());
+        blocks.put(AttributesBlock.ORDER, blockReader.readAttributes());
+        blocks.put(SkillsBlock.ORDER, blockReader.readSkills());
+        blocks.put(InventoryBlock.ORDER, blockReader.readInventory());
     }
 
     public void save(Path path) throws IOException, ValidatorException {
@@ -57,28 +65,6 @@ public class Character {
                 .collect(Collectors.toList());
         new BlockWriter().write(bytes, path);
         load(path);
-    }
-
-    /**
-     * Temporary method to creating stub data block
-     * @return stub block
-     */
-    private Map<String, DataBlock> stubs() {
-        int hotKeysMercenaryQuestWayPointsNPCStart = HeaderBlock.HEADER_BLOCK_SIZE + MetaBlock.META_BLOCK_SIZE;
-        int hotKeysMercenaryQuestWayPointsNPCSize = blockReader.getSubArrayPosition(AttributesBlock.identifier) -
-                hotKeysMercenaryQuestWayPointsNPCStart;
-        DataBlock hotKeysMercenaryQuestWayPointsNPC = blockReader.createStubBlock(3,
-                hotKeysMercenaryQuestWayPointsNPCStart,
-                hotKeysMercenaryQuestWayPointsNPCSize);
-        int itemsStart = blockReader.getSubArrayPosition(SkillsBlock.identifier) + SkillsBlock.SKILLS_BLOCK_SIZE;
-        int itemsSize = blockReader.getBytes().length - itemsStart;
-        DataBlock skillsItems = blockReader.createStubBlock(6,
-                itemsStart,
-                itemsSize);
-        Map<String, DataBlock> result = new HashMap<>();
-        result.put("STUB", hotKeysMercenaryQuestWayPointsNPC);
-        result.put("ITEMS", skillsItems);
-        return result;
     }
 
     public final void setTitleValue(String value) {
@@ -122,15 +108,15 @@ public class Character {
     }
 
     public MetaBlock getMetaBlock() {
-        return (MetaBlock) blocks.get(MetaBlock.META);
+        return (MetaBlock) blocks.get(MetaBlock.ORDER);
     }
 
     public AttributesBlock getAttributesBlock() {
-        return (AttributesBlock) blocks.get(AttributesBlock.ATTRIBUTES);
+        return (AttributesBlock) blocks.get(AttributesBlock.ORDER);
     }
 
     public SkillsBlock getSkillsBlock() {
-        return (SkillsBlock) blocks.get(SkillsBlock.SKILLS);
+        return (SkillsBlock) blocks.get(SkillsBlock.ORDER);
     }
 
     public BlockReader getBlockReader() {

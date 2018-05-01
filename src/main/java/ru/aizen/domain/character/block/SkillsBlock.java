@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Map;
 
 public class SkillsBlock extends DataBlock {
-    public static final String SKILLS = "SKILLS";
     public static final int SKILLS_BLOCK_SIZE = 32;
     /** Identifier of start skill block */
     public static final byte[] identifier = new byte[]{0x69, 0x66};
+    public static final int ORDER = 12;
 
     private Map<Integer, Byte> values;
     private final SkillDao skillDao;
 
-    public SkillsBlock(int order, SkillDao skillDao) {
-        super(order);
+    public SkillsBlock(SkillDao skillDao) {
+        super(ORDER);
         this.skillDao = skillDao;
     }
 

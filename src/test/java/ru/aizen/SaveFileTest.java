@@ -37,7 +37,6 @@ public class SaveFileTest {
         byte[] expected = character.getBlockReader().getBytes();
         character.save(path);
         Assert.assertArrayEquals(expected, character.getBlockReader().getBytes());
-
     }
 
     private Character getTestCharacter() {
