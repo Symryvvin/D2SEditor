@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class SkillsController extends AbstractController {
+public class SkillsController extends BaseController {
     @FXML private Label firstPageName;
     @FXML private GridPane firstPage;
     @FXML private Label secondPageName;

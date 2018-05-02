@@ -9,7 +9,7 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 
 @Component
-public class MetaInfoController extends AbstractController {
+public class MetaInfoController extends BaseController {
     @FXML private Label title;
     @FXML private Label name;
     @FXML private Label level;

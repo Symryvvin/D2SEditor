@@ -7,7 +7,7 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.util.BinHexUtils;
 
 @Component
-public class HexEditorController extends AbstractController{
+public class HexEditorController extends BaseController {
     @FXML private TextArea hexCodeInput;
     @FXML private TextArea hexCodeOutput;
 

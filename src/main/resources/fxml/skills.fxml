@@ -8,7 +8,7 @@
     <fx:include source="metaInfo.fxml"/>
     <HBox fillHeight="false" spacing="10.0">
         <VBox alignment="CENTER" styleClass="borderedPane">
-            <Label fx:id="firstPageName" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title"/>
+            <Label fx:id="firstPageName" styleClass="title"/>
             <AnchorPane>
                 <GridPane fx:id="firstPage" alignment="CENTER" hgap="2.0" vgap="2.0" AnchorPane.bottomAnchor="5.0"
                           AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
@@ -29,30 +29,28 @@
             </AnchorPane>
         </VBox>
         <VBox alignment="CENTER" styleClass="borderedPane">
-            <Label fx:id="secondPageName" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title"/>
+            <Label fx:id="secondPageName" styleClass="title"/>
             <AnchorPane>
-                <children>
-                    <GridPane fx:id="secondPage" alignment="CENTER" hgap="2.0" vgap="2.0" AnchorPane.bottomAnchor="5.0"
-                              AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                        <rowConstraints>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                            <RowConstraints/>
-                        </rowConstraints>
-                        <columnConstraints>
-                            <ColumnConstraints minWidth="100.0" prefWidth="100"/>
-                            <ColumnConstraints minWidth="100.0" prefWidth="100"/>
-                            <ColumnConstraints minWidth="100.0" prefWidth="100"/>
-                        </columnConstraints>
-                    </GridPane>
-                </children>
+                <GridPane fx:id="secondPage" hgap="2.0" vgap="2.0" AnchorPane.bottomAnchor="5.0"
+                          AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                    </rowConstraints>
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                        <ColumnConstraints minWidth="100.0" prefWidth="100"/>
+                    </columnConstraints>
+                </GridPane>
             </AnchorPane>
         </VBox>
         <VBox alignment="CENTER" styleClass="borderedPane">
-            <Label fx:id="thirdPageName" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title"/>
+            <Label fx:id="thirdPageName" styleClass="title"/>
             <AnchorPane>
                 <GridPane fx:id="thirdPage" alignment="CENTER" hgap="2.0" vgap="2.0" AnchorPane.bottomAnchor="5.0"
                           AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">

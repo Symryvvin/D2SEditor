@@ -21,7 +21,7 @@ import java.util.List;
 
 //TODO Move handle data to MetaInfoController
 @Component
-public class EditorController extends AbstractController {
+public class EditorController extends BaseController {
     @FXML private RadioButton start;
     @FXML private RadioButton normal;
     @FXML private RadioButton nightmare;

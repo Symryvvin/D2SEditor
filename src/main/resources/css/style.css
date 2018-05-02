@@ -41,6 +41,9 @@
     -fx-font-size: 12px;
     -fx-pref-height: 24px;
     -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-max-width: Infinity;
 }
 
 TextField{

@@ -6,11 +6,11 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.exception.ValidatorException;
 
 @Component
-public abstract class AbstractController {
+public abstract class BaseController {
     protected final Character character;
 
     @Autowired
-    public AbstractController(Character character) {
+    public BaseController(Character character) {
         this.character = character;
     }
 

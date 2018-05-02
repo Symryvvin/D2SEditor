@@ -6,7 +6,7 @@
 <VBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ru.aizen.app.controller.StatsController">
     <VBox styleClass="borderedPane">
-        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title" text="Progress"/>
+        <Label styleClass="title" text="Progress"/>
         <AnchorPane>
             <HBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
                   AnchorPane.topAnchor="5.0">
@@ -18,7 +18,7 @@
         </AnchorPane>
     </VBox>
     <VBox styleClass="borderedPane">
-        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title" text="Characteristics"/>
+        <Label styleClass="title" text="Characteristics"/>
         <AnchorPane>
             <HBox alignment="CENTER_LEFT" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
                   AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -64,7 +64,7 @@
     </VBox>
     <HBox spacing="10.0">
         <VBox styleClass="borderedPane">
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title" text="Remaining Points"/>
+            <Label styleClass="title" text="Remaining Points"/>
             <AnchorPane>
                 <GridPane hgap="2.0" vgap="4.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -85,7 +85,7 @@
             </AnchorPane>
         </VBox>
         <VBox styleClass="borderedPane">
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title" text="Gold"/>
+            <Label styleClass="title" text="Gold"/>
             <AnchorPane>
                 <GridPane hgap="2.0" vgap="4.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">

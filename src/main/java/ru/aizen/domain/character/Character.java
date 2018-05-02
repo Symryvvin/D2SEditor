@@ -119,6 +119,10 @@ public class Character {
         return (SkillsBlock) blocks.get(SkillsBlock.ORDER);
     }
 
+    public WaypointsBlock getWaypointsBlock() {
+        return (WaypointsBlock) blocks.get(WaypointsBlock.ORDER);
+    }
+
     public BlockReader getBlockReader() {
         return blockReader;
     }

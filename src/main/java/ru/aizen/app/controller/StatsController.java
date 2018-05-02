@@ -8,7 +8,7 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
 
 @Component
-public class StatsController extends AbstractController {
+public class StatsController extends BaseController {
     @FXML private NumericField hp;
     @FXML private NumericField mp;
     @FXML private NumericField sp;
