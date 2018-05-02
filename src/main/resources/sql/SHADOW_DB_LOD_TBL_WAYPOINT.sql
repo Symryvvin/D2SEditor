@@ -29,11 +29,11 @@ INSERT INTO tbl_waypoint (position, name, act) VALUES (27, 'The Pandemonium Fort
 INSERT INTO tbl_waypoint (position, name, act) VALUES (28, 'City of the Damned', 4);
 INSERT INTO tbl_waypoint (position, name, act) VALUES (29, 'River of Flame', 4);
 INSERT INTO tbl_waypoint (position, name, act) VALUES (30, 'Harrogath', 5);
-INSERT INTO tbl_waypoint (position, name, act) VALUES (31, 'Rigid Highlands', 5);
+INSERT INTO tbl_waypoint (position, name, act) VALUES (31, 'Figid Highlands', 5);
 INSERT INTO tbl_waypoint (position, name, act) VALUES (32, 'Arreat Plateau', 5);
-INSERT INTO tbl_waypoint (position, name, act) VALUES (33, 'Crystalized Cavern Level 1', 5);
-INSERT INTO tbl_waypoint (position, name, act) VALUES (34, 'Crystalized Cavern Level 2', 5);
-INSERT INTO tbl_waypoint (position, name, act) VALUES (35, 'Halls of Death''s Calling', 5);
-INSERT INTO tbl_waypoint (position, name, act) VALUES (36, 'Tundra Wastelands', 5);
-INSERT INTO tbl_waypoint (position, name, act) VALUES (37, 'Glacial Caves Level 1', 5);
-INSERT INTO tbl_waypoint (position, name, act) VALUES (38, 'The Worldstone Keep Level 2', 5);
+INSERT INTO tbl_waypoint (position, name, act) VALUES (33, 'Crystalline Passage', 5);
+INSERT INTO tbl_waypoint (position, name, act) VALUES (34, 'Glacial Trail', 5);
+INSERT INTO tbl_waypoint (position, name, act) VALUES (35, 'Halls of Pain', 5);
+INSERT INTO tbl_waypoint (position, name, act) VALUES (36, 'Frozen Tundra', 5);
+INSERT INTO tbl_waypoint (position, name, act) VALUES (37, 'The Ancient''s Way', 5);
+INSERT INTO tbl_waypoint (position, name, act) VALUES (38, 'Worldstone Keep Level 2', 5);
