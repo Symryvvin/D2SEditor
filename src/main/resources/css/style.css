@@ -46,6 +46,10 @@
     -fx-max-width: Infinity;
 }
 
+.boldLabel {
+    -fx-font-weight: bold;
+}
+
 TextField{
     -fx-font-size: 12px;
     -fx-pref-height: 24px;

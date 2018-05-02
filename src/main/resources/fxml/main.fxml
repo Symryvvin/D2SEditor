@@ -54,6 +54,7 @@
             <fx:include source="skills.fxml"/>
         </Tab>
         <Tab disable="true" text="Waypoints" closable="false">
+            <fx:include source="waypoints.fxml"/>
         </Tab>
         <Tab disable="true" text="Quests" closable="false">
         </Tab>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx/8.0.172" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.aizen.app.controller.WaypointsController">
+    <HBox prefHeight="30.0" spacing="10.0">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+        <Label maxHeight="1.7976931348623157E308" styleClass="boldLabel" text="Difficult:"/>
+        <ComboBox fx:id="difficulties" prefWidth="150.0" onAction="#onChangeDifficult"/>
+        <Button mnemonicParsing="false" text="Mark all" onAction="#onMarkAllClick"/>
+        <Button mnemonicParsing="false" text="Unmark all" onAction="#onUnmarkAllClick"/>
+    </HBox>
+    <HBox maxHeight="326.0" spacing="10.0">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+        <VBox prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 1"/>
+            <VBox fx:id="act1" spacing="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+            </VBox>
+        </VBox>
+        <VBox layoutX="10.0" layoutY="10.0" prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 2"/>
+            <VBox fx:id="act2" spacing="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+            </VBox>
+        </VBox>
+        <VBox layoutX="210.0" layoutY="10.0" prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 3"/>
+            <VBox fx:id="act3" spacing="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+            </VBox>
+        </VBox>
+        <VBox maxHeight="-Infinity" prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 4"/>
+            <VBox fx:id="act4" spacing="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+            </VBox>
+        </VBox>
+        <VBox layoutX="610.0" layoutY="10.0" prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 5"/>
+            <VBox fx:id="act5" spacing="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+                <CheckBox mnemonicParsing="false" text="CheckBox"/>
+            </VBox>
+        </VBox>
+    </HBox>
+</VBox>

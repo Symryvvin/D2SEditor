@@ -38,24 +38,20 @@ public class WaypointsBlock extends DataBlock {
     public WaypointsBlock parse(ByteReader reader) {
         reader.skip(identifier.length + unknownConst.length);
         reader.skip(waypointsDataIdentifier.length);
-        waypoints.put(Difficult.NORMAL, getWaypointsForDifficult(Difficult.NORMAL,
-                reader.readBytes(waypointsDataSize)));
+        waypoints.put(Difficult.NORMAL, getWaypoints(reader.readBytes(waypointsDataSize)));
         reader.skip(waypointsDataIdentifier.length);
-        waypoints.put(Difficult.NIGHTMARE, getWaypointsForDifficult(Difficult.NIGHTMARE,
-                reader.readBytes(waypointsDataSize)));
+        waypoints.put(Difficult.NIGHTMARE, getWaypoints(reader.readBytes(waypointsDataSize)));
         reader.skip(waypointsDataIdentifier.length);
-        waypoints.put(Difficult.HELL, getWaypointsForDifficult(Difficult.HELL,
-                reader.readBytes(waypointsDataSize)));
+        waypoints.put(Difficult.HELL, getWaypoints(reader.readBytes(waypointsDataSize)));
         return this;
     }
 
-    private List<Waypoint> getWaypointsForDifficult(Difficult difficult, byte[] data) {
+    private List<Waypoint> getWaypoints(byte[] data) {
         List<Waypoint> result = new ArrayList<>();
         String bits = BinaryUtils.getBitString(data, true);
         char[] bitArray = bits.toCharArray();
         for (int i = 0; i < waypointsCount; i++) {
             Waypoint waypoint = waypointDao.getWaypointByPosition(i);
-            waypoint.setDifficult(difficult);
             waypoint.setActive(bitArray[i] == '1');
             result.add(waypoint);
         }

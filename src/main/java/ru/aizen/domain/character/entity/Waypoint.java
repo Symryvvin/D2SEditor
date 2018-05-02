@@ -1,11 +1,8 @@
 package ru.aizen.domain.character.entity;
 
-import ru.aizen.domain.character.Difficult;
-
 public class Waypoint {
     private Act act;
     private String name;
-    private Difficult difficult;
     private boolean isActive;
 
     public Waypoint(int act, String name) {
@@ -13,12 +10,12 @@ public class Waypoint {
         this.name = name;
     }
 
-    public Difficult getDifficult() {
-        return difficult;
+    public Act getAct() {
+        return act;
     }
 
-    public void setDifficult(Difficult difficult) {
-        this.difficult = difficult;
+    public String getName() {
+        return name;
     }
 
     public boolean isActive() {
@@ -34,7 +31,6 @@ public class Waypoint {
         return "Waypoint{" +
                 "act=" + act +
                 ", name='" + name + '\'' +
-                ", difficult=" + difficult +
                 ", isActive=" + isActive +
                 '}';
     }

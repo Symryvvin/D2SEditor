@@ -34,6 +34,7 @@ public class EditorController extends BaseController {
 
     private final StatsController statsController;
     private final SkillsController skillsController;
+    private final WaypointsController waypointsController;
     private final CharacterDao characterDao;
 
     private Difficult difficult;
@@ -46,10 +47,12 @@ public class EditorController extends BaseController {
     public EditorController(Character character,
                             StatsController statsController,
                             SkillsController skillsController,
+                            WaypointsController waypointsController,
                             CharacterDao characterDao) {
         super(character);
         this.statsController = statsController;
         this.skillsController = skillsController;
+        this.waypointsController = waypointsController;
         this.characterDao = characterDao;
     }
 
@@ -136,6 +139,7 @@ public class EditorController extends BaseController {
         status = metaBlock.getStatus();
         statsController.loadCharacter();
         skillsController.loadCharacter();
+        waypointsController.loadCharacter();
         Validator.checkName(metaBlock.getName());
         name.setText(metaBlock.getName());
         changeTitleList();
@@ -150,6 +154,7 @@ public class EditorController extends BaseController {
     public void saveCharacter() throws ValidatorException {
         statsController.saveCharacter();
         skillsController.saveCharacter();
+        waypointsController.saveCharacter();
         metaBlock.setName(name.getText());
         Validator.checkName(metaBlock.getName());
         setStatus();
