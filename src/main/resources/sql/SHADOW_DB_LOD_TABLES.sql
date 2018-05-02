@@ -38,3 +38,9 @@ CREATE TABLE tbl_attribute (
   name   VARCHAR(20)     NOT NULL,
   length INT             NOT NULL
 );
+
+CREATE TABLE tbl_waypoint (
+  position INT         NOT NULL,
+  name     VARCHAR(20) NOT NULL,
+  act      INT         NOT NULL
+);

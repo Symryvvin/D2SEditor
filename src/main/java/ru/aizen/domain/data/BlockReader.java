@@ -6,6 +6,7 @@ import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.dao.SkillDao;
+import ru.aizen.domain.dao.WaypointDao;
 import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
@@ -24,14 +25,17 @@ public class BlockReader {
     private byte[] bytes;
 
     private final CharacterDao characterDao;
+    private final WaypointDao waypointDao;
     private final AttributeDao attributeDao;
     private final SkillDao skillDao;
 
     @Autowired
     public BlockReader(CharacterDao characterDao,
+                       WaypointDao waypointDao,
                        AttributeDao attributeDao,
                        SkillDao skillDao) {
         this.characterDao = characterDao;
+        this.waypointDao = waypointDao;
         this.attributeDao = attributeDao;
         this.skillDao = skillDao;
     }
@@ -92,7 +96,7 @@ public class BlockReader {
     }
 
     public WaypointsBlock readWaypoints() {
-        return new WaypointsBlock()
+        return new WaypointsBlock(waypointDao)
                 .parse(getByteReader(WaypointsBlock.OFFSET, WaypointsBlock.SIZE));
     }
 
