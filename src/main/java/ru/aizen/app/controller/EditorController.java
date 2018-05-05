@@ -15,18 +15,17 @@ import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.Validator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //TODO Move handle data to MetaInfoController
 @Component
 public class EditorController extends BaseController {
-    @FXML private RadioButton start;
-    @FXML private RadioButton normal;
-    @FXML private RadioButton nightmare;
-    @FXML private RadioButton hell;
-    private List<RadioButton> titles;
+    @FXML private RadioButton noTitle;
+    @FXML private RadioButton normalComplete;
+    @FXML private RadioButton nightmareComplete;
+    @FXML private RadioButton hellComplete;
     @FXML private CheckBox isExpansion;
     @FXML private CheckBox isHardcore;
     @FXML private CheckBox isDead;
@@ -39,6 +38,7 @@ public class EditorController extends BaseController {
 
     private Difficult difficult;
     private Status status;
+    private Map<Difficult, RadioButton> titles;
     private List<Title> titleList;
 
     private MetaBlock metaBlock;
@@ -62,8 +62,14 @@ public class EditorController extends BaseController {
                 .addListener((observable, oldValue, newValue) -> character.setNameValue(newValue));
         isExpansion.selectedProperty()
                 .addListener((observable, oldValue, newValue) -> character.setExpansion(isExpansion.isSelected()));
-        titles = new ArrayList<>();
-        titles.addAll(Arrays.asList(start, normal, nightmare, hell));
+        //  titles = new ArrayList<>();
+        //  titles.addAll(Arrays.asList(noTitle, normal, nightmare, hell));
+        titles = new HashMap<>();
+        titles.put(Difficult.NORMAL, noTitle);
+        titles.put(Difficult.NIGHTMARE, normalComplete);
+        titles.put(Difficult.HELL, nightmareComplete);
+        titles.put(Difficult.COMPLETE, hellComplete);
+
     }
 
     private void setRulesForName() {
@@ -80,34 +86,35 @@ public class EditorController extends BaseController {
     }
 
     private void uncheckAllTitles() {
-        titles.forEach(t -> t.setSelected(false));
+        titles.values().forEach(t -> t.setSelected(false));
     }
 
     public void changeTitleList() {
         titleList = characterDao.getTitleListByCharacterClassAndStatus(character);
-        normal.setText(titleList.get(1).getName());
-        nightmare.setText(titleList.get(2).getName());
-        hell.setText(titleList.get(3).getName());
+        System.out.println(titleList);
+        normalComplete.setText(titleList.get(1).getName());
+        nightmareComplete.setText(titleList.get(2).getName());
+        hellComplete.setText(titleList.get(3).getName());
         setTitle();
     }
 
     public void pickNoTitle() {
-        difficult = Difficult.START;
-        setTitle();
-    }
-
-    public void pickNormalTitle() {
         difficult = Difficult.NORMAL;
         setTitle();
     }
 
-    public void pickNightmareTitle() {
+    public void pickNormalTitle() {
         difficult = Difficult.NIGHTMARE;
         setTitle();
     }
 
-    public void pickHellTitle() {
+    public void pickNightmareTitle() {
         difficult = Difficult.HELL;
+        setTitle();
+    }
+
+    public void pickHellTitle() {
+        difficult = Difficult.COMPLETE;
         setTitle();
     }
 
@@ -116,20 +123,8 @@ public class EditorController extends BaseController {
         if (difficult == null) {
             difficult = characterDao.getCurrentDifficult(character);
         }
-        titles.forEach(t -> {
-            if (t.getId().equalsIgnoreCase(difficult.name())) {
-                t.setSelected(true);
-            }
-        });
-        String title = titles.stream()
-                .filter(RadioButton::isSelected)
-                .findFirst()
-                .map(RadioButton::getText)
-                .orElse("unknown");
-        if (title.equals("No title"))
-            character.setTitleValue("");
-        else
-            character.setTitleValue(title);
+        titles.get(difficult).setSelected(true);
+        character.setTitleValue(getSelectedTitle().getName());
     }
 
     public void loadCharacter() throws ValidatorException {

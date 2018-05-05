@@ -13,11 +13,13 @@
                 <AnchorPane>
                     <VBox spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                        <RadioButton fx:id="start" mnemonicParsing="false" onAction="#pickNoTitle" text="No title"/>
-                        <RadioButton fx:id="normal" mnemonicParsing="false" onAction="#pickNormalTitle" text="Normal"/>
-                        <RadioButton fx:id="nightmare" mnemonicParsing="false" onAction="#pickNightmareTitle"
-                                     text="Nightmare"/>
-                        <RadioButton fx:id="hell" mnemonicParsing="false" onAction="#pickHellTitle" text="Hell"/>
+                        <RadioButton fx:id="noTitle" mnemonicParsing="false" onAction="#pickNoTitle" text="No title"/>
+                        <RadioButton fx:id="normalComplete" mnemonicParsing="false" onAction="#pickNormalTitle"
+                                     text="Normal Complete"/>
+                        <RadioButton fx:id="nightmareComplete" mnemonicParsing="false" onAction="#pickNightmareTitle"
+                                     text="Nightmare Complete"/>
+                        <RadioButton fx:id="hellComplete" mnemonicParsing="false" onAction="#pickHellTitle"
+                                     text="Hell Complete"/>
                     </VBox>
                 </AnchorPane>
             </VBox>

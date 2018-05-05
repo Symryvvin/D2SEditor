@@ -44,6 +44,8 @@ public class WaypointsController extends BaseController {
     protected void loadCharacter() {
         waypointsBlock = character.getWaypointsBlock();
         difficult = character.getMetaBlock().getTitle().getDifficult();
+        if (difficult == Difficult.COMPLETE)
+            difficult = Difficult.HELL;
         loadWaypoints();
         difficulties.getSelectionModel().select(difficult);
     }

@@ -42,10 +42,10 @@ public class CharacterDao extends ShadowDao {
                 "AND (UPPER(tbl_class.name) = '" + characterClass.name() + "' OR tbl_title.gender = '')\n" +
                 "GROUP BY tbl_title.name\n" +
                 "ORDER BY CASE tbl_title.difficult\n" +
-                "WHEN 'start' THEN 0\n" +
-                "WHEN 'normal' THEN 1\n" +
-                "WHEN 'nightmare' THEN 2\n" +
-                "WHEN 'hell' THEN 3 \n" +
+                "WHEN 'normal' THEN 0\n" +
+                "WHEN 'nightmare' THEN 1\n" +
+                "WHEN 'hell' THEN 2\n" +
+                "WHEN 'complete' THEN 3 \n" +
                 "END";
         return new ObservableListWrapper<>(template.query(sql, new TitleMapper()));
     }
