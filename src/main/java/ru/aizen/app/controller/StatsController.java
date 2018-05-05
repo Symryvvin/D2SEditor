@@ -2,10 +2,12 @@ package ru.aizen.app.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.app.control.NumericField;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
+import ru.aizen.domain.dao.AttributeDao;
 
 @Component
 public class StatsController extends BaseController {
@@ -25,15 +27,28 @@ public class StatsController extends BaseController {
 
     private AttributesBlock attributesBlock;
 
+    private final AttributeDao attributeDao;
 
-    public StatsController(Character character) {
+    @Autowired
+    public StatsController(Character character, AttributeDao attributeDao) {
         super(character);
+        this.attributeDao = attributeDao;
     }
 
     public void initialize() {
         level.textProperty()
-                .addListener((observable, oldValue, newValue) ->
-                        character.setLevel("Level " + newValue));
+                .addListener((observable, oldValue, newValue) -> {
+                    character.setLevel("Level " + newValue);
+                    experience.setText(attributeDao.getExperienceAtLevel(getLevel()));
+                    long maxGold = attributeDao.getMaxGoldValueAtLevel(getLevel());
+                    gold.setMaxValue(maxGold);
+                    long maxGoldBank = attributeDao.getMaxGoldBankValueAtLevel(getLevel());
+                    goldInStash.setMaxValue(maxGoldBank);
+                    if (gold.getNumericValue() > maxGold)
+                        gold.setText(String.valueOf(maxGold));
+                    if (goldInStash.getNumericValue() > maxGoldBank)
+                        goldInStash.setText(String.valueOf(maxGoldBank));
+                });
     }
 
     @Override
@@ -76,12 +91,12 @@ public class StatsController extends BaseController {
         sp.setText(getAttributeValue(AttributesBlock.MAX_SP, true));
         statPoints.setText(getAttributeValue(AttributesBlock.STAT_POINTS));
         skillPoints.setText(getAttributeValue(AttributesBlock.SKILL_POINTS));
-        //max value of gold depends of level temporary for 99 lvl
-        gold.setMaxValue(990000);
         gold.setText(getAttributeValue(AttributesBlock.GOLD));
-        //max value of gold in stash depends of level temporary for 99 lvl
-        goldInStash.setMaxValue(2500000);
         goldInStash.setText(getAttributeValue(AttributesBlock.GOLD_IN_STASH));
+    }
+
+    private int getLevel() {
+        return Integer.parseInt(level.getText());
     }
 
     private String getAttributeValue(long id) {

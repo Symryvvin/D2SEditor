@@ -15,7 +15,7 @@ public class NumericField extends TextField {
     }
 
     public Long getNumericValue() {
-        return Long.parseLong(this.getText());
+        return !this.getText().equals("") ? Long.parseLong(this.getText()) : 0;
     }
 
     public void setMaxValue(long maxValue) {
