@@ -44,3 +44,12 @@ CREATE TABLE tbl_waypoint (
   name     VARCHAR(20) NOT NULL,
   act      INT         NOT NULL
 );
+
+CREATE TABLE tbl_level (
+  level      INT    NOT NULL,
+  experience BIGINT NOT NULL,
+  gold_inv   INT    NOT NULL,
+  gold_stash INT    NOT NULL
+);
+CREATE INDEX tbl_level_level_index
+  ON tbl_level (level);
