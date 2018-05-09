@@ -25,13 +25,4 @@ public class Waypoint {
     public void setActive(boolean active) {
         isActive = active;
     }
-
-    @Override
-    public String toString() {
-        return "Waypoint{" +
-                "act=" + act +
-                ", name='" + name + '\'' +
-                ", isActive=" + isActive +
-                '}';
-    }
 }

@@ -62,8 +62,6 @@ public class EditorController extends BaseController {
                 .addListener((observable, oldValue, newValue) -> character.setNameValue(newValue));
         isExpansion.selectedProperty()
                 .addListener((observable, oldValue, newValue) -> character.setExpansion(isExpansion.isSelected()));
-        //  titles = new ArrayList<>();
-        //  titles.addAll(Arrays.asList(noTitle, normal, nightmare, hell));
         titles = new HashMap<>();
         titles.put(Difficult.NORMAL, noTitle);
         titles.put(Difficult.NIGHTMARE, normalComplete);
@@ -91,7 +89,6 @@ public class EditorController extends BaseController {
 
     public void changeTitleList() {
         titleList = characterDao.getTitleListByCharacterClassAndStatus(character);
-        System.out.println(titleList);
         normalComplete.setText(titleList.get(1).getName());
         nightmareComplete.setText(titleList.get(2).getName());
         hellComplete.setText(titleList.get(3).getName());

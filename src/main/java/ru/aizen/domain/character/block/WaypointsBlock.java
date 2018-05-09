@@ -3,15 +3,16 @@ package ru.aizen.domain.character.block;
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.entity.Waypoint;
 import ru.aizen.domain.dao.WaypointDao;
+import ru.aizen.domain.data.Binary;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
-import ru.aizen.domain.util.BinaryUtils;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WaypointsBlock extends DataBlock {
     public static final int OFFSET = 633;
@@ -48,11 +49,10 @@ public class WaypointsBlock extends DataBlock {
 
     private List<Waypoint> getWaypoints(byte[] data) {
         List<Waypoint> result = new ArrayList<>();
-        String bits = BinaryUtils.getBitString(data, true);
-        char[] bitArray = bits.toCharArray();
+        Binary binary = new Binary(data);
         for (int i = 0; i < waypointsCount; i++) {
             Waypoint waypoint = waypointDao.getWaypointByPosition(i);
-            waypoint.setActive(bitArray[i] == '1');
+            waypoint.setActive(binary.getValueAt(i));
             result.add(waypoint);
         }
         return result;
@@ -64,27 +64,28 @@ public class WaypointsBlock extends DataBlock {
                 .put(identifier)
                 .put(unknownConst)
                 .put(waypointsDataIdentifier)
-                .put(getByteFromWaypoints(waypoints.get(Difficult.NORMAL)))
+                .put(getByteFromWaypoints(Difficult.NORMAL))
                 .put(waypointsDataIdentifier)
-                .put(getByteFromWaypoints(waypoints.get(Difficult.NIGHTMARE)))
+                .put(getByteFromWaypoints(Difficult.NIGHTMARE))
                 .put(waypointsDataIdentifier)
-                .put(getByteFromWaypoints(waypoints.get(Difficult.HELL)))
+                .put(getByteFromWaypoints(Difficult.HELL))
                 .put((byte) 0x01);
         buffer.flip();
         return UByte.getUnsignedBytes(buffer.array());
     }
 
-    private byte[] getByteFromWaypoints(List<Waypoint> waypoints) {
-        char[] array = new char[waypointsCount];
-        for (int i = 0; i < waypointsCount; i++) {
-            array[i] = waypoints.get(i).isActive() ? '1' : '0';
+    private byte[] getByteFromWaypoints(Difficult difficult) {
+        Boolean[] array = new Boolean[waypointsCount];
+        waypoints.get(difficult).stream()
+                .map(Waypoint::isActive)
+                .collect(Collectors.toList())
+                .toArray(array);
+        Binary binary = new Binary(array.length);
+        for (int i = 0; i < array.length; i++) {
+            binary.setValueAt(i, array[i]);
         }
-        StringBuilder bits = new StringBuilder(new String(array));
-        int max = waypointsDataSize * Byte.SIZE;
-        while (bits.length() < max) {
-            bits.append("0");
-        }
-        return BinaryUtils.fromBinaryString(bits.toString(), true);
+        binary.fillByZero(waypointsDataSize * Byte.SIZE);
+        return binary.toByteArray();
     }
 
     public List<Waypoint> getWaypoints(Difficult difficult) {
@@ -93,12 +94,5 @@ public class WaypointsBlock extends DataBlock {
 
     public void setWaypoints(List<Waypoint> waypoints, Difficult difficult) {
         this.waypoints.put(difficult, waypoints);
-    }
-
-    @Override
-    public String toString() {
-        return "WaypointsBlock{" +
-                "waypoints=" + waypoints +
-                '}';
     }
 }
