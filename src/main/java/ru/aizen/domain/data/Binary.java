@@ -1,6 +1,9 @@
 package ru.aizen.domain.data;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Binary {
     private static final Map<Character, Boolean> booleans = new HashMap<>();
@@ -16,44 +19,45 @@ public class Binary {
         chars.put(false, ZERO);
     }
 
-    private char[] value;
+    private StringBuilder binary;
 
     public Binary(byte[] bytes) {
-        this.value = toCharArray(UByte.getUnsignedBytes(bytes));
+        this.binary = init(UByte.getUnsignedBytes(bytes));
     }
 
-    public Binary(int size) {
-        this.value = new char[size];
+    public Binary(int capacity) {
+        this.binary = new StringBuilder();
+        fillByZero(capacity);
     }
 
-    private char[] toCharArray(List<UByte> bytes) {
+    public Binary() {
+        this.binary = new StringBuilder("");
+    }
+
+    private StringBuilder init(List<UByte> bytes) {
         bytes.forEach(UByte::revert);
-        return bytes.stream()
+        return new StringBuilder(bytes.stream()
                 .map(UByte::toBinary)
-                .reduce("", (f, s) -> f + s)
-                .toCharArray();
+                .reduce("", (f, s) -> f + s));
     }
 
     public void fillByZero(int max) {
-        StringBuilder builder = new StringBuilder(new String(value));
-        while (builder.length() < max) {
-            builder.append("0");
+        while (binary.length() < max) {
+            binary.append("0");
         }
-        value = builder.toString().toCharArray();
     }
 
-
     public boolean getValueAt(int index) {
-        return booleans.get(value[index]);
+        return booleans.get(binary.charAt(index));
     }
 
     public void setValueAt(int index, boolean b) {
-        value[index] = chars.get(b);
+        binary.setCharAt(index, chars.get(b));
     }
 
     public byte[] toByteArray() {
         List<UByte> bytes = new ArrayList<>();
-        for (int i = 0; i < value.length; i = i + 8) {
+        for (int i = 0; i < binary.length(); i = i + 8) {
             UByte b = toUByte(i);
             b.revert();
             bytes.add(b);
@@ -62,11 +66,20 @@ public class Binary {
     }
 
     public UByte toUByte(int from) {
-        return UByte.parseUByte(new String(value, from, UByte.SIZE), 2);
+        return UByte.parseUByte(subString(from, UByte.SIZE), 2);
+    }
+
+    public long getValue(int from, int length) {
+        String bits = new StringBuilder(subString(from, length)).reverse().toString();
+        return Long.parseLong(bits, 2);
+    }
+
+    private String subString(int from, int length) {
+        return binary.substring(from, from + length);
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(value);
+        return binary.toString();
     }
 }
