@@ -1,4 +1,6 @@
-package ru.aizen.domain.data;
+package ru.aizen.domain.data.binary;
+
+import ru.aizen.domain.data.UByte;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,5 +1,7 @@
 package ru.aizen.domain.data;
 
+import ru.aizen.domain.data.binary.Binary;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -3,9 +3,9 @@ package ru.aizen.domain.character.block;
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.entity.Waypoint;
 import ru.aizen.domain.dao.WaypointDao;
-import ru.aizen.domain.data.Binary;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
+import ru.aizen.domain.data.binary.Binary;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
