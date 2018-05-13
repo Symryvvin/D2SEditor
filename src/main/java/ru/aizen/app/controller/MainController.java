@@ -148,8 +148,8 @@ public class MainController {
     private void onSaveClick() {
         try {
             editorController.saveCharacter();
-            character.save(path);
-            hexEditorController.setOutputData(character.getBlockReader().getBytes());
+            byte[] save = character.save(path);
+            hexEditorController.setOutputData(save);
         } catch (IOException | ValidatorException e) {
             Alerts.showError(e).show();
         }

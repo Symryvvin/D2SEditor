@@ -57,13 +57,13 @@ public class Character {
         blocks.put(InventoryBlock.ORDER, blockReader.readInventory());
     }
 
-    public void save(Path path) throws IOException {
+    public byte[] save(Path path) throws IOException {
         List<UByte> bytes = blocks.values()
                 .stream()
                 .sorted()
                 .flatMap(b -> b.collect().stream())
                 .collect(Collectors.toList());
-        new BlockWriter().write(bytes, path);
+        return new BlockWriter().write(bytes, path);
     }
 
     public final void setTitleValue(String value) {

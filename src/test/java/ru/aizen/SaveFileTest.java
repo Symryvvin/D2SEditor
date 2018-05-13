@@ -32,11 +32,11 @@ public class SaveFileTest {
     }
 
     @Test
-    public void testWriter() throws IOException, ValidatorException {
+    public void testWriter() throws IOException {
         Character character = getTestCharacter();
         byte[] expected = character.getBlockReader().getBytes();
-        character.save(path);
-        Assert.assertArrayEquals(expected, character.getBlockReader().getBytes());
+        byte[] save = character.save(path);
+        Assert.assertArrayEquals(expected, save);
     }
 
     private Character getTestCharacter() {

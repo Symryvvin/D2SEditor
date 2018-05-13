@@ -8,8 +8,10 @@ import java.util.List;
 
 public class BlockWriter {
 
-    public void write(List<UByte> bytes, Path path) throws IOException {
-        Files.write(path, getDataToSave(bytes));
+    public byte[] write(List<UByte> bytes, Path path) throws IOException {
+        byte[] save = getDataToSave(bytes);
+        Files.write(path, save);
+        return save;
     }
 
     /**
