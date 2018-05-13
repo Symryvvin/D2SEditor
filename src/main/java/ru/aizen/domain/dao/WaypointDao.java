@@ -8,6 +8,7 @@ import ru.aizen.domain.character.entity.Waypoint;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Component
 public class WaypointDao extends ShadowDao {
@@ -21,6 +22,13 @@ public class WaypointDao extends ShadowDao {
                 "FROM tbl_waypoint\n" +
                 "WHERE position = ?";
         return template.queryForObject(sql, new Object[]{position}, new WaypointRowMapper());
+    }
+
+    public List<String> getTowns() {
+        String sql = "SELECT name\n" +
+                "FROM tbl_waypoint\n" +
+                "WHERE position IN (0, 9, 18, 27, 30)";
+        return template.queryForList(sql, String.class);
     }
 
     private class WaypointRowMapper implements RowMapper<Waypoint> {

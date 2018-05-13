@@ -11,8 +11,7 @@
         </padding>
         <Label maxHeight="1.7976931348623157E308" styleClass="boldLabel" text="Difficult:"/>
         <ComboBox fx:id="difficulties" prefWidth="150.0" onAction="#onChangeDifficult"/>
-        <Button mnemonicParsing="false" text="Mark all" onAction="#onMarkAllClick"/>
-        <Button mnemonicParsing="false" text="Unmark all" onAction="#onUnmarkAllClick"/>
+        <Button mnemonicParsing="false" text="Check all" onAction="#onCheckAll"/>
     </HBox>
     <HBox maxHeight="326.0" spacing="10.0">
         <padding>
@@ -98,4 +97,13 @@
             </VBox>
         </VBox>
     </HBox>
+    <VBox prefHeight="30.0" spacing="10.0">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+        <Label maxHeight="1.7976931348623157E308" styleClass="boldLabel" text="Current difficult:"/>
+        <ComboBox fx:id="inDifficult" prefWidth="150.0" onAction="#onChangeInDifficult"/>
+        <Label maxHeight="1.7976931348623157E308" styleClass="boldLabel" text="Current town:"/>
+        <ComboBox fx:id="inTown" prefWidth="150.0" onAction="#onChangeInTown"/>
+    </VBox>
 </VBox>

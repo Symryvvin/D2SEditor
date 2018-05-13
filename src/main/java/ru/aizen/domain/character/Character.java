@@ -122,7 +122,13 @@ public class Character {
         return (WaypointsBlock) blocks.get(WaypointsBlock.ORDER);
     }
 
+    public MapBlock getMapBlock() {
+        return (MapBlock) blocks.get(MapBlock.ORDER);
+    }
+
     public BlockReader getBlockReader() {
         return blockReader;
     }
+
+
 }

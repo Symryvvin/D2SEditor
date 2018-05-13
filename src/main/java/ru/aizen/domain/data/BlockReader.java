@@ -81,7 +81,7 @@ public class BlockReader {
     }
 
     public MapBlock readMap() {
-        return new MapBlock()
+        return new MapBlock(waypointDao)
                 .parse(getByteReader(MapBlock.OFFSET, MapBlock.SIZE));
     }
 
