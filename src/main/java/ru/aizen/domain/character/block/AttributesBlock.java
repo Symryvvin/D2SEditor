@@ -5,6 +5,7 @@ import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 import ru.aizen.domain.data.binary.Binary;
+import ru.aizen.domain.data.binary.BinaryReader;
 import ru.aizen.domain.data.binary.BinaryWriter;
 
 import java.nio.ByteBuffer;
@@ -59,17 +60,14 @@ public class AttributesBlock extends DataBlock {
     }
 
     private void unpack(byte[] data) {
-        Binary binary = new Binary(data);
+        BinaryReader reader = new BinaryReader(data);
         int stopId = Integer.parseInt(STOP_CODE, 16);
-        int cursor = 0;
         while (true) {
-            long id = binary.getValue(cursor, Attribute.ID_OFFSET);
+            long id = reader.readLong(Attribute.ID_OFFSET);
             if (id == stopId)
                 break;
-            cursor += Attribute.ID_OFFSET;
             Attribute attribute = getBy(id);
-            put(attribute.getId(), binary.getValue(cursor, attribute.getLength()));
-            cursor += attribute.getLength();
+            put(attribute.getId(), reader.readLong(attribute.getLength()));
         }
     }
 
@@ -111,9 +109,5 @@ public class AttributesBlock extends DataBlock {
 
     private Attribute getBy(long id) {
         return attributeDao.getAttributeById((int) id);
-    }
-
-    public int getBlockSize() {
-        return blockSize;
     }
 }

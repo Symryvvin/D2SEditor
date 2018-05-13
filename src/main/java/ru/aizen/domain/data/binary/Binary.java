@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Binary {
-
     public static final char ZERO = '0';
     public static final char ONE = '1';
 
@@ -23,6 +22,10 @@ public class Binary {
 
     public Binary() {
         this.binary = new StringBuilder("");
+    }
+
+    public Binary(String value) {
+        this.binary = new StringBuilder(value);
     }
 
     private StringBuilder init(List<UByte> bytes) {
@@ -53,7 +56,7 @@ public class Binary {
     }
 
     public void putBinary(Binary value) {
-        binary.append(value.toString());
+        putBinary(value.toString());
     }
 
     public boolean getValueAt(int index) {
@@ -68,28 +71,19 @@ public class Binary {
     public byte[] toByteArray() {
         List<UByte> bytes = new ArrayList<>();
         for (int i = 0; i < binary.length(); i = i + 8) {
-            UByte b = toUByte(i);
+            UByte b = UByte.parseUByte(binary.substring(i, i + UByte.SIZE), 2);
             b.revert();
             bytes.add(b);
         }
         return UByte.toArray(bytes);
     }
 
-    public UByte toUByte(int from) {
-        return UByte.parseUByte(subString(from, UByte.SIZE), 2);
-    }
-
-    public long getValue(int from, int length) {
-        String bits = new StringBuilder(subString(from, length)).reverse().toString();
-        return Long.parseLong(bits, 2);
-    }
-
-    private String subString(int from, int length) {
-        return binary.substring(from, from + length);
-    }
-
     public int length() {
         return binary.length();
+    }
+
+    public String substring(int start, int end) {
+        return binary.substring(start, end);
     }
 
     @Override
