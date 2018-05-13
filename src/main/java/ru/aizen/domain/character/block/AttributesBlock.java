@@ -1,12 +1,11 @@
 package ru.aizen.domain.character.block;
 
-import org.apache.commons.lang3.StringUtils;
 import ru.aizen.domain.character.attribute.Attribute;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 import ru.aizen.domain.data.binary.Binary;
-import ru.aizen.domain.util.BinaryUtils;
+import ru.aizen.domain.data.binary.BinaryWriter;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -75,35 +74,23 @@ public class AttributesBlock extends DataBlock {
     }
 
     private byte[] pack() {
-        byte[] result = BinaryUtils.fromBinaryString(getBinary(), true);
+        byte[] result = getBinary().toByteArray();
         ByteBuffer buffer = ByteBuffer.allocate(2 + result.length);
         buffer.put(identifier).put(result).flip();
         return buffer.array();
     }
 
-    private String getBinary() {
-        StringBuilder builder = new StringBuilder();
+    private Binary getBinary() {
+        BinaryWriter writer = new BinaryWriter();
         for (Map.Entry<Long, Long> entry : attributes.entrySet()) {
             long id = entry.getKey();
+            writer.writeLong(id, Attribute.ID_OFFSET);
             Attribute attribute = getBy(id);
             long value = entry.getValue();
-            builder.append(getBinaryString(id, Attribute.ID_OFFSET))
-                    .append(getBinaryString(value, attribute.getLength()));
+            writer.writeLong(value, attribute.getLength());
         }
-        builder.append("111111111");
-        while (builder.length() % 8 != 0) {
-            builder.append("0");
-        }
-        return builder.toString();
-    }
-
-    private String getBinaryString(Long value, int length) {
-        return StringUtils.reverse(String.format("%" + length + "s",
-                Long.toBinaryString(value)).replace(' ', '0'));
-    }
-
-    private long readValue(String bits, int initial, int length) {
-        return BinaryUtils.reversedBitsToInt(bits.substring(initial, length));
+        writer.writeHex(STOP_CODE);
+        return writer.getBinary();
     }
 
     public Map<Long, Long> getAttributes() {

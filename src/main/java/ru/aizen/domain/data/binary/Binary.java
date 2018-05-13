@@ -3,23 +3,12 @@ package ru.aizen.domain.data.binary;
 import ru.aizen.domain.data.UByte;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Binary {
-    private static final Map<Character, Boolean> booleans = new HashMap<>();
-    private static final Map<Boolean, Character> chars = new HashMap<>();
 
     public static final char ZERO = '0';
     public static final char ONE = '1';
-
-    static {
-        booleans.put(ONE, true);
-        booleans.put(ZERO, false);
-        chars.put(true, ONE);
-        chars.put(false, ZERO);
-    }
 
     private StringBuilder binary;
 
@@ -49,12 +38,31 @@ public class Binary {
         }
     }
 
+    public void fillToFullBytes() {
+        while (binary.length() % 8 != 0) {
+            binary.append("0");
+        }
+    }
+
+    public void reverse() {
+        binary.reverse();
+    }
+
+    public void putBinary(String value) {
+        binary.append(value);
+    }
+
+    public void putBinary(Binary value) {
+        binary.append(value.toString());
+    }
+
     public boolean getValueAt(int index) {
-        return booleans.get(binary.charAt(index));
+        return binary.charAt(index) == ONE;
     }
 
     public void setValueAt(int index, boolean b) {
-        binary.setCharAt(index, chars.get(b));
+        char ch = b ? ONE : ZERO;
+        binary.setCharAt(index, ch);
     }
 
     public byte[] toByteArray() {
@@ -78,6 +86,10 @@ public class Binary {
 
     private String subString(int from, int length) {
         return binary.substring(from, from + length);
+    }
+
+    public int length() {
+        return binary.length();
     }
 
     @Override
