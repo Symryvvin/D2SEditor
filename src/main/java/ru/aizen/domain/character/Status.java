@@ -1,6 +1,6 @@
 package ru.aizen.domain.character;
 
-import ru.aizen.domain.util.BinaryUtils;
+import ru.aizen.domain.data.binary.Binary;
 
 /**
  * Keep info about expansion, hardcore mode and status (dead or alive, if hardcode)
@@ -22,27 +22,19 @@ public class Status {
     }
 
     private void readStatus(byte b) {
-        String bin = BinaryUtils.toBinaryString(b, true);
-        this.isExpansion = parseChar(bin.charAt(5));
-        this.isHardcore = parseChar(bin.charAt(2));
-        this.isDead = parseChar(bin.charAt(3));
-    }
-
-    private boolean parseChar(char ch) {
-        return ch == '1';
+        Binary binary = new Binary(new byte[]{b});
+        this.isHardcore = binary.getValueAt(2);
+        this.isDead = binary.getValueAt(3);
+        this.isExpansion = binary.getValueAt(5);
     }
 
     public byte toByte() {
-        return (byte) Integer.parseInt(getBinaryString(), 2);
-    }
-
-    private String getBinaryString() {
-        return "00" +
-                (isExpansion ? "1" : "0") +
-                "0" +
-                (isDead ? "1" : "0") +
-                (isHardcore ? "1" : "0") +
-                "00";
+        Binary binary = new Binary(Byte.SIZE);
+        binary.setValueAt(2, isHardcore);
+        binary.setValueAt(3, isDead);
+        binary.setValueAt(5, isExpansion);
+        binary.reverse();
+        return Byte.parseByte(binary.toString(), 2);
     }
 
     public boolean isExpansion() {
