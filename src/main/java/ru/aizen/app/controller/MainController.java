@@ -80,7 +80,16 @@ public class MainController {
     }
 
     private void initializeCloseableTab() {
-        //TODO implement hide closeable tabs on start
+        editorTabs.getTabs().remove(hexEditor);
+        editorTabs.getTabs().remove(backupManager);
+        hexEditor.setOnClosed(event -> {
+            hexEditor.setDisable(true);
+            editorTabs.getTabs().remove(hexEditor);
+        });
+        backupManager.setOnClosed(event -> {
+            backupManager.setDisable(true);
+            editorTabs.getTabs().remove(backupManager);
+        });
     }
 
     private void initializeMenuKeyCodes() {
@@ -187,10 +196,11 @@ public class MainController {
     }
 
     private void addAndSelect(Tab tab) {
-        if (tab != null && !tab.isDisable()) {
+        if (tab != null && tab.isDisable()) {
             editorTabs.getTabs().add(tab);
-            editorTabs.getSelectionModel().select(tab);
+            tab.setDisable(false);
         }
+        editorTabs.getSelectionModel().select(tab);
     }
 
     @FXML
