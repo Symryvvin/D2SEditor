@@ -13,7 +13,7 @@ public class SkillsBlock extends DataBlock {
     public static final int SKILLS_BLOCK_SIZE = 32;
     /** Identifier of start skill block */
     public static final byte[] identifier = new byte[]{0x69, 0x66};
-    public static final int ORDER = 12;
+    public static final int ORDER = 11;
 
     private Map<Integer, Byte> values;
     private final SkillDao skillDao;

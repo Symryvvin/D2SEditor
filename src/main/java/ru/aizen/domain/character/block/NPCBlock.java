@@ -8,7 +8,7 @@ import java.util.List;
 public class NPCBlock extends DataBlock {
     public static final int OFFSET = 714;
     public static final int SIZE = 51;
-    public static final int ORDER = 10;
+    public static final int ORDER = 9;
 
     private byte[] bytes;
 

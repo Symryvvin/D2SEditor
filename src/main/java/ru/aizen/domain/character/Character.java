@@ -49,7 +49,6 @@ public class Character {
         blocks.put(MercenaryBlock.ORDER, blockReader.readMercenary());
         blocks.put(6, blockReader.unknownBlock(6, 191, 144));
         blocks.put(QuestsBlock.ORDER, blockReader.readQuests());
-        blocks.put(8, blockReader.unknownBlock(8, 442, 191));
         blocks.put(WaypointsBlock.ORDER, blockReader.readWaypoints());
         blocks.put(NPCBlock.ORDER, blockReader.readNPC());
         blocks.put(AttributesBlock.ORDER, blockReader.readAttributes());

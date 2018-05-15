@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class WaypointsBlock extends DataBlock {
     public static final int OFFSET = 633;
     public static final int SIZE = 81;
-    public static final int ORDER = 9;
+    public static final int ORDER = 8;
 
     private static final byte[] identifier = new byte[]{0x57, 0x53};
     private static final byte[] unknownConst = new byte[]{0x01, 0x00, 0x00, 0x00, 0x50, 0x00};

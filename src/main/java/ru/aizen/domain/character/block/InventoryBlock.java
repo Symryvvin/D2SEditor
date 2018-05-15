@@ -8,7 +8,7 @@ import java.util.List;
 
 public class InventoryBlock extends DataBlock {
     public static final byte[] identifier = new byte[]{0x4A, 0x4D};
-    public static final int ORDER = 13;
+    public static final int ORDER = 12;
 
     private byte[] bytes;
     private AttributeDao attributeDao;

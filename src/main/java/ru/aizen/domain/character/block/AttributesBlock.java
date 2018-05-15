@@ -16,7 +16,7 @@ import java.util.Map;
 public class AttributesBlock extends DataBlock {
     /** Identifier of start attributes block */
     public static final byte[] identifier = new byte[]{0x67, 0x66};
-    public static final int ORDER = 11;
+    public static final int ORDER = 10;
     private static final String STOP_CODE = "01FF";
 
     public static final long STRENGTH = 0;
