@@ -81,10 +81,12 @@ public class AttributesBlock extends DataBlock {
         BinaryWriter writer = new BinaryWriter();
         for (Map.Entry<Long, Long> entry : attributes.entrySet()) {
             long id = entry.getKey();
-            writer.writeLong(id, Attribute.ID_OFFSET);
             Attribute attribute = getBy(id);
             long value = entry.getValue();
-            writer.writeLong(value, attribute.getLength());
+            if (value != 0) {
+                writer.writeLong(id, Attribute.ID_OFFSET);
+                writer.writeLong(value, attribute.getLength());
+            }
 
         }
         writer.writeHex(STOP_CODE, 9);
