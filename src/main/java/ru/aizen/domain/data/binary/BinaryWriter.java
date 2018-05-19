@@ -4,66 +4,65 @@ public class BinaryWriter {
     private Binary binary;
     private int capacity;
 
-    public BinaryWriter(int allocate) {
-        binary = new Binary(allocate);
-        binary.fillByZero(allocate);
+    public BinaryWriter(int capacity) {
+        this.capacity = capacity;
+        binary = new Binary(capacity);
     }
 
     public BinaryWriter() {
         binary = new Binary();
+        capacity = 0;
     }
 
-    public void writeByte(byte value, int length) {
-        writeValue(value, length);
+    public void writeByte(byte value, int size) {
+        binary.putLong(value, size);
+        capacity += size;
     }
 
-    public void writeShort(short value, int length) {
-        writeValue(value, length);
+    public void writeShort(short value, int size) {
+        binary.putLong(value, size);
+        capacity += size;
     }
 
-    public void writeInt(int value, int length) {
-        writeValue(value, length);
+    public void writeInt(int value, int size) {
+        binary.putLong(value, size);
+        capacity += size;
     }
 
-    public void writeLong(long value, int length) {
-        writeValue(value, length);
+    public void writeLong(long value, int size) {
+        binary.putLong(value, size);
+        capacity += size;
     }
 
-    public void writeHex(String hex) {
+    public void writeHex(String hex, int size) {
         long value = Long.parseLong(hex, 16);
-        writeValue(value, hex.length());
+        binary.putLong(value, size);
+        capacity += size;
     }
 
 
     public void writeByte(byte value) {
-        writeValue(value, Byte.SIZE);
+        writeByte(value, Byte.SIZE);
     }
 
     public void writeShort(short value) {
-        writeValue(value, Short.SIZE);
+        writeShort(value, Short.SIZE);
     }
 
     public void writeInt(int value) {
-        writeValue(value, Integer.SIZE);
+        writeInt(value, Integer.SIZE);
     }
 
     public void writeLong(long value) {
-        writeValue(value, Long.SIZE);
+        writeLong(value, Long.SIZE);
 
-    }
-
-    private void writeValue(long value, int length) {
-        Binary result = new Binary();
-        result.putBinary(Long.toBinaryString(value));
-        result.reverse();
-        result.fillByZero(length);
-        binary.putBinary(result);
-        capacity = binary.length();
     }
 
     public Binary getBinary() {
-        binary.fillToFullBytes();
         return binary;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
 }

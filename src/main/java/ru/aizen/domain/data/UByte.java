@@ -1,7 +1,5 @@
 package ru.aizen.domain.data;
 
-import ru.aizen.domain.data.binary.Binary;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,25 +31,6 @@ public class UByte {
 
     public byte toByte() {
         return (byte) (value > 128 ? value & 0xff : value);
-    }
-
-    public String toBinary() {
-        return String.format("%" + SIZE + "s",
-                Integer.toBinaryString(value)).replace(' ', Binary.ZERO);
-    }
-
-    public void revert() {
-        revertBits(toByte());
-    }
-
-    private void revertBits(byte x) {
-        byte b = 0;
-        for (int i = 0; i < SIZE; ++i) {
-            b <<= 1;
-            b |= (x & 1);
-            x >>= 1;
-        }
-        value = Byte.toUnsignedInt(b);
     }
 
     @Override
@@ -86,10 +65,5 @@ public class UByte {
             result[i] = bytes.get(i).toByte();
         }
         return result;
-    }
-
-    public static UByte parseUByte(String s, int radix) throws NumberFormatException {
-        int i = Integer.parseInt(s, radix);
-        return new UByte(i);
     }
 }

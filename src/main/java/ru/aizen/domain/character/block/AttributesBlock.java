@@ -4,7 +4,6 @@ import ru.aizen.domain.character.attribute.Attribute;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
-import ru.aizen.domain.data.binary.Binary;
 import ru.aizen.domain.data.binary.BinaryReader;
 import ru.aizen.domain.data.binary.BinaryWriter;
 
@@ -72,13 +71,13 @@ public class AttributesBlock extends DataBlock {
     }
 
     private byte[] pack() {
-        byte[] result = getBinary().toByteArray();
+        byte[] result = getArray();
         ByteBuffer buffer = ByteBuffer.allocate(2 + result.length);
         buffer.put(identifier).put(result).flip();
         return buffer.array();
     }
 
-    private Binary getBinary() {
+    private byte[] getArray() {
         BinaryWriter writer = new BinaryWriter();
         for (Map.Entry<Long, Long> entry : attributes.entrySet()) {
             long id = entry.getKey();
@@ -86,9 +85,10 @@ public class AttributesBlock extends DataBlock {
             Attribute attribute = getBy(id);
             long value = entry.getValue();
             writer.writeLong(value, attribute.getLength());
+
         }
-        writer.writeHex(STOP_CODE);
-        return writer.getBinary();
+        writer.writeHex(STOP_CODE, 9);
+        return writer.getBinary().array();
     }
 
     public Map<Long, Long> getAttributes() {

@@ -15,41 +15,42 @@ public class BinaryReader {
     }
 
     public byte readByte() {
-        return Byte.parseByte(getValue(Byte.SIZE), 2);
+        return readByte(Byte.SIZE);
     }
 
     public short readShort() {
-        return Short.parseShort(getValue(Short.SIZE), 2);
+        return readShort(Short.SIZE);
     }
 
     public int readInt() {
-        return Integer.parseInt(getValue(Integer.SIZE), 2);
+        return readInt(Integer.SIZE);
     }
 
     public long readLong() {
-        return Long.parseLong(getValue(Long.SIZE), 2);
+        return readLong(Long.SIZE);
     }
 
-    public byte readByte(int length) {
-        return Byte.parseByte(getValue(length), 2);
+    public byte readByte(int size) {
+        byte b = binary.getByte(position, size);
+        position += size;
+        return b;
     }
 
-    public short readShort(int length) {
-        return Short.parseShort(getValue(length), 2);
+    public short readShort(int size) {
+        short s = binary.getShort(position, size);
+        position += size;
+        return s;
     }
 
-    public int readInt(int length) {
-        return Integer.parseInt(getValue(length), 2);
+    public int readInt(int size) {
+        int i = binary.getInt(position, size);
+        position += size;
+        return i;
     }
 
-    public long readLong(int length) {
-        return Long.parseLong(getValue(length), 2);
-    }
-
-    public String getValue(int length) {
-        Binary result = new Binary(binary.substring(position, position + length));
-        result.reverse();
-        position += length;
-        return result.toString();
+    public long readLong(int size) {
+        long l = binary.getLong(position, size);
+        position += size;
+        return l;
     }
 }

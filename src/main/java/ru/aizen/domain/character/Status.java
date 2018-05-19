@@ -23,18 +23,17 @@ public class Status {
 
     private void readStatus(byte b) {
         Binary binary = new Binary(new byte[]{b});
-        this.isHardcore = binary.getValueAt(2);
-        this.isDead = binary.getValueAt(3);
-        this.isExpansion = binary.getValueAt(5);
+        this.isHardcore = binary.get(2);
+        this.isDead = binary.get(3);
+        this.isExpansion = binary.get(5);
     }
 
     public byte toByte() {
         Binary binary = new Binary(Byte.SIZE);
-        binary.setValueAt(2, isHardcore);
-        binary.setValueAt(3, isDead);
-        binary.setValueAt(5, isExpansion);
-        binary.reverse();
-        return Byte.parseByte(binary.toString(), 2);
+        binary.set(2, isHardcore);
+        binary.set(3, isDead);
+        binary.set(5, isExpansion);
+        return binary.getByte(0);
     }
 
     public boolean isExpansion() {

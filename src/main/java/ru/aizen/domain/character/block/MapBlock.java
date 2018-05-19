@@ -71,18 +71,17 @@ public class MapBlock extends DataBlock {
         BinaryWriter writer = new BinaryWriter();
         writer.writeInt(towns.indexOf(activeTown), 3);
         Binary active = writer.getBinary();
-        active.fillToFullBytes();
-        active.setValueAt(7, true);
+        active.set(7, true);
         byte[] result = new byte[]{0, 0, 0};
         switch (activeDifficult) {
             case NORMAL:
-                result[0] = active.toByteArray()[0];
+                result[0] = active.array()[0];
                 break;
             case NIGHTMARE:
-                result[1] = active.toByteArray()[0];
+                result[1] = active.array()[0];
                 break;
             case HELL:
-                result[2] = active.toByteArray()[0];
+                result[2] = active.array()[0];
                 break;
         }
         return result;

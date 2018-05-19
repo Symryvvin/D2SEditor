@@ -52,7 +52,7 @@ public class WaypointsBlock extends DataBlock {
         Binary binary = new Binary(data);
         for (int i = 0; i < waypointsCount; i++) {
             Waypoint waypoint = waypointDao.getWaypointByPosition(i);
-            waypoint.setActive(binary.getValueAt(i));
+            waypoint.setActive(binary.get(i));
             result.add(waypoint);
         }
         return result;
@@ -80,12 +80,11 @@ public class WaypointsBlock extends DataBlock {
                 .map(Waypoint::isActive)
                 .collect(Collectors.toList())
                 .toArray(array);
-        Binary binary = new Binary(array.length);
+        Binary binary = new Binary(waypointsDataSize * Byte.SIZE);
         for (int i = 0; i < array.length; i++) {
-            binary.setValueAt(i, array[i]);
+            binary.set(i, array[i]);
         }
-        binary.fillByZero(waypointsDataSize * Byte.SIZE);
-        return binary.toByteArray();
+        return binary.array();
     }
 
     public List<Waypoint> getWaypoints(Difficult difficult) {
