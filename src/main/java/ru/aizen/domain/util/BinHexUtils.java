@@ -15,11 +15,17 @@ public final class BinHexUtils {
         List<String> hexByte = new ArrayList<>();
         char[] hexChars = hex.toCharArray();
         for (int i = 1; i < hexChars.length; i = i + 2) {
-            hexByte.add(String.valueOf(new char[]{hexChars[i - 1], hexChars[i]}));
+            hexByte.add(String.valueOf(new char[]{hexChars[i - 1], hexChars[i]}).toUpperCase());
         }
-        return hexByte.stream()
-                .reduce("", (first, second) ->
-                        first + second + "\t");
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < hexByte.size(); i++) {
+            if (i != 0 && (i + 1) % 16 == 0) {
+                result.append(hexByte.get(i)).append("\n");
+            } else {
+                result.append(hexByte.get(i)).append("\t");
+            }
+        }
+        return result.toString();
     }
 
     public static byte[] getDecodeHexString(String hex) {

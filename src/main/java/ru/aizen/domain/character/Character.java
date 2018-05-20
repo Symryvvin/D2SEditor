@@ -125,6 +125,10 @@ public class Character {
         return (MapBlock) blocks.get(MapBlock.ORDER);
     }
 
+    public QuestsBlock getQuestBlock() {
+        return (QuestsBlock) blocks.get(QuestsBlock.ORDER);
+    }
+
     public BlockReader getBlockReader() {
         return blockReader;
     }

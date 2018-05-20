@@ -70,11 +70,9 @@ public class QuestsBlock extends DataBlock {
         result.addAll(readActQuests(questReader, Act.ACT4));
         difficultTravel.put(Act.ACT5, questReader.readShort());
         difficultIntroduce.put(Act.ACT5, questReader.readShort());
-        questReader.skip(2);
+        questReader.skip(4);
         result.addAll(readActQuests(questReader, Act.ACT5));
         questReader.skip(unknown2.length);
-        System.out.println(introduce);
-        System.out.println(travel);
         quests.put(difficult, result);
         introduce.put(difficult, difficultIntroduce);
         travel.put(difficult, difficultTravel);
@@ -88,7 +86,9 @@ public class QuestsBlock extends DataBlock {
                 break;
             }
             Quest quest = questDao.getQuestByPosition(i, act);
+
             quest.setBinary(new Binary(questReader.readBytes(2)));
+            System.out.println(quest);
             result.add(quest);
         }
         return result;
@@ -141,13 +141,20 @@ public class QuestsBlock extends DataBlock {
                 result.putShort((short) 0);
                 break;
             }
-            Quest quest = actQuest.get(i);
-            Binary binary = quest.getBinary();
-            binary.setTrue(0);
-            result.put(binary.array());
+            result.put(actQuest
+                    .get(i)
+                    .getBinary()
+                    .array());
         }
         result.flip();
         return result.array();
     }
 
+    public List<Quest> getQuests(Difficult difficult) {
+        return quests.get(difficult);
+    }
+
+    public void setQuests(List<Quest> waypoints, Difficult difficult) {
+        this.quests.put(difficult, waypoints);
+    }
 }
