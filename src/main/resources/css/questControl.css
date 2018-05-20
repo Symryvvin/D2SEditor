@@ -1,0 +1,15 @@
+.name {
+    -fx-font-size: 10px;
+    -fx-pref-height: 24px;
+    -fx-font-weight: bold;
+}
+
+.value {
+    -fx-font-size: 10px;
+    -fx-pref-height: 24px;
+    -fx-pref-width: 30px;
+}
+
+.wrapper {
+    -fx-padding: 5px 10px 5px 10px;
+}

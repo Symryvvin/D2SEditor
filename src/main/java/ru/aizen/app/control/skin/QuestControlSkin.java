@@ -16,7 +16,7 @@ public class QuestControlSkin extends SkinBase<QuestControl> {
      */
     public QuestControlSkin(QuestControl control) {
         super(control);
-        control.getStylesheets().add("/css/skillControl.css");
+        control.getStylesheets().add("/css/questControl.css");
         ImageView image = control.getImage();
         image.setFitWidth(48.0d);
         image.setFitHeight(49.0d);
@@ -26,6 +26,7 @@ public class QuestControlSkin extends SkinBase<QuestControl> {
         value.getStyleClass().add("value");
         VBox vBox = new VBox(name, value);
         HBox hBox = new HBox(2.0d, image, vBox);
+        hBox.getStyleClass().add("wrapper");
         hBox.setAlignment(Pos.BOTTOM_LEFT);
         getChildren().add(hBox);
     }
