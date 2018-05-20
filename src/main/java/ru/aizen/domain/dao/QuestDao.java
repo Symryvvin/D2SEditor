@@ -18,7 +18,11 @@ public class QuestDao extends ShadowDao {
 
     public Quest getQuestByPosition(int position, Act act) {
         int actValue = act.ordinal() + 1;
-        String sql = "SELECT name, act, quest_position\n" +
+        String sql = "SELECT name, \n" +
+                "act,\n" +
+                "quest_position,\n" +
+                "icon_active,\n" +
+                "icon_complete\n" +
                 "FROM tbl_quest\n" +
                 "WHERE position = ?" +
                 "AND act = ?";
@@ -31,7 +35,9 @@ public class QuestDao extends ShadowDao {
         public Quest mapRow(ResultSet rs, int i) throws SQLException {
             return new Quest(rs.getInt("act"),
                     rs.getString("name"),
-                    rs.getString("quest_position"));
+                    rs.getString("quest_position"),
+                    rs.getString("icon_active"),
+                    rs.getString("icon_complete"));
         }
     }
 

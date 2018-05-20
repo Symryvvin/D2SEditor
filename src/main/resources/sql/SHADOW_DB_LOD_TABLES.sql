@@ -58,7 +58,11 @@ CREATE TABLE tbl_quest (
   name           VARCHAR(25) NOT NULL,
   act            INT         NOT NULL,
   position       INT         NOT NULL,
-  quest_position INT         NOT NULL
+  quest_position INT         NOT NULL,
+  icon_active    CLOB        NOT NULL,
+  icon_complete  CLOB        NOT NULL
 );
+
 CREATE INDEX tbl_quest_position_index
   ON tbl_quest (position);
+
