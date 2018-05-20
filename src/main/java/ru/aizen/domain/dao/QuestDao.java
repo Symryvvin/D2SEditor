@@ -21,6 +21,7 @@ public class QuestDao extends ShadowDao {
         String sql = "SELECT name, \n" +
                 "act,\n" +
                 "quest_position,\n" +
+                "position,\n" +
                 "icon_active,\n" +
                 "icon_complete\n" +
                 "FROM tbl_quest\n" +
@@ -36,6 +37,7 @@ public class QuestDao extends ShadowDao {
             return new Quest(rs.getInt("act"),
                     rs.getString("name"),
                     rs.getString("quest_position"),
+                    rs.getString("position"),
                     rs.getString("icon_active"),
                     rs.getString("icon_complete"));
         }

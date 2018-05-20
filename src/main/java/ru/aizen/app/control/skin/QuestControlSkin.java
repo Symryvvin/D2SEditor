@@ -22,7 +22,7 @@ public class QuestControlSkin extends SkinBase<QuestControl> {
         image.setFitHeight(49.0d);
         Label name = control.getName();
         name.getStyleClass().add("name");
-        CheckBox value = control.getIsCompleted();
+        CheckBox value = control.getCheckBox();
         value.getStyleClass().add("value");
         VBox vBox = new VBox(name, value);
         HBox hBox = new HBox(2.0d, image, vBox);

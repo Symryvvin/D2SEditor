@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ru.aizen.app.control.skin.QuestControlSkin;
 
-public class QuestControl extends Control {
+public class QuestControl extends Control implements Comparable<QuestControl> {
     private ImageView image;
     private Label name;
     private CheckBox isCompleted;
@@ -36,7 +36,11 @@ public class QuestControl extends Control {
         name.setText(value);
     }
 
-    public CheckBox getIsCompleted() {
+    public boolean getIsCompleted() {
+        return isCompleted.isSelected();
+    }
+
+    public CheckBox getCheckBox() {
         return isCompleted;
     }
 
@@ -56,4 +60,10 @@ public class QuestControl extends Control {
     protected Skin<?> createDefaultSkin() {
         return new QuestControlSkin(this);
     }
+
+    @Override
+    public int compareTo(QuestControl o) {
+        return Integer.compare(order, o.order);
+    }
+
 }

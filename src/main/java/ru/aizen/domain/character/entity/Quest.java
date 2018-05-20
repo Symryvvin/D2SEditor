@@ -6,16 +6,18 @@ public class Quest implements Comparable<Quest> {
     private Act act;
     private String name;
     private int position;
+    private int order;
     private boolean isComplete;
     private Binary binary;
 
     private String activeImage;
     private String completeImage;
 
-    public Quest(int act, String name, String position, String activeImage, String completeImage) {
+    public Quest(int act, String name, String position, String order, String activeImage, String completeImage) {
         this.act = Act.valueOf("ACT" + act);
         this.name = name;
         this.position = Integer.parseInt(position);
+        this.order = Integer.parseInt(order);
         this.activeImage = activeImage;
         this.completeImage = completeImage;
     }
@@ -33,7 +35,8 @@ public class Quest implements Comparable<Quest> {
     }
 
     public void setComplete(boolean complete) {
-        isComplete = complete;
+        this.isComplete = complete;
+        this.binary.set(0, complete);
     }
 
     public int getPosition() {
@@ -49,12 +52,15 @@ public class Quest implements Comparable<Quest> {
         this.isComplete = binary.get(0);
     }
 
-    public String getActiveImage() {
-        return activeImage;
+    public String getImagePath() {
+        if (isComplete)
+            return completeImage;
+        else
+            return activeImage;
     }
 
-    public String getCompleteImage() {
-        return completeImage;
+    public int getOrder() {
+        return order;
     }
 
     @Override
@@ -63,6 +69,7 @@ public class Quest implements Comparable<Quest> {
                 "act=" + act +
                 ", name='" + name + '\'' +
                 ", position=" + position +
+                ", order=" + order +
                 ", isComplete=" + isComplete +
                 ", binary=" + binary +
                 ", activeImage='" + activeImage + '\'' +
