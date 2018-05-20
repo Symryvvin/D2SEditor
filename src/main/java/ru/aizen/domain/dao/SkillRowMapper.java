@@ -1,7 +1,7 @@
 package ru.aizen.domain.dao;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.aizen.domain.character.attribute.Skill;
+import ru.aizen.domain.character.entity.Skill;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

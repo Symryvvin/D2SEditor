@@ -3,7 +3,7 @@ package ru.aizen.domain.dao;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.CharacterClass;
-import ru.aizen.domain.character.attribute.Skill;
+import ru.aizen.domain.character.entity.Skill;
 
 import javax.sql.DataSource;
 import java.util.List;

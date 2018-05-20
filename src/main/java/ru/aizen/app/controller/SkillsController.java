@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import ru.aizen.app.control.SkillControl;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
-import ru.aizen.domain.character.attribute.Skill;
 import ru.aizen.domain.character.block.SkillsBlock;
+import ru.aizen.domain.character.entity.Skill;
 import ru.aizen.domain.dao.SkillDao;
 
 import java.util.ArrayList;

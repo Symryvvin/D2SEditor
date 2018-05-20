@@ -1,4 +1,4 @@
-package ru.aizen.domain.character.attribute;
+package ru.aizen.domain.character.entity;
 
 public class Attribute {
     public static final int ID_OFFSET = 9;

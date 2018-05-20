@@ -1,6 +1,6 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.character.attribute.Attribute;
+import ru.aizen.domain.character.entity.Attribute;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;

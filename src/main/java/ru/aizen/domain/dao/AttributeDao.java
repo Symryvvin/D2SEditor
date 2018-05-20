@@ -2,7 +2,7 @@ package ru.aizen.domain.dao;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.aizen.domain.character.attribute.Attribute;
+import ru.aizen.domain.character.entity.Attribute;
 
 import javax.sql.DataSource;
 

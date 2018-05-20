@@ -1,4 +1,4 @@
-package ru.aizen.domain.character.attribute;
+package ru.aizen.domain.character.entity;
 
 public class Skill {
     private int value;
