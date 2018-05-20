@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import ru.aizen.app.control.*?>
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.aizen.app.controller.QuestsController">
+    <HBox prefHeight="30.0" spacing="10.0">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+        <Label maxHeight="1.7976931348623157E308" styleClass="boldLabel" text="Difficult:"/>
+        <ComboBox fx:id="difficulties" onAction="#onChangeDifficult" prefWidth="150.0"/>
+    </HBox>
+    <HBox spacing="10.0">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0"/>
+        </padding>
+        <VBox prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 1"/>
+            <VBox fx:id="act1" prefWidth="100.0">
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+            </VBox>
+        </VBox>
+        <VBox prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 2"/>
+            <VBox fx:id="act2" prefWidth="100.0">
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+            </VBox>
+        </VBox>
+        <VBox prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 3"/>
+            <VBox fx:id="act3" prefWidth="100.0">
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+            </VBox>
+        </VBox>
+        <VBox prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 4"/>
+            <VBox fx:id="act4" prefWidth="100.0">
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+            </VBox>
+        </VBox>
+        <VBox prefWidth="200.0" styleClass="borderedPane">
+            <Label styleClass="title" text="Act 5"/>
+            <VBox fx:id="act5" prefWidth="100.0">
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+                <QuestControl/>
+            </VBox>
+        </VBox>
+    </HBox>
+</VBox>

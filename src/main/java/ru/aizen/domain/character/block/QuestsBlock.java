@@ -86,9 +86,7 @@ public class QuestsBlock extends DataBlock {
                 break;
             }
             Quest quest = questDao.getQuestByPosition(i, act);
-
             quest.setBinary(new Binary(questReader.readBytes(2)));
-            System.out.println(quest);
             result.add(quest);
         }
         return result;
