@@ -78,7 +78,6 @@ public class CharacterTest {
         Assert.assertEquals(false, metaBlock.getStatus().isDead());
         Assert.assertEquals(0, metaBlock.getTitle().getValue());
         Assert.assertEquals(CharacterClass.DRUID, metaBlock.getCharacterClass());
-        // Assert.assertEquals(LocalDateTime.parse("2018-03-25T09:17:11"), character.getTime());
     }
 
     @Test
