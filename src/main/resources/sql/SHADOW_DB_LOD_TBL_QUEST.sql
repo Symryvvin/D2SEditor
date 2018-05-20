@@ -15,7 +15,7 @@ INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_co
 INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_complete) VALUES ('Blade of the Old Religion', 3, 2, 2, '/icons/quests/act3/a3q3_active.png', '/icons/quests/act3/a3q3_complete.png');
 INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_complete) VALUES ('The Golden Bird', 3, 3, 1, '/icons/quests/act3/a3q4_active.png', '/icons/quests/act3/a3q4_complete.png');
 INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_complete) VALUES ('The Blackened Temple', 3, 4, 5, '/icons/quests/act3/a3q5_active.png', '/icons/quests/act3/a3q5_complete.png');
-INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_complete) VALUES ('The Guardian', 3, 5, 6, '/icons/quests/act3/a3q6_active.png', '/icons/quests/act3/a1q6_complete.png');
+INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_complete) VALUES ('The Guardian', 3, 5, 6, '/icons/quests/act3/a3q6_active.png', '/icons/quests/act3/a3q6_complete.png');
 INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_complete) VALUES ('The Fallen Angel', 4, 0, 1, '/icons/quests/act4/a4q1_active.png', '/icons/quests/act4/a4q1_complete.png');
 INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_complete) VALUES ('Terror''s End', 4, 1, 3, '/icons/quests/act4/a4q3_active.png', '/icons/quests/act4/a4q3_complete.png');
 INSERT INTO tbl_quest (name, act, position, quest_position, icon_active, icon_complete) VALUES ('Hell''s Forge', 4, 2, 2, '/icons/quests/act4/a4q2_active.png', '/icons/quests/act4/a4q2_complete.png');
