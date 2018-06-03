@@ -65,6 +65,10 @@ public class Character {
         return new BlockWriter().write(bytes, path);
     }
 
+    public boolean isNameChanged(String fileName) {
+        return !fileName.equals(getMetaBlock().getName() + ".d2s");
+    }
+
     public final void setTitleValue(String value) {
         title.set(value);
     }

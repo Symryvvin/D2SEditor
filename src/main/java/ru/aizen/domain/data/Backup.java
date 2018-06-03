@@ -13,14 +13,18 @@ import java.util.List;
 public class Backup {
     private static final String BACKUP_EXT = ".bak";
 
+    private String name;
+    private Path parent;
     private Path original;
     private Path directory;
     private Path selectedBackup;
     private List<Path> paths;
 
     public Backup(Path original) throws IOException {
+        this.name = original.getFileName().toString().replace(".d2s", "");
         this.original = original;
-        directory = getDirectory();
+        this.parent = original.getParent();
+        directory = parent.resolve(name);
         createDirectoryNotExist();
         load();
     }
@@ -36,14 +40,6 @@ public class Backup {
                 paths.add(file.toPath());
             }
         }
-    }
-
-    /**
-     * Trim file extension and get path for backups directory
-     * @return full path for backups directory
-     */
-    private Path getDirectory() {
-        return Paths.get(original.toString().replace(".d2s", ""));
     }
 
     /**
@@ -85,5 +81,34 @@ public class Backup {
         return paths;
     }
 
+
+    public Path renameAll(String newName) throws IOException {
+        renameWithExtension(newName, "key");
+        renameWithExtension(newName, "map");
+        renameWithExtension(newName, "ma0");
+        renameWithExtension(newName, "ma1");
+        renameWithExtension(newName, "ma2");
+        renameWithExtension(newName, "ma3");
+        renameBackupDirectory(newName);
+        return Files.move(original, parent.resolve(newName + ".d2s"));
+    }
+
+    private void renameBackupDirectory(String newName) throws IOException {
+        Path newBackUpParent = parent.resolve(newName);
+        if (Files.notExists(newBackUpParent)) {
+            Files.createDirectory(newBackUpParent);
+        }
+        for (Path path : paths) {
+            String fileName = path.getFileName().toString();
+            Files.move(path, newBackUpParent.resolve(fileName));
+        }
+        Files.deleteIfExists(directory);
+    }
+
+    private void renameWithExtension(String newName, String extension) throws IOException {
+        Path old = parent.resolve(name + "." + extension);
+        if (Files.exists(old))
+            Files.move(parent.resolve(name + "." + extension), parent.resolve(newName + "." + extension));
+    }
 
 }

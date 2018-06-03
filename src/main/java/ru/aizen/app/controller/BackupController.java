@@ -16,14 +16,10 @@ public class BackupController {
     @FXML private ListView<Path> list;
     private Backup backup;
 
-    public void createBackup(Path path) {
-        try {
-            backup = new Backup(path);
-            backup.createBackup();
-            initializeList();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void createBackup(Path path) throws IOException {
+        backup = new Backup(path);
+        backup.createBackup();
+        initializeList();
     }
 
     private void initializeList() {
@@ -50,5 +46,9 @@ public class BackupController {
 
     public void revert() throws IOException {
         backup.revertLast();
+    }
+
+    public Path renameFiles(String newName) throws IOException {
+        return backup.renameAll(newName);
     }
 }

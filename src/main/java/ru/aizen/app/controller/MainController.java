@@ -121,6 +121,8 @@ public class MainController {
             FileChooser chooser = new FileChooser();
             chooser.setTitle("Open Resource File");
             chooser.setInitialDirectory(new File(folder));
+            chooser.getExtensionFilters()
+                    .add(new FileChooser.ExtensionFilter("Diablo 2 Save", "*.d2s"));
             File file = chooser.showOpenDialog(new Stage());
             if (file != null) {
                 path = file.toPath();
@@ -158,9 +160,18 @@ public class MainController {
         try {
             editorController.saveCharacter();
             byte[] save = character.save(path);
+            changeName();
             hexEditorController.setOutputData(save);
         } catch (IOException | ValidatorException e) {
             Alerts.showError(e).show();
+        }
+    }
+
+    private void changeName() throws IOException, ValidatorException {
+        String fileName = path.getFileName().toString();
+        if (character.isNameChanged(fileName)) {
+            path = backupController.renameFiles(character.getMetaBlock().getName());
+            openFile();
         }
     }
 
