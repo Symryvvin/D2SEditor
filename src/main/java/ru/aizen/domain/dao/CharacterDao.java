@@ -19,16 +19,6 @@ public class CharacterDao extends ShadowDao {
         super(dataSource);
     }
 
-    public CharacterClass getCharacterClassByValue(int value) {
-        String sql = "SELECT name FROM tbl_class WHERE id = " + value;
-        return template.queryForObject(sql, new CharacterClassMapper());
-    }
-
-    public byte getValueByCharacterClass(CharacterClass characterClass) {
-        String sql = "SELECT id FROM tbl_class WHERE UPPER(name) = '" + characterClass.name() + "'";
-        return template.queryForObject(sql, Byte.class);
-    }
-
     public ObservableList<Title> getTitleListByCharacterClassAndStatus(Character character) {
         Status status = character.getMetaBlock().getStatus();
         CharacterClass characterClass = character.getMetaBlock().getCharacterClass();
@@ -85,15 +75,6 @@ public class CharacterDao extends ShadowDao {
                 "AND tbl_title.difficult = '" + difficult.name().toLowerCase() + "'\n" +
                 "LIMIT 1";
         return template.queryForObject(sql, Byte.class);
-    }
-
-
-    public class CharacterClassMapper implements RowMapper<CharacterClass> {
-
-        @Override
-        public CharacterClass mapRow(ResultSet resultSet, int i) throws SQLException {
-            return CharacterClass.valueOf(resultSet.getString("name").toUpperCase());
-        }
     }
 
     public class TitleMapper implements RowMapper<Title> {
