@@ -11,7 +11,6 @@ import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
 import ru.aizen.domain.character.block.MetaBlock;
-import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.Validator;
 
@@ -35,12 +34,11 @@ public class EditorController extends BaseController {
     private final SkillsController skillsController;
     private final WaypointsController waypointsController;
     private final QuestsController questsController;
-    private final CharacterDao characterDao;
 
     private Difficult difficult;
     private Status status;
-    private Map<Difficult, RadioButton> titles;
-    private List<Title> titleList;
+    private Map<Difficult, RadioButton> titlesToButtonLink;
+    private List<Title> titles;
 
     private MetaBlock metaBlock;
 
@@ -49,14 +47,12 @@ public class EditorController extends BaseController {
                             StatsController statsController,
                             SkillsController skillsController,
                             WaypointsController waypointsController,
-                            QuestsController questsController,
-                            CharacterDao characterDao) {
+                            QuestsController questsController) {
         super(character);
         this.statsController = statsController;
         this.skillsController = skillsController;
         this.waypointsController = waypointsController;
         this.questsController = questsController;
-        this.characterDao = characterDao;
     }
 
     public void initialize() {
@@ -65,11 +61,11 @@ public class EditorController extends BaseController {
                 .addListener((observable, oldValue, newValue) -> character.setNameValue(newValue));
         isExpansion.selectedProperty()
                 .addListener((observable, oldValue, newValue) -> character.setExpansion(isExpansion.isSelected()));
-        titles = new HashMap<>();
-        titles.put(Difficult.NORMAL, noTitle);
-        titles.put(Difficult.NIGHTMARE, normalComplete);
-        titles.put(Difficult.HELL, nightmareComplete);
-        titles.put(Difficult.COMPLETE, hellComplete);
+        titlesToButtonLink = new HashMap<>();
+        titlesToButtonLink.put(Difficult.NORMAL, noTitle);
+        titlesToButtonLink.put(Difficult.NIGHTMARE, normalComplete);
+        titlesToButtonLink.put(Difficult.HELL, nightmareComplete);
+        titlesToButtonLink.put(Difficult.COMPLETE, hellComplete);
 
     }
 
@@ -87,14 +83,14 @@ public class EditorController extends BaseController {
     }
 
     private void uncheckAllTitles() {
-        titles.values().forEach(t -> t.setSelected(false));
+        titlesToButtonLink.values().forEach(t -> t.setSelected(false));
     }
 
     public void changeTitleList() {
-        titleList = characterDao.getTitleListByCharacterClassAndStatus(character);
-        normalComplete.setText(titleList.get(1).getName());
-        nightmareComplete.setText(titleList.get(2).getName());
-        hellComplete.setText(titleList.get(3).getName());
+        titles = Title.getTitlesForCharacter(character);
+        normalComplete.setText(titles.get(1).getName());
+        nightmareComplete.setText(titles.get(2).getName());
+        hellComplete.setText(titles.get(3).getName());
         setTitle();
     }
 
@@ -121,9 +117,9 @@ public class EditorController extends BaseController {
     private void setTitle() {
         uncheckAllTitles();
         if (difficult == null) {
-            difficult = characterDao.getCurrentDifficult(character);
+            difficult = character.getMetaBlock().getTitle().getDifficult();
         }
-        titles.get(difficult).setSelected(true);
+        titlesToButtonLink.get(difficult).setSelected(true);
         character.setTitleValue(getSelectedTitle().getName());
     }
 
@@ -159,10 +155,10 @@ public class EditorController extends BaseController {
     }
 
     private Title getSelectedTitle() {
-        return titleList.stream()
+        return titles.stream()
                 .filter(t -> t.getDifficult() == difficult)
                 .findFirst()
-                .orElse(titleList.get(0));
+                .orElse(titles.get(0));
     }
 
     private void setStatus() {

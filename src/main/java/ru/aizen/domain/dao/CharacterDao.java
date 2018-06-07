@@ -81,9 +81,7 @@ public class CharacterDao extends ShadowDao {
 
         @Override
         public Title mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Title(resultSet.getString("name"),
-                    resultSet.getString("difficult"),
-                    resultSet.getInt("value"));
+            return null;
         }
     }
 }

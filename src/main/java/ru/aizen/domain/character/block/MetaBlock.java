@@ -42,7 +42,7 @@ public class MetaBlock extends DataBlock {
         byte tempTitleValue = reader.readByte();
         reader.skip(2);
         this.characterClass = CharacterClass.getByValue(reader.readByte());
-        this.title = characterDao.getTitleByValue(characterClass, status, tempTitleValue);
+        this.title = Title.getByValue(tempTitleValue, characterClass.getGender(), status);
         reader.skip(2);
         this.level = reader.readByte();
         reader.skip(4);
@@ -57,7 +57,7 @@ public class MetaBlock extends DataBlock {
                 .putInt(activeHand)
                 .put(fillNameWithSpaces())
                 .put(status.toByte())
-                .put(characterDao.getTitleValue(status, title.getDifficult()))
+                .put(title.getValue())
                 .putShort((short) 0)
                 .put((byte) characterClass.getValue())
                 .put(new byte[]{0x10, 0x1E})
