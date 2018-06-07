@@ -3,6 +3,7 @@ package ru.aizen.domain.character.block;
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.entity.Act;
 import ru.aizen.domain.character.entity.Quest;
+import ru.aizen.domain.character.entity.Quests;
 import ru.aizen.domain.dao.QuestDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
@@ -85,7 +86,7 @@ public class QuestsBlock extends DataBlock {
                 questReader.skip(6);
                 break;
             }
-            Quest quest = questDao.getQuestByPosition(i, act);
+            Quest quest = Quests.getByPositionAndAct(i, act);
             quest.setBinary(new Binary(questReader.readBytes(2)));
             result.add(quest);
         }

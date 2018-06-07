@@ -1,25 +1,29 @@
 package ru.aizen.domain.character.entity;
 
+import org.apache.commons.csv.CSVRecord;
+import ru.aizen.domain.data.Extensions;
 import ru.aizen.domain.data.binary.Binary;
 
 public class Quest implements Comparable<Quest> {
+    private static final String COMPLETED = "_complete";
+    private static final String ACTIVE = "_active";
+
     private Act act;
     private String name;
     private int position;
     private int order;
     private boolean isComplete;
     private Binary binary;
-
     private String activeImage;
     private String completeImage;
 
-    public Quest(int act, String name, String position, String order, String activeImage, String completeImage) {
-        this.act = Act.valueOf("ACT" + act);
-        this.name = name;
-        this.position = Integer.parseInt(position);
-        this.order = Integer.parseInt(order);
-        this.activeImage = activeImage;
-        this.completeImage = completeImage;
+    public Quest(CSVRecord record) {
+        this.name = record.get("name");
+        this.act = Act.getByNumber(Integer.parseInt(record.get("act")));
+        this.position = Integer.parseInt(record.get("position"));
+        this.order = Integer.parseInt(record.get("order"));
+        this.activeImage = record.get("icon") + ACTIVE + Extensions.PNG;
+        this.completeImage = record.get("icon") + COMPLETED + Extensions.PNG;
     }
 
     public Act getAct() {
@@ -37,10 +41,6 @@ public class Quest implements Comparable<Quest> {
     public void setComplete(boolean complete) {
         this.isComplete = complete;
         this.binary.set(0, complete);
-    }
-
-    public int getPosition() {
-        return position;
     }
 
     public Binary getBinary() {
@@ -61,6 +61,10 @@ public class Quest implements Comparable<Quest> {
 
     public int getOrder() {
         return order;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     @Override

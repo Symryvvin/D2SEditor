@@ -34,12 +34,7 @@ public class QuestDao extends ShadowDao {
 
         @Override
         public Quest mapRow(ResultSet rs, int i) throws SQLException {
-            return new Quest(rs.getInt("act"),
-                    rs.getString("name"),
-                    rs.getString("quest_position"),
-                    rs.getString("position"),
-                    rs.getString("icon_active"),
-                    rs.getString("icon_complete"));
+            return null;
         }
     }
 
