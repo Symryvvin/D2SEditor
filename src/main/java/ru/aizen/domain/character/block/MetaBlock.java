@@ -3,7 +3,6 @@ package ru.aizen.domain.character.block;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.Title;
-import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 
@@ -27,11 +26,8 @@ public class MetaBlock extends DataBlock {
     private int activeHand;
     private LocalDateTime time;
 
-    private CharacterDao characterDao;
-
-    public MetaBlock(CharacterDao characterDao) {
+    public MetaBlock() {
         super(ORDER);
-        this.characterDao = characterDao;
     }
 
     @Override

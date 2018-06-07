@@ -12,7 +12,6 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
 import ru.aizen.domain.character.block.MetaBlock;
-import ru.aizen.domain.dao.CharacterDao;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.Validator;
 
@@ -27,8 +26,6 @@ import java.nio.file.Paths;
 public class CharacterTest {
     @Autowired
     private Character character;
-    @Autowired
-    private CharacterDao characterDao;
 
     @Test
     public void testStatus() {

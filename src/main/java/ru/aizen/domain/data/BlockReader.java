@@ -3,7 +3,10 @@ package ru.aizen.domain.data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
-import ru.aizen.domain.dao.*;
+import ru.aizen.domain.dao.AttributeDao;
+import ru.aizen.domain.dao.QuestDao;
+import ru.aizen.domain.dao.SkillDao;
+import ru.aizen.domain.dao.WaypointDao;
 import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
@@ -21,19 +24,16 @@ import java.util.List;
 public class BlockReader {
     private byte[] bytes;
 
-    private final CharacterDao characterDao;
     private final WaypointDao waypointDao;
     private final AttributeDao attributeDao;
     private final SkillDao skillDao;
     private final QuestDao questDao;
 
     @Autowired
-    public BlockReader(CharacterDao characterDao,
-                       WaypointDao waypointDao,
+    public BlockReader(WaypointDao waypointDao,
                        AttributeDao attributeDao,
                        SkillDao skillDao,
                        QuestDao questDao) {
-        this.characterDao = characterDao;
         this.waypointDao = waypointDao;
         this.attributeDao = attributeDao;
         this.skillDao = skillDao;
@@ -71,7 +71,7 @@ public class BlockReader {
      * @return meta object
      */
     public MetaBlock readMeta() {
-        return new MetaBlock(characterDao)
+        return new MetaBlock()
                 .parse(getByteReader(MetaBlock.META_BLOCK_OFFSET, MetaBlock.META_BLOCK_SIZE));
     }
 
