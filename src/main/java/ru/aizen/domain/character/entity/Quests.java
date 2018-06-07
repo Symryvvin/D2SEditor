@@ -20,6 +20,7 @@ public class Quests {
                 new InputStreamReader(Quest.class.getResourceAsStream(PATH + Extensions.CSV)))) {
             CSVParser parser = CSVFormat.DEFAULT
                     .withHeader()
+                    .withTrim()
                     .parse(reader);
             quests = parser.getRecords()
                     .stream()
