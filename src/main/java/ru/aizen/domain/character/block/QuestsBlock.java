@@ -4,7 +4,6 @@ import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.entity.Act;
 import ru.aizen.domain.character.entity.Quest;
 import ru.aizen.domain.character.entity.Quests;
-import ru.aizen.domain.dao.QuestDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 import ru.aizen.domain.data.binary.Binary;
@@ -34,11 +33,8 @@ public class QuestsBlock extends DataBlock {
     private Map<Difficult, Map<Act, Short>> introduce;
     private Map<Difficult, Map<Act, Short>> travel;
 
-    private final QuestDao questDao;
-
-    public QuestsBlock(QuestDao questDao) {
+    public QuestsBlock() {
         super(ORDER);
-        this.questDao = questDao;
         quests = new HashMap<>();
         introduce = new HashMap<>();
         travel = new HashMap<>();

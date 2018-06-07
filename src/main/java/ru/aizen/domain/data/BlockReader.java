@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
-import ru.aizen.domain.dao.QuestDao;
 import ru.aizen.domain.dao.SkillDao;
 import ru.aizen.domain.dao.WaypointDao;
 import ru.aizen.domain.exception.ValidatorException;
@@ -27,17 +26,14 @@ public class BlockReader {
     private final WaypointDao waypointDao;
     private final AttributeDao attributeDao;
     private final SkillDao skillDao;
-    private final QuestDao questDao;
 
     @Autowired
     public BlockReader(WaypointDao waypointDao,
                        AttributeDao attributeDao,
-                       SkillDao skillDao,
-                       QuestDao questDao) {
+                       SkillDao skillDao) {
         this.waypointDao = waypointDao;
         this.attributeDao = attributeDao;
         this.skillDao = skillDao;
-        this.questDao = questDao;
     }
 
     /**
@@ -91,7 +87,7 @@ public class BlockReader {
     }
 
     public QuestsBlock readQuests() {
-        return new QuestsBlock(questDao)
+        return new QuestsBlock()
                 .parse(getByteReader(QuestsBlock.OFFSET, QuestsBlock.SIZE));
     }
 
