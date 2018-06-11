@@ -1,6 +1,7 @@
 package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.character.entity.Attribute;
+import ru.aizen.domain.character.entity.Attributes;
 import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
@@ -65,7 +66,7 @@ public class AttributesBlock extends DataBlock {
             long id = reader.readLong(Attribute.ID_OFFSET);
             if (id == stopId)
                 break;
-            Attribute attribute = getBy(id);
+            Attribute attribute = Attributes.getById(id);
             put(attribute.getId(), reader.readLong(attribute.getLength()));
         }
     }
@@ -81,7 +82,7 @@ public class AttributesBlock extends DataBlock {
         BinaryWriter writer = new BinaryWriter();
         for (Map.Entry<Long, Long> entry : attributes.entrySet()) {
             long id = entry.getKey();
-            Attribute attribute = getBy(id);
+            Attribute attribute = Attributes.getById(id);
             long value = entry.getValue();
             if (value != 0) {
                 writer.writeLong(id, Attribute.ID_OFFSET);
@@ -107,9 +108,5 @@ public class AttributesBlock extends DataBlock {
 
     public Long get(long key) {
         return attributes.get(key);
-    }
-
-    private Attribute getBy(long id) {
-        return attributeDao.getAttributeById((int) id);
     }
 }

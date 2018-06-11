@@ -1,0 +1,17 @@
+id,name              ,length
+0 ,Strength          ,10
+1 ,Energy            ,10
+2 ,Dexterity         ,10
+3 ,Vitality          ,10
+4 ,Stat points       ,10
+5 ,Skill points      ,8
+6 ,Hit point         ,21
+7 ,Max hit points    ,21
+8 ,Mana points       ,21
+9 ,Max mana points   ,21
+10,Stamina points    ,21
+11,Max stamina points,21
+12,Level             ,7
+13,Experience        ,32
+14,Gold              ,25
+15,Gold in stash     ,25
