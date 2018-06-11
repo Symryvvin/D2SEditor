@@ -1,0 +1,41 @@
+order,name                     ,act
+0    ,Rogue Encampment         ,1
+1    ,Cold Plains              ,1
+2    ,Stony Field              ,1
+3    ,Dark Wood                ,1
+4    ,Black Marsh              ,1
+5    ,Outer Cloister           ,1
+6    ,Jail Level 1             ,1
+7    ,Inner Cloister           ,1
+8    ,Catacombs Level 2        ,1
+9    ,Lut Gholein              ,2
+10   ,Sewers Level 2           ,2
+11   ,Dry Hills                ,2
+12   ,Halls of the Dead Level 2,2
+13   ,Far Oasis                ,2
+14   ,Lost City                ,2
+15   ,Palace Cellar Level 1    ,2
+16   ,Arcane Sanctuary         ,2
+17   ,Canyon of the Magi       ,2
+18   ,Kurast Docktown          ,3
+19   ,Spider Forest            ,3
+20   ,Great Marsh              ,3
+21   ,Flayer Jungle            ,3
+22   ,Lower Kurast             ,3
+23   ,Kurast Bazaar            ,3
+24   ,Upper Kurast             ,3
+25   ,Travincal                ,3
+26   ,Durance of Hate Level 2  ,3
+27   ,The Pandemonium Fortress ,4
+28   ,City of the Damned       ,4
+29   ,River of Flame           ,4
+30   ,Harrogath                ,5
+31   ,Figid Highlands          ,5
+32   ,Arreat Plateau           ,5
+33   ,Crystalline Passage      ,5
+34   ,Glacial Trail            ,5
+35   ,Halls of Pain            ,5
+36   ,Frozen Tundra            ,5
+37   ,The Ancient's Way        ,5
+38   ,Worldstone Keep Level 2  ,5
+

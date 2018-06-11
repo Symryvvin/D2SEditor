@@ -13,6 +13,7 @@ import ru.aizen.domain.character.block.MapBlock;
 import ru.aizen.domain.character.block.WaypointsBlock;
 import ru.aizen.domain.character.entity.Act;
 import ru.aizen.domain.character.entity.Waypoint;
+import ru.aizen.domain.character.entity.Waypoints;
 import ru.aizen.domain.dao.WaypointDao;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class WaypointsController extends BaseController {
                 Arrays.asList(Difficult.NORMAL, Difficult.NIGHTMARE, Difficult.HELL)));
         inDifficult.setItems(new ObservableListWrapper<>(
                 Arrays.asList(Difficult.NORMAL, Difficult.NIGHTMARE, Difficult.HELL)));
-        inTown.setItems(new ObservableListWrapper<>(waypointDao.getTowns()));
+        inTown.setItems(new ObservableListWrapper<>(Waypoints.getTowns()));
     }
 
     @Override

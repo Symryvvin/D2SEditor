@@ -1,6 +1,7 @@
 package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.character.Difficult;
+import ru.aizen.domain.character.entity.Waypoints;
 import ru.aizen.domain.dao.WaypointDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
@@ -31,7 +32,7 @@ public class MapBlock extends DataBlock {
 
     @Override
     public MapBlock parse(ByteReader reader) {
-        towns = waypointDao.getTowns();
+        towns = Waypoints.getTowns();
         setTownAndDifficult(reader.readBytes(3));
         mapId = reader.readInt();
         return this;

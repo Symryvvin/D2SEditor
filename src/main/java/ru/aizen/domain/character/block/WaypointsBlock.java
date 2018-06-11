@@ -2,6 +2,7 @@ package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.entity.Waypoint;
+import ru.aizen.domain.character.entity.Waypoints;
 import ru.aizen.domain.dao.WaypointDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
@@ -51,7 +52,7 @@ public class WaypointsBlock extends DataBlock {
         List<Waypoint> result = new ArrayList<>();
         Binary binary = new Binary(data);
         for (int i = 0; i < waypointsCount; i++) {
-            Waypoint waypoint = waypointDao.getWaypointByPosition(i);
+            Waypoint waypoint = Waypoints.getByOrder(i);
             waypoint.setActive(binary.get(i));
             result.add(waypoint);
         }
