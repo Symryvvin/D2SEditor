@@ -2,7 +2,6 @@ package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.entity.Waypoints;
-import ru.aizen.domain.dao.WaypointDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 import ru.aizen.domain.data.binary.Binary;
@@ -18,16 +17,13 @@ public class MapBlock extends DataBlock {
     public static final int SIZE = 9;
     public static final int ORDER = 4;
 
-    private WaypointDao waypointDao;
-
     private List<String> towns;
     private Difficult activeDifficult;
     private String activeTown;
     private int mapId;
 
-    public MapBlock(WaypointDao waypointDao) {
+    public MapBlock() {
         super(ORDER);
-        this.waypointDao = waypointDao;
     }
 
     @Override

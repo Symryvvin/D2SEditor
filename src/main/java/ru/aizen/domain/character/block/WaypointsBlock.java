@@ -3,7 +3,6 @@ package ru.aizen.domain.character.block;
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.entity.Waypoint;
 import ru.aizen.domain.character.entity.Waypoints;
-import ru.aizen.domain.dao.WaypointDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 import ru.aizen.domain.data.binary.Binary;
@@ -28,12 +27,9 @@ public class WaypointsBlock extends DataBlock {
 
     private Map<Difficult, List<Waypoint>> waypoints;
 
-    private final WaypointDao waypointDao;
-
-    public WaypointsBlock(WaypointDao waypointDao) {
+    public WaypointsBlock() {
         super(ORDER);
         this.waypoints = new HashMap<>();
-        this.waypointDao = waypointDao;
     }
 
     @Override

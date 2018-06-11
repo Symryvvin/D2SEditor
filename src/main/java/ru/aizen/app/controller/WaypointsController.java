@@ -14,7 +14,6 @@ import ru.aizen.domain.character.block.WaypointsBlock;
 import ru.aizen.domain.character.entity.Act;
 import ru.aizen.domain.character.entity.Waypoint;
 import ru.aizen.domain.character.entity.Waypoints;
-import ru.aizen.domain.dao.WaypointDao;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,11 +35,8 @@ public class WaypointsController extends BaseController {
     private WaypointsBlock waypointsBlock;
     private MapBlock mapBlock;
 
-    private WaypointDao waypointDao;
-
-    public WaypointsController(Character character, WaypointDao waypointDao) {
+    public WaypointsController(Character character) {
         super(character);
-        this.waypointDao = waypointDao;
     }
 
     public void initialize() {

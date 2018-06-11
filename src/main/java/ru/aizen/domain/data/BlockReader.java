@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.dao.AttributeDao;
-import ru.aizen.domain.dao.WaypointDao;
 import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
@@ -22,13 +21,10 @@ import java.util.List;
 public class BlockReader {
     private byte[] bytes;
 
-    private final WaypointDao waypointDao;
     private final AttributeDao attributeDao;
 
     @Autowired
-    public BlockReader(WaypointDao waypointDao,
-                       AttributeDao attributeDao) {
-        this.waypointDao = waypointDao;
+    public BlockReader(AttributeDao attributeDao) {
         this.attributeDao = attributeDao;
     }
 
@@ -73,7 +69,7 @@ public class BlockReader {
     }
 
     public MapBlock readMap() {
-        return new MapBlock(waypointDao)
+        return new MapBlock()
                 .parse(getByteReader(MapBlock.OFFSET, MapBlock.SIZE));
     }
 
@@ -88,7 +84,7 @@ public class BlockReader {
     }
 
     public WaypointsBlock readWaypoints() {
-        return new WaypointsBlock(waypointDao)
+        return new WaypointsBlock()
                 .parse(getByteReader(WaypointsBlock.OFFSET, WaypointsBlock.SIZE));
     }
 
