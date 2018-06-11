@@ -10,6 +10,7 @@ import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.block.SkillsBlock;
 import ru.aizen.domain.character.entity.Skill;
+import ru.aizen.domain.character.entity.Skills;
 import ru.aizen.domain.dao.SkillDao;
 
 import java.util.ArrayList;
@@ -46,14 +47,37 @@ public class SkillsController extends BaseController {
     public void loadCharacter() {
         skillsBlock = character.getSkillsBlock();
         characterClass = character.getMetaBlock().getCharacterClass();
+        clear();
+        Map<String, List<Skill>> skills = addValues(skillsBlock.getSkillValues());
+        List<String> pages = skills.keySet()
+                .stream()
+                .sorted()
+                .collect(Collectors.toList());
+        firstPageName.setText(pages.get(0));
+        addToPage(skills.get(pages.get(0)), firstPage);
+        secondPageName.setText(pages.get(1));
+        addToPage(skills.get(pages.get(1)), secondPage);
+        thirdPageName.setText(pages.get(2));
+        addToPage(skills.get(pages.get(2)), thirdPage);
+    }
+
+    private void clear() {
         skillControls.clear();
         firstPage.getChildren().clear();
         secondPage.getChildren().clear();
         thirdPage.getChildren().clear();
-        List<Skill> skills = addValues(skillsBlock.getSkillValues());
-        firstPageName.setText(skillDao.getSkillPage(characterClass, 1));
-        secondPageName.setText(skillDao.getSkillPage(characterClass, 2));
-        thirdPageName.setText(skillDao.getSkillPage(characterClass, 3));
+    }
+
+    private Map<String, List<Skill>> addValues(Map<Integer, Byte> values) {
+        List<Skill> skills = Skills.getByClass(characterClass);
+        for (Skill skill : skills) {
+            byte value = values.get(skill.getOrder());
+            skill.setValue(value);
+        }
+        return skills.stream().collect(Collectors.groupingBy(Skill::getPage));
+    }
+
+    private void addToPage(List<Skill> skills, GridPane page) {
         for (Skill skill : skills) {
             SkillControl control = new SkillControl();
             control.setName(skill.getName());
@@ -61,25 +85,8 @@ public class SkillsController extends BaseController {
             control.setValue(String.valueOf(skill.getValue()));
             control.setSkillOrder(skill.getOrder());
             skillControls.add(control);
-            if (skill.getPage() == 1) {
-                firstPage.add(control, skill.getColumn(), skill.getRow());
-            }
-            if (skill.getPage() == 2) {
-                secondPage.add(control, skill.getColumn(), skill.getRow());
-            }
-            if (skill.getPage() == 3) {
-                thirdPage.add(control, skill.getColumn(), skill.getRow());
-            }
+            page.add(control, skill.getColumn(), skill.getRow());
         }
-    }
-
-    private List<Skill> addValues(Map<Integer, Byte> values) {
-        List<Skill> skills = skillDao.getSkills(characterClass);
-        for (Skill skill : skills) {
-            byte value = values.get(skill.getOrder());
-            skill.setValue(value);
-        }
-        return skills;
     }
 
     @Override

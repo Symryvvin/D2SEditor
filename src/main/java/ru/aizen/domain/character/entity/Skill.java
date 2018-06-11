@@ -1,21 +1,23 @@
 package ru.aizen.domain.character.entity;
 
+import org.apache.commons.csv.CSVRecord;
+
 public class Skill {
     private int value;
     private int order;
     private String name;
     private String image;
-    private int page;
+    private String page;
     private int row;
     private int column;
 
-    public Skill(int order, String name, String image, int page, int row, int column) {
-        this.order = order;
-        this.name = name;
-        this.image = image;
-        this.page = page;
-        this.row = row;
-        this.column = column;
+    public Skill(CSVRecord record) {
+        this.order = Integer.parseInt(record.get(Skills.ORDER_HEADER));
+        this.name = record.get(Skills.NAME_HEADER);
+        this.image = record.get(Skills.ICON_HEADER);
+        this.page = record.get(Skills.PAGE_HEADER);
+        this.row = Integer.parseInt(record.get(Skills.ROW_HEADER));
+        this.column = Integer.parseInt(record.get(Skills.COLUMN_HEADER));
     }
 
     public String getName() {
@@ -30,7 +32,7 @@ public class Skill {
         return image;
     }
 
-    public int getPage() {
+    public String getPage() {
         return page;
     }
 
