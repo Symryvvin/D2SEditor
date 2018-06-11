@@ -35,8 +35,8 @@ public class Character {
     private final BlockReader blockReader;
 
     @Autowired
-    public Character(BlockReader blockReader) {
-        this.blockReader = blockReader;
+    public Character() {
+        this.blockReader = new BlockReader();
         this.blocks = new HashMap<>();
     }
 

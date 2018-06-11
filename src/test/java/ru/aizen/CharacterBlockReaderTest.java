@@ -12,7 +12,6 @@ import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.block.HeaderBlock;
-import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.exception.ValidatorException;
 import ru.aizen.domain.util.BinHexUtils;
@@ -28,10 +27,7 @@ import java.nio.file.Paths;
 public class CharacterBlockReaderTest {
     @Autowired
     private Character character;
-    @Autowired
     private BlockReader reader;
-    @Autowired
-    private AttributeDao attributeDao;
 
     @Before
     public void getTestData() throws IOException, URISyntaxException, ValidatorException {
@@ -42,7 +38,7 @@ public class CharacterBlockReaderTest {
 
     @Test
     public void testExtractAttributes() {
-        AttributesBlock expected = new AttributesBlock(attributeDao);
+        AttributesBlock expected = new AttributesBlock();
         expected.put(AttributesBlock.STRENGTH, 15L);
         expected.put(AttributesBlock.ENERGY, 20L);
         expected.put(AttributesBlock.DEXTERITY, 20L);

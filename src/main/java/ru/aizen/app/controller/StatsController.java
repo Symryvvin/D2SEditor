@@ -8,7 +8,6 @@ import ru.aizen.app.control.NumericField;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.entity.Levels;
-import ru.aizen.domain.dao.AttributeDao;
 
 @Component
 public class StatsController extends BaseController {
@@ -28,12 +27,9 @@ public class StatsController extends BaseController {
 
     private AttributesBlock attributesBlock;
 
-    private final AttributeDao attributeDao;
-
     @Autowired
-    public StatsController(Character character, AttributeDao attributeDao) {
+    public StatsController(Character character) {
         super(character);
-        this.attributeDao = attributeDao;
     }
 
     public void initialize() {

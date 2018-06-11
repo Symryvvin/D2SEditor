@@ -1,6 +1,5 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 
@@ -11,11 +10,9 @@ public class InventoryBlock extends DataBlock {
     public static final int ORDER = 12;
 
     private byte[] bytes;
-    private AttributeDao attributeDao;
 
-    public InventoryBlock(AttributeDao attributeDao) {
+    public InventoryBlock() {
         super(ORDER);
-        this.attributeDao = attributeDao;
     }
 
     @Override

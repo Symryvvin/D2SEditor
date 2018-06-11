@@ -2,7 +2,6 @@ package ru.aizen.domain.character.block;
 
 import ru.aizen.domain.character.entity.Attribute;
 import ru.aizen.domain.character.entity.Attributes;
-import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 import ru.aizen.domain.data.binary.BinaryReader;
@@ -38,11 +37,9 @@ public class AttributesBlock extends DataBlock {
 
     private Map<Long, Long> attributes;
     private int blockSize;
-    private final AttributeDao attributeDao;
 
-    public AttributesBlock(AttributeDao attributeDao) {
+    public AttributesBlock() {
         super(ORDER);
-        this.attributeDao = attributeDao;
         this.attributes = new HashMap<>();
     }
 

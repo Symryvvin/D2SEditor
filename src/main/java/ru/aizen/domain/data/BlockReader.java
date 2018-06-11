@@ -1,9 +1,6 @@
 package ru.aizen.domain.data;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
-import ru.aizen.domain.dao.AttributeDao;
 import ru.aizen.domain.exception.ValidatorException;
 
 import java.io.IOException;
@@ -17,16 +14,8 @@ import java.util.List;
 /**
  * This class keep save file data and can give byte block of different parts saved hero data
  */
-@Component
 public class BlockReader {
     private byte[] bytes;
-
-    private final AttributeDao attributeDao;
-
-    @Autowired
-    public BlockReader(AttributeDao attributeDao) {
-        this.attributeDao = attributeDao;
-    }
 
     /**
      * Read data to bytes field
@@ -101,7 +90,7 @@ public class BlockReader {
     public AttributesBlock readAttributes() {
         int offset = getSubArrayPosition(AttributesBlock.identifier);
         int size = getSubArrayPosition(SkillsBlock.identifier) - offset;
-        return new AttributesBlock(attributeDao)
+        return new AttributesBlock()
                 .parse(getByteReader(offset, size));
     }
 
@@ -117,7 +106,7 @@ public class BlockReader {
 
     public InventoryBlock readInventory() {
         int offset = getSubArrayPosition(InventoryBlock.identifier);
-        return new InventoryBlock(attributeDao)
+        return new InventoryBlock()
                 .parse(getByteReader(offset, bytes.length - offset));
     }
 
