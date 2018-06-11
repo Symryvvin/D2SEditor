@@ -1,6 +1,5 @@
 package ru.aizen.domain.character.block;
 
-import ru.aizen.domain.dao.SkillDao;
 import ru.aizen.domain.data.ByteReader;
 import ru.aizen.domain.data.UByte;
 
@@ -16,11 +15,9 @@ public class SkillsBlock extends DataBlock {
     public static final int ORDER = 11;
 
     private Map<Integer, Byte> values;
-    private final SkillDao skillDao;
 
-    public SkillsBlock(SkillDao skillDao) {
+    public SkillsBlock() {
         super(ORDER);
-        this.skillDao = skillDao;
     }
 
     @Override

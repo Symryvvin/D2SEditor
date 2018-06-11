@@ -11,7 +11,6 @@ import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.block.SkillsBlock;
 import ru.aizen.domain.character.entity.Skill;
 import ru.aizen.domain.character.entity.Skills;
-import ru.aizen.domain.dao.SkillDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +28,12 @@ public class SkillsController extends BaseController {
 
     private List<SkillControl> skillControls;
     private SkillsBlock skillsBlock;
-    private final SkillDao skillDao;
 
     private CharacterClass characterClass;
 
     @Autowired
-    public SkillsController(Character character, SkillDao skillDao) {
+    public SkillsController(Character character) {
         super(character);
-        this.skillDao = skillDao;
     }
 
     public void initialize() {
