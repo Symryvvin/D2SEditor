@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.aizen.app.control.NumericField;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
+import ru.aizen.domain.character.entity.Levels;
 import ru.aizen.domain.dao.AttributeDao;
 
 @Component
@@ -39,10 +40,10 @@ public class StatsController extends BaseController {
         level.textProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     character.setLevel("Level " + newValue);
-                    experience.setText(attributeDao.getExperienceAtLevel(getLevel()));
-                    long maxGold = attributeDao.getMaxGoldValueAtLevel(getLevel());
+                    experience.setText(Levels.getExperienceAtLevel(getLevel()));
+                    long maxGold = Levels.getGoldAtLevel(getLevel());
                     gold.setMaxValue(maxGold);
-                    long maxGoldBank = attributeDao.getMaxGoldBankValueAtLevel(getLevel());
+                    long maxGoldBank = Levels.getGoldBankAtLevel(getLevel());
                     goldInStash.setMaxValue(maxGoldBank);
                     if (gold.getNumericValue() > maxGold)
                         gold.setText(String.valueOf(maxGold));

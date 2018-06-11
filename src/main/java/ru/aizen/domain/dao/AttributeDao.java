@@ -22,25 +22,4 @@ public class AttributeDao extends ShadowDao {
                 "WHERE id = ?";
         return template.queryForObject(sql, new Object[]{id}, new AttributeRowMapper());
     }
-
-    public String getExperienceAtLevel(int level) {
-        String sql = "SELECT experience\n" +
-                "FROM tbl_level\n" +
-                "WHERE level = ?";
-        return String.valueOf(template.queryForObject(sql, new Object[]{level}, Long.class));
-    }
-
-    public Long getMaxGoldValueAtLevel(int level) {
-        String sql = "SELECT gold_inv\n" +
-                "FROM tbl_level\n" +
-                "WHERE level = ?";
-        return template.queryForObject(sql, new Object[]{level}, Long.class);
-    }
-
-    public Long getMaxGoldBankValueAtLevel(int level) {
-        String sql = "SELECT gold_stash\n" +
-                "FROM tbl_level\n" +
-                "WHERE level = ?";
-        return template.queryForObject(sql, new Object[]{level}, Long.class);
-    }
 }
