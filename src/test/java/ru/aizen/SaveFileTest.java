@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 @SpringBootTest
 @ContextConfiguration(classes = AppConfig.class)
 public class SaveFileTest {
-    private Path path;
+    private Path toSave;
 
     @Autowired
     private Character character;
@@ -35,15 +35,16 @@ public class SaveFileTest {
     public void testWriter() throws IOException {
         Character character = getTestCharacter();
         byte[] expected = character.getBlockReader().getBytes();
-        byte[] save = character.save(path);
+        byte[] save = character.save(toSave);
         Assert.assertArrayEquals(expected, save);
     }
 
     private Character getTestCharacter() {
-        String fileName = "/test.d2s";
+        String origin = "/test.d2s";
+        String saved = "/test-saved.d2s";
         try {
-            path = Paths.get(getClass().getResource(fileName).toURI());
-            character.load(path);
+            toSave = Paths.get(getClass().getResource(saved).toURI());
+            character.load(Paths.get(getClass().getResource(origin).toURI()));
         } catch (IOException | URISyntaxException | ValidatorException e) {
             e.printStackTrace();
         }

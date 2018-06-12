@@ -48,7 +48,7 @@
     <TabPane fx:id="editorTabs" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0"
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
         <Tab disable="true" text="Stats" closable="false">
-            <fx:include source="editor.fxml"/>
+            <fx:include source="metaInfo.fxml"/>
         </Tab>
         <Tab disable="true" text="Skills" closable="false">
             <fx:include source="skills.fxml"/>
