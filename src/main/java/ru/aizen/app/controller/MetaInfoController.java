@@ -6,8 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.*;
 import ru.aizen.domain.character.block.MetaBlock;
@@ -18,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
 public class MetaInfoController extends BaseController {
     @FXML private Label title;
     @FXML private Label name2;
@@ -35,7 +32,8 @@ public class MetaInfoController extends BaseController {
     @FXML private CheckBox isDead;
     @FXML private TextField name;
 
-    private final SkillsController skillsController;
+    private SkillsController skillsController;
+    @FXML private StatsController statsController;
 
     private Difficult difficult;
     private Status status;
@@ -44,19 +42,16 @@ public class MetaInfoController extends BaseController {
 
     private MetaBlock metaBlock;
 
-    @Autowired
-    public MetaInfoController(Character character,
-                              SkillsController skillsController) {
-        super(character);
+    public void setSkillController(SkillsController skillsController) {
         this.skillsController = skillsController;
     }
 
     public void initialize() {
-        title.textProperty().bind(character.titleProperty());
+/*        title.textProperty().bind(character.titleProperty());
         name2.textProperty().bind(character.nameProperty());
         level.textProperty().bind(character.levelProperty());
         characterClass.textProperty().bind(character.classProperty());
-        expansion.textProperty().bind(character.expansionProperty());
+        expansion.textProperty().bind(character.expansionProperty());*/
         setRulesForName();
         name.textProperty()
                 .addListener((observable, oldValue, newValue) -> character.setNameValue(newValue));
@@ -70,7 +65,14 @@ public class MetaInfoController extends BaseController {
     }
 
     @Override
+    public void setCharacter(Character character) {
+        super.setCharacter(character);
+        statsController.setCharacter(character);
+    }
+
+    @Override
     public void loadCharacter() throws ValidatorException {
+        statsController.loadCharacter();
         metaBlock = character.getMetaBlock();
         difficult = null;
         changeTitleList();
@@ -86,6 +88,7 @@ public class MetaInfoController extends BaseController {
 
     @Override
     public void saveCharacter() throws ValidatorException {
+        statsController.saveCharacter();
         metaBlock.setName(name.getText());
         Validator.checkName(metaBlock.getName());
         setStatus();

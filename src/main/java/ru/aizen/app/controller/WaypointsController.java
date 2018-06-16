@@ -6,8 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
-import org.springframework.stereotype.Component;
-import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.block.MapBlock;
 import ru.aizen.domain.character.block.WaypointsBlock;
@@ -20,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public class WaypointsController extends BaseController {
     @FXML private ComboBox<Difficult> inDifficult;
     @FXML private ComboBox<String> inTown;
@@ -34,10 +31,6 @@ public class WaypointsController extends BaseController {
     private Difficult difficult;
     private WaypointsBlock waypointsBlock;
     private MapBlock mapBlock;
-
-    public WaypointsController(Character character) {
-        super(character);
-    }
 
     public void initialize() {
         difficulties.setItems(new ObservableListWrapper<>(

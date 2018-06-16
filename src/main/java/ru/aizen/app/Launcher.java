@@ -36,7 +36,6 @@ public class Launcher extends Application {
 
     private Parent load() throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setControllerFactory(context::getBean);
         loader.setLocation(getClass().getResource("/fxml/main.fxml"));
         loader.setClassLoader(getClass().getClassLoader());
         return loader.load();

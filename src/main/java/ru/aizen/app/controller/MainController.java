@@ -9,9 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import ru.aizen.app.InputCombination;
 import ru.aizen.app.stage.Alerts;
 import ru.aizen.app.stage.BackupManagerModalStage;
@@ -23,11 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-@Component
 public class MainController {
-
-    @Value("${save.path}")
-    private String folder;
+    private String folder = "default";
 
     @FXML private Label file;
 
@@ -54,20 +48,13 @@ public class MainController {
     private Path path;
     private boolean isBackup = true;
 
-    private final Character character;
-    private final EditorController editorController;
+    private Character character;
+    @FXML private EditorController editorController;
 
     private HexEditorModalStage hexStage;
     private HexEditorController hexEditorController;
     private BackupManagerModalStage backupStage;
     private BackupController backupController;
-
-    @Autowired
-    public MainController(Character character,
-                          EditorController editorController) {
-        this.character = character;
-        this.editorController = editorController;
-    }
 
     public void initialize() throws IOException {
         backupStage = new BackupManagerModalStage();
@@ -123,12 +110,15 @@ public class MainController {
 
     private void openFile() throws IOException, ValidatorException {
         loadCharacter();
-        editorController.loadCharacter();
         file.setText(path.toString());
     }
 
     private void loadCharacter() throws IOException, ValidatorException {
+        character = new Character();
+        editorController.setCharacter(character);
         character.load(path);
+        editorController.loadCharacter();
+        hexEditorController.load(character);
         if (isBackup) {
             backupController.createBackup(path);
         }
@@ -188,7 +178,6 @@ public class MainController {
 
     @FXML
     private void onHexEditorClick() {
-        hexEditorController.load(character);
         hexEditorController.loadHex();
         hexStage.showHex();
     }

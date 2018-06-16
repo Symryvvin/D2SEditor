@@ -4,20 +4,20 @@
 <?import javafx.scene.layout.Pane?>
 <Pane xmlns="http://javafx.com/javafx/8.0.121"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.EditorController">
-    <TabPane fx:id="editorTabs" tabClosingPolicy="ALL_TABS">
-        <Tab disable="true" text="Stats" closable="false">
-            <fx:include source="metaInfo.fxml"/>
+    <TabPane fx:id="editorTabs" tabClosingPolicy="UNAVAILABLE">
+        <Tab disable="true" text="Stats">
+            <fx:include source="metaInfo.fxml" fx:id="metaInfo"/>
         </Tab>
-        <Tab disable="true" text="Skills" closable="false">
-            <fx:include source="skills.fxml"/>
+        <Tab disable="true" text="Skills">
+            <fx:include source="skills.fxml" fx:id="skills"/>
         </Tab>
-        <Tab disable="true" text="Waypoints" closable="false">
-            <fx:include source="waypoints.fxml"/>
+        <Tab disable="true" text="Waypoints">
+            <fx:include source="waypoints.fxml" fx:id="waypoints"/>
         </Tab>
-        <Tab disable="true" text="Quests" closable="false">
-            <fx:include source="quests.fxml"/>
+        <Tab disable="true" text="Quests">
+            <fx:include source="quests.fxml" fx:id="quests"/>
         </Tab>
-        <Tab disable="true" text="Inventory" closable="false">
+        <Tab disable="true" text="Inventory">
         </Tab>
     </TabPane>
 </Pane>

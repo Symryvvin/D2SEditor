@@ -74,7 +74,7 @@
                 </AnchorPane>
             </VBox>
         </VBox>
-        <fx:include minHeight="300.0" source="stats.fxml"/>
+        <fx:include minHeight="300.0" source="stats.fxml" fx:id="stats"/>
         <VBox.margin>
             <Insets left="10.0"/>
         </VBox.margin>

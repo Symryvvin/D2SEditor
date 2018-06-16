@@ -1,20 +1,16 @@
 package ru.aizen.app.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.exception.ValidatorException;
 
-@Component
 public abstract class BaseController {
-    protected final Character character;
-
-    @Autowired
-    public BaseController(Character character) {
-        this.character = character;
-    }
+    protected Character character;
 
     protected abstract void loadCharacter() throws ValidatorException;
 
     public abstract void saveCharacter() throws ValidatorException;
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
 }

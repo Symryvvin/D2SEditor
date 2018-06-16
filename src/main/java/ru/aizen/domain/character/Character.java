@@ -2,8 +2,6 @@ package ru.aizen.domain.character;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.block.*;
 import ru.aizen.domain.data.BlockReader;
 import ru.aizen.domain.data.BlockWriter;
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
 /**
  * Class keep all data of character witch can be present on application forms
  */
-@Component
 public class Character {
     private Map<Integer, DataBlock> blocks;
 
@@ -34,7 +31,6 @@ public class Character {
 
     private final BlockReader blockReader;
 
-    @Autowired
     public Character() {
         this.blockReader = new BlockReader();
         this.blocks = new HashMap<>();

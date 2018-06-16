@@ -3,10 +3,7 @@ package ru.aizen.app.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.aizen.app.control.SkillControl;
-import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.block.SkillsBlock;
 import ru.aizen.domain.character.entity.Skill;
@@ -17,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
 public class SkillsController extends BaseController {
     @FXML private Label firstPageName;
     @FXML private GridPane firstPage;
@@ -30,11 +26,6 @@ public class SkillsController extends BaseController {
     private SkillsBlock skillsBlock;
 
     private CharacterClass characterClass;
-
-    @Autowired
-    public SkillsController(Character character) {
-        super(character);
-    }
 
     public void initialize() {
         skillControls = new ArrayList<>();

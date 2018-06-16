@@ -2,14 +2,10 @@ package ru.aizen.app.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.aizen.app.control.NumericField;
-import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.entity.Levels;
 
-@Component
 public class StatsController extends BaseController {
     @FXML private NumericField hp;
     @FXML private NumericField mp;
@@ -26,11 +22,6 @@ public class StatsController extends BaseController {
     @FXML private Label experience;
 
     private AttributesBlock attributesBlock;
-
-    @Autowired
-    public StatsController(Character character) {
-        super(character);
-    }
 
     public void initialize() {
         level.textProperty()

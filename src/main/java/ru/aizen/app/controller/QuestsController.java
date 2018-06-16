@@ -5,9 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
-import org.springframework.stereotype.Component;
 import ru.aizen.app.control.QuestControl;
-import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.Difficult;
 import ru.aizen.domain.character.block.QuestsBlock;
 import ru.aizen.domain.character.entity.Act;
@@ -19,7 +17,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public class QuestsController extends BaseController {
     @FXML private ComboBox<Difficult> difficulties;
     @FXML private VBox act1;
@@ -30,10 +27,6 @@ public class QuestsController extends BaseController {
 
     private Difficult difficult;
     private QuestsBlock questsBlock;
-
-    public QuestsController(Character character) {
-        super(character);
-    }
 
     public void initialize() {
         difficulties.setItems(new ObservableListWrapper<>(
