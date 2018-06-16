@@ -2,20 +2,16 @@ package ru.aizen.app.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.util.BinHexUtils;
 
-@Component
-public class HexEditorController extends BaseController {
+public class HexEditorController {
+    private Character character;
+
     @FXML private TextArea hexCodeInput;
     @FXML private TextArea hexCodeOutput;
 
-    public HexEditorController(Character character) {
-        super(character);
-    }
-
-    private void loadHexData(){
+    private void loadHexData() {
         hexCodeInput.setText(BinHexUtils.getFormattedHexString(character.getBlockReader().getBytes()));
     }
 
@@ -23,7 +19,7 @@ public class HexEditorController extends BaseController {
         hexCodeOutput.setText(BinHexUtils.getFormattedHexString(output));
     }
 
-    public void clearAll() {
+    private void clearAll() {
         hexCodeInput.clear();
         hexCodeOutput.clear();
     }
@@ -32,13 +28,12 @@ public class HexEditorController extends BaseController {
         return hexCodeInput;
     }
 
-    @Override
-    protected void loadCharacter() {
-        loadHexData();
+    public void load(Character character) {
+        this.character = character;
     }
 
-    @Override
-    public void saveCharacter() {
-        //not for implementing now
+    public void loadHex() {
+        clearAll();
+        loadHexData();
     }
 }

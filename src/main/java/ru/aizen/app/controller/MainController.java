@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import ru.aizen.app.InputCombination;
 import ru.aizen.app.stage.Alerts;
 import ru.aizen.app.stage.BackupManagerModalStage;
+import ru.aizen.app.stage.HexEditorModalStage;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.exception.ValidatorException;
 
@@ -55,23 +56,24 @@ public class MainController {
 
     private final Character character;
     private final EditorController editorController;
-    private final HexEditorController hexEditorController;
 
+    private HexEditorModalStage hexStage;
+    private HexEditorController hexEditorController;
     private BackupManagerModalStage backupStage;
     private BackupController backupController;
 
     @Autowired
     public MainController(Character character,
-                          EditorController editorController,
-                          HexEditorController hexEditorController) {
+                          EditorController editorController) {
         this.character = character;
         this.editorController = editorController;
-        this.hexEditorController = hexEditorController;
     }
 
     public void initialize() throws IOException {
         backupStage = new BackupManagerModalStage();
         backupController = backupStage.getController();
+        hexStage = new HexEditorModalStage();
+        hexEditorController = hexStage.getController();
         initializeMenuKeyCodes();
         initializeButtonGraphics();
         if (folder.equals("default"))
@@ -120,9 +122,7 @@ public class MainController {
     }
 
     private void openFile() throws IOException, ValidatorException {
-        hexEditorController.clearAll();
         loadCharacter();
-        hexEditorController.loadCharacter();
         editorController.loadCharacter();
         file.setText(path.toString());
     }
@@ -164,7 +164,7 @@ public class MainController {
     private void onRevertClick() {
         try {
             backupController.revert();
-            hexEditorController.clearAll();
+            hexEditorController.loadHex();
             isBackup = false;
             openFile();
             isBackup = true;
@@ -188,7 +188,9 @@ public class MainController {
 
     @FXML
     private void onHexEditorClick() {
-        editorController.addAndSelectHex();
+        hexEditorController.load(character);
+        hexEditorController.loadHex();
+        hexStage.showHex();
     }
 
     @FXML

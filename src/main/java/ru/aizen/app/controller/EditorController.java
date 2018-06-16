@@ -16,7 +16,6 @@ public class EditorController extends BaseController {
     private final WaypointsController waypointsController;
     private final QuestsController questsController;
     @FXML private TabPane editorTabs;
-    @FXML private Tab hexEditor;
 
     @Autowired
     public EditorController(Character character,
@@ -31,18 +30,6 @@ public class EditorController extends BaseController {
         this.skillsController = skillsController;
         this.waypointsController = waypointsController;
         this.questsController = questsController;
-    }
-
-    public void initialize() {
-        initializeCloseableTab();
-    }
-
-    private void initializeCloseableTab() {
-        editorTabs.getTabs().remove(hexEditor);
-        hexEditor.setOnClosed(event -> {
-            hexEditor.setDisable(true);
-            editorTabs.getTabs().remove(hexEditor);
-        });
     }
 
     public void loadCharacter() throws ValidatorException {
@@ -61,18 +48,6 @@ public class EditorController extends BaseController {
         skillsController.saveCharacter();
         waypointsController.saveCharacter();
         questsController.saveCharacter();
-    }
-
-    public void addAndSelectHex() {
-        addAndSelect(hexEditor);
-    }
-
-    private void addAndSelect(Tab tab) {
-        if (tab != null && tab.isDisable()) {
-            editorTabs.getTabs().add(tab);
-            tab.setDisable(false);
-        }
-        editorTabs.getSelectionModel().select(tab);
     }
 
     public void selectTab(int index) {

@@ -19,8 +19,5 @@
         </Tab>
         <Tab disable="true" text="Inventory" closable="false">
         </Tab>
-        <Tab fx:id="hexEditor" disable="true" text="Hex Editor">
-            <fx:include source="hex.fxml"/>
-        </Tab>
     </TabPane>
 </Pane>
