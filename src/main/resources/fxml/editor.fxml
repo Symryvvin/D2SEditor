@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<Pane xmlns="http://javafx.com/javafx/8.0.121"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.EditorController">
+    <TabPane fx:id="editorTabs" tabClosingPolicy="ALL_TABS">
+        <Tab disable="true" text="Stats" closable="false">
+            <fx:include source="metaInfo.fxml"/>
+        </Tab>
+        <Tab disable="true" text="Skills" closable="false">
+            <fx:include source="skills.fxml"/>
+        </Tab>
+        <Tab disable="true" text="Waypoints" closable="false">
+            <fx:include source="waypoints.fxml"/>
+        </Tab>
+        <Tab disable="true" text="Quests" closable="false">
+            <fx:include source="quests.fxml"/>
+        </Tab>
+        <Tab disable="true" text="Inventory" closable="false">
+        </Tab>
+        <Tab fx:id="hexEditor" disable="true" text="Hex Editor">
+            <fx:include source="hex.fxml"/>
+        </Tab>
+        <Tab fx:id="backupManager" disable="true" text="Backup Manager">
+            <fx:include source="backup.fxml"/>
+        </Tab>
+    </TabPane>
+</Pane>
