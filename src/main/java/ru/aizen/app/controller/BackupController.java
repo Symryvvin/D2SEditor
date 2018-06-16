@@ -4,13 +4,11 @@ import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import org.springframework.stereotype.Component;
 import ru.aizen.domain.data.Backup;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
-@Component
 public class BackupController {
 
     @FXML private ListView<Path> list;

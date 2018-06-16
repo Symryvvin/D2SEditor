@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.aizen.app.InputCombination;
 import ru.aizen.app.stage.Alerts;
+import ru.aizen.app.stage.BackupManagerModalStage;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.exception.ValidatorException;
 
@@ -55,20 +56,22 @@ public class MainController {
     private final Character character;
     private final EditorController editorController;
     private final HexEditorController hexEditorController;
-    private final BackupController backupController;
+
+    private BackupManagerModalStage backupStage;
+    private BackupController backupController;
 
     @Autowired
     public MainController(Character character,
                           EditorController editorController,
-                          HexEditorController hexEditorController,
-                          BackupController backupController) {
+                          HexEditorController hexEditorController) {
         this.character = character;
         this.editorController = editorController;
         this.hexEditorController = hexEditorController;
-        this.backupController = backupController;
     }
 
-    public void initialize() {
+    public void initialize() throws IOException {
+        backupStage = new BackupManagerModalStage();
+        backupController = backupStage.getController();
         initializeMenuKeyCodes();
         initializeButtonGraphics();
         if (folder.equals("default"))
@@ -175,7 +178,7 @@ public class MainController {
 
     @FXML
     private void onBackupClick() {
-        editorController.addAndSelectBackup();
+        backupStage.showBackup();
     }
 
     @FXML

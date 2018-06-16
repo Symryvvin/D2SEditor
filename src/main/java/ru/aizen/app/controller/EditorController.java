@@ -17,7 +17,6 @@ public class EditorController extends BaseController {
     private final QuestsController questsController;
     @FXML private TabPane editorTabs;
     @FXML private Tab hexEditor;
-    @FXML private Tab backupManager;
 
     @Autowired
     public EditorController(Character character,
@@ -40,14 +39,9 @@ public class EditorController extends BaseController {
 
     private void initializeCloseableTab() {
         editorTabs.getTabs().remove(hexEditor);
-        editorTabs.getTabs().remove(backupManager);
         hexEditor.setOnClosed(event -> {
             hexEditor.setDisable(true);
             editorTabs.getTabs().remove(hexEditor);
-        });
-        backupManager.setOnClosed(event -> {
-            backupManager.setDisable(true);
-            editorTabs.getTabs().remove(backupManager);
         });
     }
 
@@ -67,10 +61,6 @@ public class EditorController extends BaseController {
         skillsController.saveCharacter();
         waypointsController.saveCharacter();
         questsController.saveCharacter();
-    }
-
-    public void addAndSelectBackup() {
-        addAndSelect(backupManager);
     }
 
     public void addAndSelectHex() {
