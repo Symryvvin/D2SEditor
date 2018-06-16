@@ -2,7 +2,9 @@ package ru.aizen.app.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -47,11 +49,6 @@ public class MainController {
     @FXML private MenuItem waypointsTabMenu;
     @FXML private MenuItem questsTabMenu;
 
-    @FXML private TabPane editorTabs;
-    // Closeable tabs
-    @FXML private Tab hexEditor;
-    @FXML private Tab backupManager;
-
     private Path path;
     private boolean isBackup = true;
 
@@ -72,24 +69,10 @@ public class MainController {
     }
 
     public void initialize() {
-        initializeCloseableTab();
         initializeMenuKeyCodes();
         initializeButtonGraphics();
         if (folder.equals("default"))
             folder = "C:/Users/" + System.getProperty("user.name") + "/Saved Games/Diablo II/";
-    }
-
-    private void initializeCloseableTab() {
-        editorTabs.getTabs().remove(hexEditor);
-        editorTabs.getTabs().remove(backupManager);
-        hexEditor.setOnClosed(event -> {
-            hexEditor.setDisable(true);
-            editorTabs.getTabs().remove(hexEditor);
-        });
-        backupManager.setOnClosed(event -> {
-            backupManager.setDisable(true);
-            editorTabs.getTabs().remove(backupManager);
-        });
     }
 
     private void initializeMenuKeyCodes() {
@@ -146,7 +129,6 @@ public class MainController {
         if (isBackup) {
             backupController.createBackup(path);
         }
-        editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         save.setDisable(false);
         backup.setDisable(false);
         revert.setDisable(false);
@@ -193,7 +175,7 @@ public class MainController {
 
     @FXML
     private void onBackupClick() {
-        addAndSelect(backupManager);
+        editorController.addAndSelectBackup();
     }
 
     @FXML
@@ -203,46 +185,33 @@ public class MainController {
 
     @FXML
     private void onHexEditorClick() {
-        addAndSelect(hexEditor);
-    }
-
-    private void addAndSelect(Tab tab) {
-        if (tab != null && tab.isDisable()) {
-            editorTabs.getTabs().add(tab);
-            tab.setDisable(false);
-        }
-        editorTabs.getSelectionModel().select(tab);
+        editorController.addAndSelectHex();
     }
 
     @FXML
     private void OnSelectStats() {
-        selectTab(0);
+        editorController.selectTab(0);
     }
 
     @FXML
     private void OnSelectSkills() {
-        selectTab(1);
+        editorController.selectTab(1);
     }
 
     @FXML
     private void OnSelectWaypoints() {
-        selectTab(2);
+        editorController.selectTab(2);
     }
 
     @FXML
     private void OnSelectQuests() {
-        selectTab(3);
+        editorController.selectTab(3);
     }
 
 
-    public void OnSelectInventory() {
-        selectTab(4);
-    }
-
-    private void selectTab(int index) {
-        Tab tab = editorTabs.getTabs().get(index);
-        if (!tab.isDisable())
-            editorTabs.getSelectionModel().select(index);
+    @FXML
+    private void OnSelectInventory() {
+        editorController.selectTab(4);
     }
 
     @FXML

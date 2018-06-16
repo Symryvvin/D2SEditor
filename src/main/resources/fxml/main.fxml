@@ -45,29 +45,8 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
         </padding>
     </HBox>
-    <TabPane fx:id="editorTabs" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0"
-             AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80">
-        <Tab disable="true" text="Stats" closable="false">
-            <fx:include source="metaInfo.fxml"/>
-        </Tab>
-        <Tab disable="true" text="Skills" closable="false">
-            <fx:include source="skills.fxml"/>
-        </Tab>
-        <Tab disable="true" text="Waypoints" closable="false">
-            <fx:include source="waypoints.fxml"/>
-        </Tab>
-        <Tab disable="true" text="Quests" closable="false">
-            <fx:include source="quests.fxml"/>
-        </Tab>
-        <Tab disable="true" text="Inventory" closable="false">
-        </Tab>
-        <Tab fx:id="hexEditor" disable="true" text="Hex Editor">
-            <fx:include source="hex.fxml"/>
-        </Tab>
-        <Tab fx:id="backupManager" disable="true" text="Backup Manager">
-            <fx:include source="backup.fxml"/>
-        </Tab>
-    </TabPane>
+    <fx:include source="editor.fxml" fx:id="editor" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0" AnchorPane.topAnchor="80"/>
     <Pane prefHeight="20.0" styleClass="statusBar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
           AnchorPane.rightAnchor="0.0">
         <Label fx:id="file" layoutX="5" prefHeight="20"/>

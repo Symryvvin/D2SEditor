@@ -1,5 +1,8 @@
 package ru.aizen.app.controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aizen.domain.character.Character;
@@ -12,6 +15,9 @@ public class EditorController extends BaseController {
     private final SkillsController skillsController;
     private final WaypointsController waypointsController;
     private final QuestsController questsController;
+    @FXML private TabPane editorTabs;
+    @FXML private Tab hexEditor;
+    @FXML private Tab backupManager;
 
     @Autowired
     public EditorController(Character character,
@@ -28,7 +34,25 @@ public class EditorController extends BaseController {
         this.questsController = questsController;
     }
 
+    public void initialize() {
+        initializeCloseableTab();
+    }
+
+    private void initializeCloseableTab() {
+        editorTabs.getTabs().remove(hexEditor);
+        editorTabs.getTabs().remove(backupManager);
+        hexEditor.setOnClosed(event -> {
+            hexEditor.setDisable(true);
+            editorTabs.getTabs().remove(hexEditor);
+        });
+        backupManager.setOnClosed(event -> {
+            backupManager.setDisable(true);
+            editorTabs.getTabs().remove(backupManager);
+        });
+    }
+
     public void loadCharacter() throws ValidatorException {
+        editorTabs.getTabs().forEach(tab -> tab.setDisable(false));
         metaInfoController.loadCharacter();
         statsController.loadCharacter();
         skillsController.loadCharacter();
@@ -43,6 +67,27 @@ public class EditorController extends BaseController {
         skillsController.saveCharacter();
         waypointsController.saveCharacter();
         questsController.saveCharacter();
+    }
 
+    public void addAndSelectBackup() {
+        addAndSelect(backupManager);
+    }
+
+    public void addAndSelectHex() {
+        addAndSelect(hexEditor);
+    }
+
+    private void addAndSelect(Tab tab) {
+        if (tab != null && tab.isDisable()) {
+            editorTabs.getTabs().add(tab);
+            tab.setDisable(false);
+        }
+        editorTabs.getSelectionModel().select(tab);
+    }
+
+    public void selectTab(int index) {
+        Tab tab = editorTabs.getTabs().get(index);
+        if (!tab.isDisable())
+            editorTabs.getSelectionModel().select(index);
     }
 }
