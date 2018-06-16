@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import ru.aizen.app.control.*?>
-<VBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1"
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/8.0.172" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ru.aizen.app.controller.StatsController">
     <VBox styleClass="borderedPane">
         <Label styleClass="title" text="Progress"/>

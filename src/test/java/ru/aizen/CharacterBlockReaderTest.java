@@ -3,12 +3,6 @@ package ru.aizen;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.block.AttributesBlock;
 import ru.aizen.domain.character.block.HeaderBlock;
@@ -21,16 +15,13 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ContextConfiguration(classes = AppConfig.class)
 public class CharacterBlockReaderTest {
-    @Autowired
     private Character character;
     private BlockReader reader;
 
     @Before
     public void getTestData() throws IOException, URISyntaxException, ValidatorException {
+        character = new Character();
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
         character.load(path);
         reader = character.getBlockReader();

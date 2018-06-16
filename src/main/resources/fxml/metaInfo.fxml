@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox minWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/9.0.4"
+<VBox minWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.172"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.aizen.app.controller.MetaInfoController">
     <HBox prefHeight="0.0" spacing="10.0">
         <padding>

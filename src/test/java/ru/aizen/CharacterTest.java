@@ -2,12 +2,6 @@ package ru.aizen;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import ru.aizen.app.AppConfig;
 import ru.aizen.domain.character.Character;
 import ru.aizen.domain.character.CharacterClass;
 import ru.aizen.domain.character.Status;
@@ -20,12 +14,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ContextConfiguration(classes = AppConfig.class)
 public class CharacterTest {
-    @Autowired
-    private Character character;
 
     @Test
     public void testStatus() {
@@ -67,9 +56,10 @@ public class CharacterTest {
     @Test
     public void testCharacterMeta() throws URISyntaxException, IOException, ValidatorException {
         Path path = Paths.get(getClass().getResource("/test.d2s").toURI());
+        Character character = new Character();
         character.load(path);
         MetaBlock metaBlock = character.getMetaBlock();
-        Assert.assertEquals("Test", metaBlock.getName());
+        Assert.assertEquals("test", metaBlock.getName());
         Assert.assertEquals(true, metaBlock.getStatus().isExpansion());
         Assert.assertEquals(false, metaBlock.getStatus().isHardcore());
         Assert.assertEquals(false, metaBlock.getStatus().isDead());
